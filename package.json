@@ -1,19 +1,36 @@
 {
   "name": "arrow",
-  "version": "1.0.0",
-  "license": "AGPL",
+  "version": "0.0.1",
+  "license": "AGPL-3.0",
+  "repository": "https://github.com/amos-ws16/amos-ws16-arrowjs",
   "devDependencies": {
+    "babel-plugin-istanbul": "^2.0.3",
     "buster": "^0.7.18",
     "coveralls": "^2.11.14",
+    "cross-env": "^3.1.3",
     "eslint": "^3.9.0",
     "eslint-config-standard": "^6.2.1",
     "eslint-plugin-promise": "^3.3.0",
     "eslint-plugin-standard": "^2.0.1",
-    "istanbul": "^0.4.5"
+    "nyc": "^8.4.0",
+    "supertest": "^2.0.1",
+    "supertest-as-promised": "^4.0.2"
   },
   "scripts": {
-    "test": "eslint **/*.js && buster-test",
-    "cover": "istanbul cover buster-test",
-    "coveralls": "npm run cover -- --report lcovonly && cat ./coverage/lcov.info | coveralls"
+    "start": "node ./bin/start-server.js",
+    "test": "eslint **/*.js && babel-node ./node_modules/.bin/buster-test",
+    "cover": "cross-env NODE_ENV=test nyc --reporter=lcov --reporter=text babel-node -- ./node_modules/.bin/buster-test",
+    "coveralls": "npm run cover && nyc report --reporter=text-lcov | coveralls"
+  },
+  "nyc": {
+    "sourceMap": false,
+    "instrument": false
+  },
+  "dependencies": {
+    "babel-cli": "^6.18.0",
+    "babel-plugin-transform-async-to-module-method": "^6.16.0",
+    "babel-preset-es2015": "^6.18.0",
+    "bluebird": "^3.4.6",
+    "express": "^4.14.0"
   }
 }
