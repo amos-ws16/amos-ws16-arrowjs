@@ -1,172 +1,229 @@
 const buster = require('buster')
-const ScoreManager = require('../lib/score-manager')
+const scoreManager = require('../lib/score-manager')
 const aggregator = require('../lib/score-aggregator')
+
 const sameTitlePlugin = require('../lib/plugins/same-title-plugin')
 
-buster.testCase('Score Manager', {
-  setUp: function () {
-    this.meanCombiner = new aggregator.Mean()
-    this.scoreManager = new ScoreManager(this.meanCombiner)
-    this.scoreManager.registerPlugin('default-plugin', () => 0.42)
+buster.testCase('ScoreManager with configuration', {
+  'scoreWith': {
+    setUp: function () {
+      this.stubPlugin = this.stub()
+      let config = {
+        plugins: {
+          'plugin-a': {
+            use: this.stubPlugin,
+            inputs: ['x.y.z', 'a.b[].c']
+          }
+        },
+        // Not used.
+        aggregator: { combine: this.stub() }
+      }
+      this.manager = scoreManager.create(config)
+    },
+
+    'should call plugin with inputs defined by path': function () {
+      let blob = {
+        x: { y: { z: 'foo' } },
+        a: { b: [
+          { c: 'bar' },
+          { c: 'baz' }
+        ] }
+      }
+
+      this.manager.scoreWith('plugin-a', blob)
+
+      buster.assert.calledWith(this.stubPlugin, 'foo', 'bar')
+      buster.assert.calledWith(this.stubPlugin, 'foo', 'baz')
+    },
+
+    'should call plugin with inputs defined by path 2': function () {
+      let blob = {
+        x: { y: { z: 'hello' } },
+        a: { b: [
+          { c: 'world' },
+          { c: 'goodbye' }
+        ] }
+      }
+
+      this.manager.scoreWith('plugin-a', blob)
+
+      buster.assert.calledWith(this.stubPlugin, 'hello', 'world')
+      buster.assert.calledWith(this.stubPlugin, 'hello', 'goodbye')
+    },
+
+    'should return what the plugin returned': function () {
+      this.stubPlugin.onCall(0).returns(0.123)
+      this.stubPlugin.onCall(1).returns(0.456)
+      let blob = {
+        x: { y: { z: 'foo' } },
+        a: { b: [
+          { c: 'bar' },
+          { c: 'baz' }
+        ] }
+      }
+
+      let result = this.manager.scoreWith('plugin-a', blob)
+
+      buster.assert.equals(result, [0.123, 0.456])
+    },
+
+    'should throw error when plugin does not exist': function () {
+      buster.assert.exception(() => {
+        this.manager.scoreWith('nonexistent-plugin', {})
+      })
+    },
+
+    'should rethrow a wrapped error when extractObject throws': function () {
+      buster.assert.exception(() => this.manager.scoreWith('plugin-a', {}))
+    }
   },
 
-  'should have an interface': function () {
-    let blob = {
-      tasks: [
-        { name: 'blub' },
-        { name: 'foo' }
-      ]
+  'construction failures': {
+    setUp: function () {
+      this.stubAggregator = { combine: this.stub() }
+      this.stubPlugin = { use: this.stub(), inputs: ['', ''] }
+    },
+
+    'should throw error when config was not used': function () {
+      buster.assert.exception(() => scoreManager.create(undefined))
+    },
+
+    'should throw error when config has no plugins': function () {
+      // Valid aggregator but no plugins.
+      let config = { aggregator: this.stubAggregator }
+      buster.assert.exception(() => scoreManager.create(config))
+    },
+
+    'should throw error when config has no aggregator': function () {
+      // Valid plugin configuration but no aggregator.
+      let config = { plugins: { 'plugin-a': this.stubPlugin } }
+      buster.assert.exception(() => scoreManager.create(config))
+    },
+
+    'should throw error when config\'s aggregator has no combine property': function () {
+      let config = {
+        plugins: { 'plugin-a': this.stubPlugin },
+        aggregator: {}
+      }
+      buster.assert.exception(() => scoreManager.create(config))
+    },
+
+    'should throw error when plugin was defined without score function': function () {
+      let config = {
+        plugins: { 'plugin-a': { inputs: ['', ''] } },
+        aggregator: this.stubAggregator
+      }
+      buster.assert.exception(() => scoreManager.create(config))
+    },
+
+    'should throw error when plugin was defined without inputs field': function () {
+      let config = {
+        plugins: { 'plugin-a': { use: this.stub() } },
+        aggregator: this.stubAggregator
+      }
+      buster.assert.exception(() => scoreManager.create(config))
+    },
+
+    'should throw error when plugin inputs field is not an array of length 2': function () {
+      let config = {
+        plugins: { 'plugin-a': { use: this.stub(), inputs: 'not an array' } },
+        aggregator: this.stubAggregator
+      }
+      buster.assert.exception(() => scoreManager.create(config))
     }
-
-    let result = this.scoreManager.score(blob)
-
-    buster.assert.isArray(result)
-    result.forEach((element) => {
-      buster.assert.isNumber(element.score)
-      buster.assert(element.score >= 0 && element.score <= 1)
-    })
   },
 
-  'should return only tasks that were given as arguments': function () {
-    let blob = {
-      tasks: [
-        { name: 'blub' }
-      ]
+  'score using Aggregator': {
+    setUp: function () {
+      this.stubPluginA = this.stub()
+      this.stubPluginB = this.stub()
+      this.stubAggregator = this.stub()
+      let config = {
+        aggregator: { combine: this.stubAggregator },
+        plugins: {
+          'plugin-a': {
+            use: this.stubPluginA,
+            inputs: ['x', 'y[]']
+          },
+          'plugin-b': {
+            use: this.stubPluginB,
+            inputs: ['x', 'y[]']
+          }
+        }
+      }
+      this.manager = scoreManager.create(config)
+    },
+
+    'should use the config provided aggregator': function () {
+      this.stubPluginA.returns(0.5)
+      this.stubPluginB.returns(0.8)
+
+      this.manager.score({ x: {}, y: [0] })
+
+      buster.assert.calledWith(this.stubAggregator,
+        { 'plugin-a': 0.5, 'plugin-b': 0.8 })
+    },
+
+    'should return the scores returned by the aggregator in field total': function () {
+      this.stubPluginA.returns(0.5)
+      this.stubPluginB.returns(0.8)
+      this.stubAggregator.returns(0.1)
+
+      let scores = this.manager.score({ x: {}, y: [0] })
+
+      buster.assert.equals(scores, [{ 'total': 0.1, 'plugin-a': 0.5, 'plugin-b': 0.8 }])
     }
-
-    let result = this.scoreManager.score(blob)
-
-    buster.assert.equals(result[0].name, 'blub')
   },
 
-  'should return only tasks that were given as arguments 2': function () {
-    let blob = {
-      tasks: [
-        { name: 'blub' },
-        { name: 'foo' }
-      ]
+  'score using string aggregator': {
+    setUp: function () {
+      this.stubPluginA = this.stub()
+      this.stubPluginB = this.stub()
+      this.config = {
+        plugins: {
+          'plugin-a': {
+            use: this.stubPluginA,
+            inputs: ['x', 'y[]']
+          },
+          'plugin-b': {
+            use: this.stubPluginB,
+            inputs: ['x', 'y[]']
+          }
+        }
+      }
+    },
+
+    'should dynamically assign aggregator function from string': function () {
+      this.stubPluginA.returns(0.5)
+      this.stubPluginB.returns(0.8)
+      this.config.aggregator = 'Largest'
+      let manager = scoreManager.create(this.config)
+
+      let scores = manager.score({ x: {}, y: [0] })
+      buster.assert.equals(scores, [{ 'total': 0.8, 'plugin-a': 0.5, 'plugin-b': 0.8 }])
+    },
+
+    'should throw an error if no aggregator by that name exists': function () {
+      this.stubPluginA.returns(0.5)
+      this.stubPluginB.returns(0.8)
+      this.config.aggregator = 'no-aggregator-here'
+      buster.assert.exception(() => scoreManager.create(this.config))
     }
-
-    let result = this.scoreManager.score(blob)
-
-    buster.assert.equals(result[0].name, 'blub')
-    buster.assert.equals(result[1].name, 'foo')
-  },
-
-  'should take a plugin and return the output of the plugin\'s score function': function () {
-    let blob = {
-      file: {},
-      tasks: [
-        { name: 'foo' }
-      ]
-    }
-
-    let result = this.scoreManager.score(blob)
-
-    buster.assert.near(result[0].score, 0.42, 1e-3)
-  },
-
-  'should take multiple plugins and return multiple scores': function () {
-    this.scoreManager.registerPlugin('plugin-a', (file, task) => 1.0)
-    this.scoreManager.registerPlugin('plugin-b', (file, task) => 0.5)
-    this.scoreManager.registerPlugin('plugin-c', (file, task) => 0.0)
-    let blob = {
-      file: {},
-      tasks: [
-        { name: 'foo' }
-      ]
-    }
-
-    let result = this.scoreManager.score(blob)
-
-    buster.assert.equals(result[0].scores,
-      {'default-plugin': 0.42, 'plugin-a': 1.0, 'plugin-b': 0.5, 'plugin-c': 0.0}
-    )
-  },
-
-  'should pass file from blob on to the plugin': function () {
-    let pluginStub = this.stub()
-    this.scoreManager.registerPlugin('plugin-stub', pluginStub)
-
-    let blob = {
-      file: { data: 'Hello' },
-      tasks: [ { name: 'foo' } ]
-    }
-
-    this.scoreManager.score(blob)
-
-    buster.assert.calledWith(pluginStub, { data: 'Hello' }, { name: 'foo' })
-  },
-
-  'should pass a copy of the task from the blob to the plugin': function () {
-    let pluginStub = this.stub()
-    this.scoreManager.registerPlugin('plugin-stub', pluginStub)
-
-    let blob = {
-      file: { data: 'Hello' },
-      tasks: [ { some_key: 'foo' } ]
-    }
-
-    this.scoreManager.score(blob)
-
-    buster.assert.calledWith(pluginStub, { data: 'Hello' }, { some_key: 'foo' })
-  }
-})
-
-buster.testCase('Score Manager with aggregator', {
-  'score manager should take a score combiner as an input': function () {
-    buster.assert.exception(() => new ScoreManager().score())
-  },
-
-  'return an overall score which is the mean value for one task': function () {
-    var meanCombiner = new aggregator.Mean()
-    var scoreManager = new ScoreManager(meanCombiner)
-    scoreManager.registerPlugin('plugin-a', (file, task) => 0.3)
-    scoreManager.registerPlugin('plugin-b', (file, task) => 0.6)
-    scoreManager.registerPlugin('plugin-c', (file, task) => 0.9)
-    let blob = {
-      file: {},
-      tasks: [
-        { name: 'foo' }
-      ]
-    }
-    var result = scoreManager.score(blob)
-    buster.assert.near(result[0].score, 0.6, 1e-3)
-  },
-
-  'different ScoreCombiners can be used': function () {
-    var largestCombiner = new aggregator.Largest()
-    var largestScoreManager = new ScoreManager(largestCombiner)
-    largestScoreManager.registerPlugin('plugin-a', (file, task) => 0.3)
-    largestScoreManager.registerPlugin('plugin-b', (file, task) => 0.6)
-
-    var meanCombiner = new aggregator.Mean()
-    var meanScoreManager = new ScoreManager(meanCombiner)
-    meanScoreManager.registerPlugin('plugin-a', (file, task) => 0.3)
-    meanScoreManager.registerPlugin('plugin-b', (file, task) => 0.6)
-
-    let blob = {
-      file: {},
-      tasks: [
-        { name: 'foo' }
-      ]
-    }
-
-    var largestResult = largestScoreManager.score(blob)
-    buster.assert.near(largestResult[0].score, 0.6, 1e-3)
-
-    var meanScoreResult = meanScoreManager.score(blob)
-    buster.assert.near(meanScoreResult[0].score, 0.45, 1e-3)
   },
 
   'plugin failures': {
     'should be caught and returned as a special value': function () {
       let aggregator = { combine: this.stub().returns(1.0) }
-      let manager = new ScoreManager(aggregator)
       let plugA = () => 1.0
       let plugB = () => { throw new Error() }
-      manager.registerPlugin('plugin-a', plugA)
-      manager.registerPlugin('plugin-b', plugB)
+
+      let manager = scoreManager.create({
+        aggregator,
+        plugins: {
+          'plugin-a': { use: plugA, inputs: ['file', 'tasks[]'] },
+          'plugin-b': { use: plugB, inputs: ['file', 'tasks[]'] }
+        }
+      })
 
       let blob = {
         file: {},
@@ -175,16 +232,21 @@ buster.testCase('Score Manager with aggregator', {
 
       let result = manager.score(blob)
 
-      buster.assert.match(result[0].scores['plugin-b'], /failure/)
+      buster.assert.match(result[0]['plugin-b'], /failure/)
     },
 
     'should be caught and returned as error message with description': function () {
       let aggregator = { combine: this.stub().returns(1.0) }
-      let manager = new ScoreManager(aggregator)
       let plugA = () => 1.0
-      let plugC = () => { throw new Error('this is the error description') }
-      manager.registerPlugin('plugin-a', plugA)
-      manager.registerPlugin('plugin-c', plugC)
+      let plugB = () => { throw new Error('this is the error description') }
+
+      let manager = scoreManager.create({
+        aggregator,
+        plugins: {
+          'plugin-a': { use: plugA, inputs: ['file', 'tasks[]'] },
+          'plugin-c': { use: plugB, inputs: ['file', 'tasks[]'] }
+        }
+      })
 
       let blob = {
         file: {},
@@ -193,15 +255,23 @@ buster.testCase('Score Manager with aggregator', {
 
       let result = manager.score(blob)
 
-      buster.assert.match(result[0].scores['plugin-c'], /this is the error description/)
+      buster.assert.match(result[0]['plugin-c'], /this is the error description/)
     }
   }
 })
 
-buster.testCase('Score Manager Integration', {
+buster.testCase('ScoreManager Integration', {
   'should be able to use sameTitlePlugin': function () {
-    let manager = new ScoreManager(new aggregator.Largest())
-    manager.registerPlugin('same-title', sameTitlePlugin)
+    let config = {
+      aggregator: new aggregator.Largest(),
+      plugins: {
+        'same-title': {
+          use: sameTitlePlugin,
+          inputs: ['file', 'tasks[]']
+        }
+      }
+    }
+    let manager = scoreManager.create(config)
 
     let blob = {
       file: { title: 'location.png' },
@@ -212,7 +282,58 @@ buster.testCase('Score Manager Integration', {
     }
 
     let result = manager.score(blob)
-    buster.assert.near(result[0].score, 1.0, 1e-3)
-    buster.assert.near(result[1].score, 0.0, 1e-3)
+    buster.assert.near(result[0].total, 1.0, 1e-3)
+    buster.assert.near(result[1].total, 0.0, 1e-3)
+  },
+
+  'dynamic plugin loading': {
+    'should load plugin given by string from plugin directory': function () {
+      let config = {
+        aggregator: new aggregator.Largest(),
+        plugins: {
+          'same-title': {
+            use: 'same-title-plugin',
+            inputs: ['file', 'tasks[]']
+          }
+        }
+      }
+      let manager = scoreManager.create(config)
+
+      let blob = {
+        file: { title: 'location.png' },
+        tasks: [
+          { title: 'location' },
+          { title: 'something_else' }
+        ]
+      }
+
+      let result = manager.score(blob)
+      buster.assert.near(result[0].total, 1.0, 1e-3)
+      buster.assert.near(result[1].total, 0.0, 1e-3)
+    }
+  },
+
+  'plugin parameters': {
+    'should be passed as third argument': function () {
+      let pluginA = this.stub()
+      let config = {
+        aggregator: { combine: this.stub() },
+        plugins: {
+          'plugin-a': {
+            use: pluginA,
+            inputs: ['x', 'y[]'],
+            params: { 'my-special-arg': 100 }
+          }
+        }
+      }
+      let manager = scoreManager.create(config)
+      let blob = {
+        x: { xkey: 'xvalue' },
+        y: [{ ykey: 'yvalue' }]
+      }
+      manager.score(blob)
+      buster.assert.calledWith(pluginA, { xkey: 'xvalue' }, { ykey: 'yvalue' }, { 'my-special-arg': 100 })
+    }
   }
 })
+
