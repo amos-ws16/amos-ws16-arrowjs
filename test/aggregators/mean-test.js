@@ -13,15 +13,32 @@ buster.testCase('mean.create()', {
 
   'should forward aggregation to a weighted mean aggregator with weights set to 1': function () {
     let stubCreate = this.stub(weightedMean, 'create')
-    mean.create(['agtrA', 'agtrB'])
+    let stubAgtrA = { eval: this.stub() }
+    let stubAgtrB = { eval: this.stub() }
+    mean.create([ stubAgtrA, stubAgtrB ])
 
-    buster.assert.calledWith(stubCreate, [[1.0, 'agtrA'], [1.0, 'agtrB']])
+    buster.assert.calledWith(stubCreate, [[1.0, stubAgtrA], [1.0, stubAgtrB]])
   },
 
   'should return what weightedMean.create returns': function () {
+    let stubAgtrA = { eval: this.stub() }
+    let stubAgtrB = { eval: this.stub() }
     this.stub(weightedMean, 'create').returns('1234')
-    let agtr = mean.create(['agtrA', 'agtrB'])
+    let agtr = mean.create([ stubAgtrA, stubAgtrB ])
 
     buster.assert.same(agtr, '1234')
+  },
+
+  'should throw an error if no argument is provided': function () {
+    buster.assert.exception(() => mean.create())
+  },
+
+  'shoud throw an error if argument is not an array': function () {
+    buster.assert.exception(() => mean.create('something else'))
+  },
+
+  'should throw an error if any array element has no eval method': function () {
+    let agtrs = [ 'one' ]
+    buster.assert.exception(() => mean.create(agtrs))
   }
 })
