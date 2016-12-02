@@ -1,5 +1,5 @@
 const buster = require('buster')
-const weightedMean = require('../../lib/aggregators/weighted-mean.js')
+const weightedMean = require('../../lib/aggregators/weighted-mean')
 
 buster.testCase('weightedMean.create()', {
   'should return an aggregator that can be evaluated': function () {
