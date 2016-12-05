@@ -1,6 +1,6 @@
 
 let task1 = {
-  name: 'create test cases',
+  title: 'create test cases',
   created_at: 1479391500, // 17.11.2016 @ 14:00:00
   due_date: 1479942000, // 24.11.2016 @ 12:00:00
   user: 'simonschwan',
@@ -10,7 +10,7 @@ let task1 = {
 }
 
 let task2 = {
-  name: 'organize final celebration',
+  title: 'organize final celebration',
   created_at: 1476705900, // 17.10.2016 @ 14:05:00
   due_date: 1486724400, // 10.02.2017 @ 12:00:00
   user: 'simonschwan',
@@ -20,7 +20,7 @@ let task2 = {
 }
 
 let task3 = {
-  name: 'move server to eu-west2',
+  title: 'move server to eu-west2',
   created_at: 1479392700, // 17.11.2016 @ 15:25:00
   due_date: 1480330800, // 28.11.2016 @ 12:00:00
   user: 'simonschwan',
@@ -30,7 +30,7 @@ let task3 = {
 }
 
 let task4 = {
-  name: 'write test with created examples',
+  title: 'write test with created examples',
   created_at: 1480061580, // 25.11.2016 @ 09:13:00
   due_date: 1480590000, // 01.12.2016 @ 12:00:00
   user: 'olli',
@@ -40,7 +40,7 @@ let task4 = {
 }
 
 let task5 = {
-  name: 'review offer',
+  title: 'review offer',
   created_at: 1479899520, // 23.11.2016 @ 12:12:00
   due_date: 1479918600, // 23.11.2016 @ 17:30:00
   user: 'fabian',
@@ -50,7 +50,7 @@ let task5 = {
 }
 
 let task6 = {
-  name: 'buy coffey and mate',
+  title: 'buy coffey and mate',
   created_at: 1479921803, // 23.11.2016 @ 18:23:23
   due_date: 1479987000, // 24.11.2016 @ 12:30:00
   user: 'fabian',
@@ -60,7 +60,7 @@ let task6 = {
 }
 
 let task7 = {
-  name: 'create better test data',
+  title: 'create better test data',
   created_at: 1480076420, // 25.11.2016 @ 13:20:20
   due_date: 1483225200, // 01.01.2017 @ 00:00:00
   user: 'simonschwan',
@@ -70,7 +70,7 @@ let task7 = {
 }
 
 let task8 = {
-  name: 'plan christmas celebration',
+  title: 'plan christmas celebration',
   created_at: 1481439780, // 11.12.2016 @ 08:03:00
   due_date: 1482080400, // 18.12.2016 @ 18:00:00
   user: 'yves',
@@ -82,7 +82,7 @@ let task8 = {
 let testCase1 = {
   tasks: [ task1, task2, task3, task4, task5, task6, task7, task8 ],
   file: {
-    name: 'test-cases',
+    title: 'test-cases',
     filetype: 'js',
     created_at: 1479897600, // 23.11.2016 @ 11:40:00
     user: 'simonschwan',
@@ -93,7 +93,7 @@ let testCase1 = {
 let testCase2 = {
   tasks: [ task2, task1, task3, task4, task5, task6, task7, task8 ],
   file: {
-    name: 'schleusenkrug',
+    title: 'schleusenkrug',
     filetype: 'jpeg',
     created_at: 1485205200, // 23.01.2017 @ 22:00:00
     user: 'simonschwan',
@@ -104,7 +104,7 @@ let testCase2 = {
 let testCase3 = {
   tasks: [ task3, task1, task2, task4, task5, task6, task7, task8 ],
   file: {
-    name: 'pubkey',
+    title: 'pubkey',
     filetype: 'crt',
     created_at: 944908800, // 11/23/2016 @ 11:40:00
     user: 'simonschwan',
@@ -115,7 +115,7 @@ let testCase3 = {
 let testCase4 = {
   tasks: [ task4, task1, task2, task3, task5, task6, task7, task8 ],
   file: {
-    name: 'annoyed-donald',
+    title: 'annoyed-donald',
     filetype: 'jpeg',
     created_at: 1480061700, // 25.11.2016 @ 09:15:00
     user: 'simonschwan',
@@ -127,7 +127,7 @@ let testCase5 = {
   tasks: [
     task5, task1, task2, task3, task4, task6, task7, task8 ],
   file: {
-    name: 'offer_ibm_14346134356',
+    title: 'offer_ibm_14346134356',
     filetype: 'pdf',
     created_at: 1479899700, // 23.11.2016 @ 12:15:00
     user: 'simonschwan',
@@ -138,7 +138,7 @@ let testCase5 = {
 let testCase6 = {
   tasks: [ task5, task1, task2, task3, task4, task6, task7, task8 ],
   file: {
-    name: 'offer_lenovo_14346134356',
+    title: 'offer_lenovo_14346134356',
     filetype: 'pdf',
     created_at: 1479899820, // 23.11.2016 @ 12:17:00
     user: 'simonschwan',
@@ -149,7 +149,7 @@ let testCase6 = {
 let testCase7 = {
   tasks: [ task5, task1, task2, task3, task4, task6, task7, task8 ],
   file: {
-    name: 'ibm-thinkpad',
+    title: 'ibm-thinkpad',
     filetype: 'jpeg',
     created_at: 1479899760, // 23.11.2016 @ 12:16:00
     user: 'simonschwan',
@@ -160,7 +160,7 @@ let testCase7 = {
 let testCase8 = {
   tasks: [ task6, task1, task2, task3, task4, task5, task7, task8 ],
   file: {
-    name: 'jacobs-kroenung',
+    title: 'jacobs-kroenung',
     filetype: 'jpeg',
     created_at: 1479942000, // 24.11.2016 @ 00:00:00
     user: 'simonschwan',
@@ -171,7 +171,7 @@ let testCase8 = {
 let testCase9 = {
   tasks: [ task7, task1, task2, task3, task4, task5, task6, task8 ],
   file: {
-    name: 'new_possible_test_set',
+    title: 'new_possible_test_set',
     filetype: 'js',
     created_at: 1482606000, // 24.12.2016 @ 20:00:00
     user: 'jan.huenges',
@@ -182,7 +182,7 @@ let testCase9 = {
 let testCase10 = {
   tasks: [ task8, task1, task2, task3, task4, task5, task6, task7 ],
   file: {
-    name: 'santa_clause',
+    title: 'santa_clause',
     filetype: 'jpeg',
     created_at: 1482080400, // 18.12.2016 @ 18:00:00
     user: 'yves',

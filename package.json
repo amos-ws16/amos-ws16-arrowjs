@@ -22,7 +22,8 @@
     "start": "cross-env NODE_ENV=production node ./bin/start-server.js",
     "test": "eslint **/*.js && buster-test",
     "cover": "cross-env NODE_ENV=test nyc --reporter=lcov --reporter=text buster-test",
-    "coveralls": "npm run cover && nyc report --reporter=text-lcov | coveralls"
+    "coveralls": "npm run cover && nyc report --reporter=text-lcov | coveralls",
+    "scoretest": "node ./test/test-cases/test-cases-run.js"
   },
   "dependencies": {
     "body-parser": "^1.15.2",
