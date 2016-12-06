@@ -13,29 +13,29 @@ const config = {}
 config.scoreManager = {
   aggregator: new aggregator.Mean(),
   plugins: {
-    // similar-title-plugin pulls file.name from file and tasks[].name from tasks[] itself
+    // similar-title-plugin pulls file.title from file and tasks[].title from tasks[] itself
     'similar-title': {
       use: 'similar-title-plugin',
       inputs: ['file', 'tasks[]']
     },
-// timestamp comparison defaults to 600 sec
+    // timestamp comparison defaults to 600 sec
     'context-file-timestamp-tasks-timestamp': {
-      use: 'close-timestamp-plugin',
+      use: 'close-time-plugin',
       inputs: ['file.created_at', 'tasks[].created_at']
     },
     'context-file-timestamp-tasks-timestamp-long': {
-      use: 'close-timestamp-plugin',
+      use: 'close-time-plugin',
       inputs: ['file.created_at', 'tasks[].created_at'],
       params: { 'time-limit': 3000 }
     },
     'context-file-title-task-description': {
       use: 'similar-context-plugin',
-      inputs: ['file.name', 'tasks[].description'],
+      inputs: ['file.title', 'tasks[].description'],
       params: { 'extractKeywords': true }
     },
     'context-file-description-task-title': {
       use: 'similar-context-plugin',
-      inputs: ['file.description', 'tasks[].name'],
+      inputs: ['file.description', 'tasks[].title'],
       params: { 'extractKeywords': true }
     },
     'context-file-description-task-description': {
@@ -45,12 +45,12 @@ config.scoreManager = {
     },
     'similar-file-title-task-description': {
       use: 'similar-context-plugin',
-      inputs: ['file.name', 'tasks[].description'],
+      inputs: ['file.title', 'tasks[].description'],
       params: { 'extractKeywords': false }
     },
     'similar-file-description-task-title': {
       use: 'similar-context-plugin',
-      inputs: ['file.description', 'tasks[].name'],
+      inputs: ['file.description', 'tasks[].title'],
       params: { 'extractKeywords': false }
     },
     'similar-file-description-task-description': {

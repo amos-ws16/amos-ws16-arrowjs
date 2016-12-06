@@ -8,7 +8,7 @@ All notable changes to this project will be documented in this file.
 ## Added
 - Default [configuration](https://github.com/amos-ws16/amos-ws16-arrowjs/blob/master/config/index.js)
 - [Exclude plugins](https://github.com/amos-ws16/amos-ws16-arrowjs/pull/37) from the scoreing if they throw an exception
-- [Getting started](https://github.com/amos-ws16/amos-ws16-arrowjs/pull/37)
+- [Getting started](https://github.com/amos-ws16/amos-ws16-arrowjs/blob/master/docs/user-guide.pdf)
 
 
 ## Changed
