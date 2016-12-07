@@ -1,5 +1,5 @@
 
-const fs = require('fs')
+// const fs = require('fs')
 const scoreManager = require('../../lib/score-manager')
 const config = require('../../config/index.js')
 const manager = scoreManager.create(config.scoreManager)
@@ -48,7 +48,7 @@ for (let key in allTestCases) {
 *dynamic loads of all testcases in the folder ('./test/test-cases') with the format of <NAME>-test-cases.js
 *@param
 */
-function getAllTestCases () {
+/* function getAllTestCases () {
   let testCasesSet = {}
   let files = fs.readdirSync('./test/test-cases')
   for (let file of files) {
@@ -58,3 +58,4 @@ function getAllTestCases () {
   }
   return testCasesSet
 }
+*/
