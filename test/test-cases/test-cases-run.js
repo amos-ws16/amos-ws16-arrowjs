@@ -18,7 +18,7 @@ allTestCases.testCasesSimon = require('./simon-test-cases').testCases
 for (let key in allTestCases) {
   var testCases = allTestCases[key]
   var hitCounter = 0
-
+  console.log('TestCase name: ' + key)
   for (let index in testCases) {
     let testCase = testCases[index]
     const a = manager.score(testCase)
@@ -30,7 +30,6 @@ for (let key in allTestCases) {
         biggestAScore = a[j].total
       }
     }
-    console.log('TestCase name: ' + key)
     console.log('groessterIndex:' + biggestAIndex + ', groesster Score:' + biggestAScore)
     if (biggestAIndex === '0') {
       hitCounter++
