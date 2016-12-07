@@ -1,6 +1,6 @@
 
 let task1 = {
-  name: 'book a flight',
+  title: 'book a flight',
   created_at: 1479934104,
   duedate: 1479935104,
   user: 'robert',
@@ -9,7 +9,7 @@ let task1 = {
 }
 
 let task2 = {
-  name: 'find a pot full of gold',
+  title: 'find a pot full of gold',
   created_at: 1479935104,
   duedate: 1479936172,
   user: 'maria',
@@ -17,7 +17,7 @@ let task2 = {
 }
 
 let task3 = {
-  name: 'find the end of the rainbow',
+  title: 'find the end of the rainbow',
   created_at: 1479936104,
   duedate: 1479937104,
   user: 'paul',
@@ -27,7 +27,7 @@ let task3 = {
 }
 
 let task4 = {
-  name: 'grow a mustage',
+  title: 'grow a mustage',
   created_at: 1479937104,
   duedate: 1482438999,
   user: 'cleo',
@@ -36,7 +36,7 @@ let task4 = {
 }
 
 let task5 = {
-  name: 'learn swimming',
+  title: 'learn swimming',
   created_at: 1479938104,
   duedate: 1479944104,
   user: 'andreas',
@@ -44,7 +44,7 @@ let task5 = {
 }
 
 let task6 = {
-  name: 'brick a phone',
+  title: 'brick a phone',
   created_at: 1479939104,
   duedate: 1479946633,
   user: 'luise',
@@ -52,7 +52,7 @@ let task6 = {
 }
 
 let task7 = {
-  name: 'recover deleted photos',
+  title: 'recover deleted photos',
   created_at: 1479940104,
   duedate: 1479944204,
   user: 'walter',
@@ -60,7 +60,7 @@ let task7 = {
 }
 
 let task8 = {
-  name: 'quit phone contract',
+  title: 'quit phone contract',
   created_at: 1479941104,
   duedate: 1479942123,
   user: 'jana',
@@ -70,7 +70,7 @@ let task8 = {
 let testCase1 = {
   tasks: [task1, task2, task3, task4, task5, task6, task7, task8],
   file: {
-    name: 'book fligth',
+    title: 'book fligth',
     filetype: 'jpeg',
     created_at: 1479934200,
     user: 'olga'
@@ -80,7 +80,7 @@ let testCase1 = {
 let testCase2 = {
   tasks: [task2, task1, task3, task5],
   file: {
-    name: 'find pot',
+    title: 'find pot',
     filetype: 'gold',
     created_at: 1479934634,
     user: 'timmi',
@@ -91,7 +91,7 @@ let testCase2 = {
 let testCase3 = {
   tasks: [task4, task2, task3, task1, task5, task6],
   file: {
-    name: 'facelift',
+    title: 'facelift',
     filetype: 'png',
     created_at: 1479937012,
     user: 'robert',
@@ -102,7 +102,7 @@ let testCase3 = {
 let testCase4 = {
   tasks: [task5, task2, task3, task4, task1, task6, task7],
   file: {
-    name: 'swimmers',
+    title: 'swimmers',
     filetype: 'jped',
     created_at: 1479938210,
     user: 'swimming pool',
@@ -113,7 +113,7 @@ let testCase4 = {
 let testCase5 = {
   tasks: [task2, task1, task3],
   file: {
-    name: 'goldie',
+    title: 'goldie',
     filetype: 'png',
     created_at: 1479934165,
     user: 'marvin',
@@ -124,7 +124,7 @@ let testCase5 = {
 let testCase6 = {
   tasks: [task7, task2, task3, task4, task5, task6, task1],
   file: {
-    name: 'recovery suite',
+    title: 'recovery suite',
     filetype: 'exe',
     created_at: 1479941254,
     user: 'pete'
@@ -134,7 +134,7 @@ let testCase6 = {
 let testCase7 = {
   tasks: [task1, task2, task3, task4, task5, task6, task7],
   file: {
-    name: 'no matches',
+    title: 'no matches',
     filetype: 'tiff',
     created_at: 1372773845,
     user: 'bill',
@@ -145,7 +145,7 @@ let testCase7 = {
 let testCase8 = {
   tasks: [task6, task7, task8],
   file: {
-    name: 'break phone',
+    title: 'break phone',
     filetype: 'pdf',
     created_at: 1479939442,
     user: 'timo'
@@ -155,7 +155,7 @@ let testCase8 = {
 let testCase9 = {
   tasks: [task8, task2, task3, task4, task5, task6],
   file: {
-    name: 'phone company',
+    title: 'phone company',
     filetype: 'txt',
     created_at: 1479941258,
     user: 'gert'
@@ -165,7 +165,7 @@ let testCase9 = {
 let testCase10 = {
   tasks: [task7, task2, task3, task4, task5, task6, task1, task8],
   file: {
-    name: '',
+    title: '',
     filetype: '',
     created_at: 1479940110,
     user: 'claire',

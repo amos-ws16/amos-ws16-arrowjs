@@ -1,6 +1,6 @@
 
 let task1 = {
-  name: 'apply for ERASMUS',
+  title: 'apply for ERASMUS',
   created_at: 1479687500,
   due_date: 1483518000,
   user: 'kao',
@@ -10,7 +10,7 @@ let task1 = {
 }
 
 let task2 = {
-  name: 'letter of recommendation',
+  title: 'letter of recommendation',
   created_at: 1479555500,
   due_date: 1480398000,
   user: 'kao',
@@ -20,7 +20,7 @@ let task2 = {
 }
 
 let task3 = {
-  name: 'Write a CV',
+  title: 'Write a CV',
   created_at: 1493515800,
   due_date: 1531864730,
   user: 'duc.nguyen',
@@ -29,7 +29,7 @@ let task3 = {
 }
 
 let task4 = {
-  name: 'learn NodeJS',
+  title: 'learn NodeJS',
   created_at: 1479391500,
   due_date: 1479942000,
   user: 'dirk.riehle',
@@ -39,7 +39,7 @@ let task4 = {
 }
 
 let task5 = {
-  name: 'visit home',
+  title: 'visit home',
   created_at: 1479362100,
   due_date: 1479469800,
   user: 'jason',
@@ -49,7 +49,7 @@ let task5 = {
 }
 
 let task6 = {
-  name: 'exercise',
+  title: 'exercise',
   created_at: 1484412200,
   due_date: 1485987800,
   user: 'jason',
@@ -58,7 +58,7 @@ let task6 = {
 }
 
 let task7 = {
-  name: 'do homework',
+  title: 'do homework',
   created_at: 1477336400,
   due_date: 1478645300,
   user: 'dirk.riehle',
@@ -68,7 +68,7 @@ let task7 = {
 }
 
 let task8 = {
-  name: 'do chores',
+  title: 'do chores',
   created_at: 1479663200,
   due_date: 1480316150,
   user: 'duc.nguyen',
@@ -76,14 +76,14 @@ let task8 = {
 }
 
 let task9 = {
-  name: 'pay bills',
+  title: 'pay bills',
   created_at: 1479654800,
   due_date: 1479545600,
   user: 'scott'
 }
 
 let task10 = {
-  name: 'university project',
+  title: 'university project',
   created_at: 1473216680,
   due_date: 1479523130,
   user: 'dirk.riehle',
@@ -94,7 +94,7 @@ let task10 = {
 let testCase1 = {
   tasks: [task1, task2, task3],
   file: {
-    name: 'study program abroad',
+    title: 'study program abroad',
     filetype: 'pdf',
     created_at: 1488877310,
     user: 'duc.nguyen'
@@ -104,7 +104,7 @@ let testCase1 = {
 let testCase2 = {
   tasks: [task4, task6, task7, task10],
   file: {
-    name: 'winter term 2016',
+    title: 'winter term 2016',
     filetype: 'docx',
     created_at: 1477256232,
     user: 'scott'
@@ -114,7 +114,7 @@ let testCase2 = {
 let testCase3 = {
   tasks: [task4, task5, task6, task7, task8],
   file: {
-    name: 'everyday tasks',
+    title: 'everyday tasks',
     filetype: 'jpeg',
     created_at: 1488883310,
     user: 'jason'
@@ -124,7 +124,7 @@ let testCase3 = {
 let testCase4 = {
   tasks: [task4, task6, task7, task10],
   file: {
-    name: 'computer science',
+    title: 'computer science',
     filetype: 'doc',
     created_at: 1483554331,
     user: 'dirk.riehle'
@@ -134,7 +134,7 @@ let testCase4 = {
 let testCase5 = {
   tasks: [task1, task2, task3, task4, task6, task7, task8, task10],
   file: {
-    name: 'future investment',
+    title: 'future investment',
     filetype: 'png',
     created_at: 1488668864,
     user: 'jasmin'
@@ -144,7 +144,7 @@ let testCase5 = {
 let testCase6 = {
   tasks: [task1, task2, task3],
   file: {
-    name: 'computer science project',
+    title: 'computer science project',
     filetype: 'xml',
     created_at: 1483135483,
     user: 'duc.nguyen'
@@ -154,7 +154,7 @@ let testCase6 = {
 let testCase7 = {
   tasks: [task1, task2, task3, task5, task7],
   file: {
-    name: 'university and homework',
+    title: 'university and homework',
     filetype: 'zip',
     created_at: 1478926233,
     user: 'kao'
@@ -164,7 +164,7 @@ let testCase7 = {
 let testCase8 = {
   tasks: [task7, task8],
   file: {
-    name: 'sport',
+    title: 'sport',
     filetype: 'rar',
     created_at: 1480883310,
     user: 'jason'
@@ -174,7 +174,7 @@ let testCase8 = {
 let testCase9 = {
   tasks: [task2, task3, task4],
   file: {
-    name: 'job interview',
+    title: 'job interview',
     filetype: 'pdf',
     created_at: 1476593520,
     user: 'kao'
@@ -184,7 +184,7 @@ let testCase9 = {
 let testCase10 = {
   tasks: [task7, task8, task9],
   file: {
-    name: 'parents and home',
+    title: 'parents and home',
     filetype: 'docx',
     created_at: 1485684310,
     user: 'tai'

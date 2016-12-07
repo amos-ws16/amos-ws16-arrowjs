@@ -1,6 +1,6 @@
 
 let task1 = {
-  name: 'wash dishes',
+  title: 'wash dishes',
   created_at: 1479916800,
   duedate: 1480003200,
   user: 'yves',
@@ -9,7 +9,7 @@ let task1 = {
 }
 
 let task2 = {
-  name: 'read a book',
+  title: 'read a book',
   created_at: 1479744000,
   duedate: 1480435200,
   user: 'fabian',
@@ -17,7 +17,7 @@ let task2 = {
 }
 
 let task3 = {
-  name: 'clean your room',
+  title: 'clean your room',
   created_at: 1479830400,
   duedate: 1480003200,
   user: 'yves',
@@ -27,7 +27,7 @@ let task3 = {
 }
 
 let task4 = {
-  name: 'homework',
+  title: 'homework',
   created_at: 1482422400,
   duedate: 1482433200,
   user: 'otto',
@@ -36,7 +36,7 @@ let task4 = {
 }
 
 let task5 = {
-  name: 'print pdf',
+  title: 'print pdf',
   created_at: 1482422400,
   duedate: 1482433200,
   user: 'kevin',
@@ -44,7 +44,7 @@ let task5 = {
 }
 
 let task6 = {
-  name: 'do some sport',
+  title: 'do some sport',
   created_at: 1480359600,
   duedate: 1480446000,
   user: 'gerwin mueller II',
@@ -52,7 +52,7 @@ let task6 = {
 }
 
 let task7 = {
-  name: 'create a presentation',
+  title: 'create a presentation',
   created_at: 1472151600,
   duedate: 1480446000,
   user: 'max',
@@ -60,7 +60,7 @@ let task7 = {
 }
 
 let task8 = {
-  name: 'call ute',
+  title: 'call ute',
   created_at: 1479841200,
   duedate: 1479844800,
   user: 'bernd',
@@ -70,7 +70,7 @@ let task8 = {
 let testCase1 = {
   tasks: [task1, task2, task3, task4, task5, task6, task7, task8],
   file: {
-    name: 'dirty dish',
+    title: 'dirty dish',
     filetype: 'jpeg',
     created_at: 1479916850,
     user: 'simon'
@@ -80,7 +80,7 @@ let testCase1 = {
 let testCase2 = {
   tasks: [task1, task2, task3, task5],
   file: {
-    name: 'How to read a book',
+    title: 'How to read a book',
     filetype: 'pdf',
     created_at: 1479754800,
     user: 'gerald',
@@ -91,7 +91,7 @@ let testCase2 = {
 let testCase3 = {
   tasks: [task1, task2, task3, task4, task5, task6],
   file: {
-    name: 'superfit schedule',
+    title: 'superfit schedule',
     filetype: 'png',
     created_at: 1480359608,
     user: 'n0rd',
@@ -102,7 +102,7 @@ let testCase3 = {
 let testCase4 = {
   tasks: [task1, task2, task3, task4, task5, task6, task7],
   file: {
-    name: 'sport presentation',
+    title: 'sport presentation',
     filetype: 'pptx',
     created_at: 1472497200,
     user: 'sportsman5000',
@@ -113,7 +113,7 @@ let testCase4 = {
 let testCase5 = {
   tasks: [task1, task2, task5],
   file: {
-    name: 'Wash your dishes right!',
+    title: 'Wash your dishes right!',
     filetype: 'pdf',
     created_at: 1479754800,
     user: 'kevin',
@@ -124,7 +124,7 @@ let testCase5 = {
 let testCase6 = {
   tasks: [task1, task2, task3, task4, task5, task6, task7],
   file: {
-    name: '1',
+    title: '1',
     filetype: 'xml',
     created_at: 1345921200,
     user: 'petra'
@@ -134,7 +134,7 @@ let testCase6 = {
 let testCase7 = {
   tasks: [task1, task2, task3, task4, task5, task6, task7],
   file: {
-    name: 'All keywords',
+    title: 'All keywords',
     filetype: 'json',
     created_at: 1480273200,
     user: 'ute',
@@ -145,7 +145,7 @@ let testCase7 = {
 let testCase8 = {
   tasks: [task6, task7, task8],
   file: {
-    name: 'Contact: ute',
+    title: 'Contact: ute',
     filetype: 'json',
     created_at: 1479841320,
     user: 'bernd'
@@ -155,7 +155,7 @@ let testCase8 = {
 let testCase9 = {
   tasks: [task1, task2, task3, task4, task5],
   file: {
-    name: 'Contact: ute',
+    title: 'Contact: ute',
     filetype: 'json',
     created_at: 1479841320,
     user: 'bernd'
@@ -165,7 +165,7 @@ let testCase9 = {
 let testCase10 = {
   tasks: [task1, task2, task3, task4, task5, task6, task7, task8],
   file: {
-    name: 'sweet kitten',
+    title: 'sweet kitten',
     filetype: 'jpeg',
     created_at: 1479754920,
     user: 'jochen',
