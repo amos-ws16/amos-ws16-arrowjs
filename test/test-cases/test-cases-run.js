@@ -12,13 +12,8 @@ let allTestCases = {}
 allTestCases.testCasesSimon = require('./simon-test-cases').testCases
 // allTestCases.testCasesYves = require('./yves-test-cases').testCases
 
-// dynamic loads of all testcases in the folder ('./test/test-cases') with the format of <NAME>-test-cases.js
-let files = fs.readdirSync('./test/test-cases')
-for (let file of files) {
-  if (file.substring(file.length - 13, file.length) === 'test-cases.js') {
-    allTestCases[file] = require('./' + file.substring(0, file.length - 3)).testCases
-  }
-}
+// throws error cause testCases are not valid
+// allTestCases = getAllTestCases()
 
 for (let key in allTestCases) {
   var testCases = allTestCases[key]
@@ -47,4 +42,19 @@ for (let key in allTestCases) {
   console.log('Hits: ' + hitCounter)
   console.log((hitRate * 100) + '% wurden korrekt bewertet.')
   console.log('______________________________________')
+}
+
+/**
+*dynamic loads of all testcases in the folder ('./test/test-cases') with the format of <NAME>-test-cases.js
+*@param
+*/
+function getAllTestCases () {
+  let testCasesSet = {}
+  let files = fs.readdirSync('./test/test-cases')
+  for (let file of files) {
+    if (file.substring(file.length - 13, file.length) === 'test-cases.js') {
+      testCasesSet[file] = require('./' + file.substring(0, file.length - 3)).testCases
+    }
+  }
+  return testCasesSet
 }
