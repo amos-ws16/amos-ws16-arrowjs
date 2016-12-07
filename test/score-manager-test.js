@@ -2,7 +2,7 @@ const buster = require('buster')
 const scoreManager = require('../lib/score-manager')
 const aggregator = require('../lib/score-aggregator')
 
-const sameTitlePlugin = require('../lib/plugins/same-title-plugin')
+const similarContextPlugin = require('../lib/plugins/similar-context-plugin')
 
 buster.testCase('ScoreManager with configuration', {
   'scoreWith': {
@@ -284,23 +284,23 @@ buster.testCase('ScoreManager with configuration', {
 })
 
 buster.testCase('ScoreManager Integration', {
-  'should be able to use sameTitlePlugin': function () {
+  'should be able to use similarContextPlugin': function () {
     let config = {
       aggregator: new aggregator.Largest(),
       plugins: {
-        'same-title': {
-          use: sameTitlePlugin,
-          inputs: ['file', 'tasks[]']
+        'similar-context': {
+          use: similarContextPlugin,
+          inputs: ['file.title', 'tasks[].title']
         }
       }
     }
     let manager = scoreManager.create(config)
 
     let blob = {
-      file: { title: 'location.png' },
+      file: { title: 'location' },
       tasks: [
         { title: 'location' },
-        { title: 'something_else' }
+        { title: '12345' }
       ]
     }
 
@@ -314,19 +314,19 @@ buster.testCase('ScoreManager Integration', {
       let config = {
         aggregator: new aggregator.Largest(),
         plugins: {
-          'same-title': {
-            use: 'same-title-plugin',
-            inputs: ['file', 'tasks[]']
+          'similar-context': {
+            use: 'similar-context-plugin',
+            inputs: ['file.title', 'tasks[].title']
           }
         }
       }
       let manager = scoreManager.create(config)
 
       let blob = {
-        file: { title: 'location.png' },
+        file: { title: 'location' },
         tasks: [
           { title: 'location' },
-          { title: 'something_else' }
+          { title: '12345' }
         ]
       }
 

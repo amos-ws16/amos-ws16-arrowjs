@@ -13,10 +13,10 @@ const config = {}
 config.scoreManager = {
   aggregator: new aggregator.Mean(),
   plugins: {
-    // similar-title-plugin pulls file.title from file and tasks[].title from tasks[] itself
-    'similar-title': {
-      use: 'similar-title-plugin',
-      inputs: ['file', 'tasks[]']
+    // similar-title-plugin pulls file.name from file and tasks[].name from tasks[] itself
+    'similar-file-title-task-title': {
+      use: 'similar-context-plugin',
+      inputs: ['file.name', 'tasks[].name']
     },
     // timestamp comparison defaults to 600 sec
     'context-file-timestamp-tasks-timestamp': {
