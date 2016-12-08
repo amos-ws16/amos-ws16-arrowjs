@@ -37,7 +37,7 @@ buster.testCase('similar-context-plugin', {
 
   'test6 - without Keywordsextraction: should return the same value as Stringsimilarity compare method': function () {
     this.stub(stringSimilarity, 'compareTwoStrings').returns(1.0)
-    let sString1 = 'healed.jpeg'
+    let sString1 = 'healed'
     let sString2 = 'sealed'
     let keywordExtraction = { extractKeywords: false }
 
@@ -47,7 +47,7 @@ buster.testCase('similar-context-plugin', {
 
   'test7 - should call Stringsimilarity compare method': function () {
     let compare = this.stub(stringSimilarity, 'compareTwoStrings')
-    let sString1 = 'healed.jpeg'
+    let sString1 = 'healed'
     let sString2 = 'sealed'
     let keywordExtraction = { extractKeywords: false }
 
@@ -81,6 +81,21 @@ buster.testCase('similar-context-plugin', {
     let sString2 = 'test'
     let keywordExtraction = { extractKeywords: 'test' }
     buster.assert.exception(() => plugin(sString1, sString2, keywordExtraction))
-  }
+  },
 
+  'should return 0.0 when there is no match at all ignoring the file extension': function () {
+    let file = { title: '123' }
+    let task = { title: 'location' }
+
+    let result = plugin(file.title, task.title)
+    buster.assert.equals(result, 0.0)
+  },
+
+  'should return 1.0 when there is a total match ignoring the file extension': function () {
+    let file = { title: 'location' }
+    let task = { title: 'location' }
+
+    let result = plugin(file.title, task.title)
+    buster.assert.equals(result, 1.0)
+  }
 })
