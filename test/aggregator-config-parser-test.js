@@ -60,5 +60,13 @@ buster.testCase('AggregatorConfigParser', {
     let abstractSyntaxTree = AggregatorConfigParser.parse(config, scores)
 
     buster.assert.near(abstractSyntaxTree.eval(), 0.7, 1e-3)
+  },
+
+  'should be able to use array and number arguments': function () {
+    let scores = { 'plugin-a': 0.5, 'plugin-b': 0.9 }
+    let config = { 'weighted-mean': [[ 0.1, 'plugin-a' ], [ 0.9, 'plugin-b' ]] }
+    let abstractSyntaxTree = AggregatorConfigParser.parse(config, scores)
+
+    buster.assert.near(abstractSyntaxTree.eval(), 0.86, 1e-3)
   }
 })
