@@ -1,5 +1,3 @@
-const aggregator = require('../lib/score-aggregator')
-
 const config = {}
 /**
  * Default config for scoreManager
@@ -11,7 +9,7 @@ const config = {}
  * context-file-description-task-description: compares keywords of file description with keywords of description of tasks
 */
 config.scoreManager = {
-  aggregator: new aggregator.Mean(),
+  aggregator: {'mean': '*'},
   plugins: {
     // similar-title-plugin pulls file.title from file and tasks[].title from tasks[] itself
     'similar-file-title-task-title': {
