@@ -68,5 +68,13 @@ buster.testCase('AggregatorConfigParser', {
     let abstractSyntaxTree = AggregatorConfigParser.parse(config, scores)
 
     buster.assert.near(abstractSyntaxTree.eval(), 0.86, 1e-3)
+  },
+
+  'should take * (star) argument to mean array of all plugins': function () {
+    let scores = { 'plugin-a': 0.5, 'plugin-b': 0.9 }
+    let config = { 'mean': '*' }
+    let abstractSyntaxTree = AggregatorConfigParser.parse(config, scores)
+
+    buster.assert.near(abstractSyntaxTree.eval(), 0.7, 1e-3)
   }
 })
