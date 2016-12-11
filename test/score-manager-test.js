@@ -71,10 +71,6 @@ buster.testCase('ScoreManager with configuration', {
       buster.assert.exception(() => {
         this.manager.scoreWith('nonexistent-plugin', {})
       })
-    },
-
-    'should rethrow a wrapped error when extractObject throws': function () {
-      buster.assert.exception(() => this.manager.scoreWith('plugin-a', {}))
     }
   },
 
@@ -256,6 +252,28 @@ buster.testCase('ScoreManager with configuration', {
       let result = manager.score(blob)
 
       buster.assert.match(result[0]['plugin-c'], /this is the error description/)
+    },
+
+    'should be caught and isolated on a per plugin bases': function () {
+      let aggregator = { combine: this.stub().returns(1.0) }
+      let plugA = () => 1.0
+      let plugB = () => 1.0
+
+      let manager = scoreManager.create({
+        aggregator,
+        plugins: {
+          'plugin-a': { use: plugA, inputs: ['no-attribute-here', 'tasks[]'] },
+          'plugin-b': { use: plugB, inputs: ['file', 'tasks[]'] }
+        }
+      })
+
+      let blob = {
+        file: {},
+        tasks: [{}]
+      }
+
+      let result = manager.score(blob)
+      buster.assert.match(result[0]['plugin-a'], /no-attribute-here/)
     },
 
     'should only pass successful scores to the aggregator': function () {
