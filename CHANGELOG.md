@@ -1,7 +1,15 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
-## [Unreleased](https://github.com/amos-ws16/amos-ws16-arrowjs/compare/midproject-release...dev)
+## [Unreleased](https://github.com/amos-ws16/amos-ws16-arrowjs/compare/sprint-07-release...dev)
+
+## [1.4.0](https://github.com/amos-ws16/amos-ws16-arrowjs/releases/tag/sprint-07-release) - 2016-12-08
+
+## Changed
+- Updated [Getting Started](https://github.com/amos-ws16/amos-ws16-arrowjs/blob/master/docs/user-guide.md) to include custom configurations
+
+## Removed
+- `similar-title-plugin` and `same-title-plugin` and refactored the functionality into the `similar-context-plugin`
 
 ## [1.3.0](https://github.com/amos-ws16/amos-ws16-arrowjs/releases/tag/midproject-release) - 2016-12-01
 
