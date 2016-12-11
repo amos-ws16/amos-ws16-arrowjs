@@ -1,6 +1,5 @@
 const buster = require('buster')
 const scoreManager = require('../lib/score-manager')
-// const aggregator = require('../lib/score-aggregator')
 const aggregatorConfigParser = require('../lib/aggregator-config-parser')
 
 const similarContextPlugin = require('../lib/plugins/similar-context-plugin')
@@ -274,11 +273,6 @@ buster.testCase('ScoreManager with configuration', {
 })
 
 buster.testCase('ScoreManager Plugin Integration', {
-  setUp: function () {
-    // this.stubAstEval = this.stub()
-    // this.stub(aggregatorConfigParser, 'parse').returns({ eval: this.stubAstEval })
-  },
-
   'should be able to use similarContextPlugin': function () {
     let config = {
       aggregator: {'max': ['similar-context']},
