@@ -1,26 +1,25 @@
 const buster = require('buster')
 const request = require('supertest')
+const fs = require('fs')
+const Table = require('cli-table')
 const app = require('../../lib/server')
 
 let allTestCases = {}
 // allTestCases get loaded
-allTestCases.testCasesDuc = require('./duc-test-cases.js').testCases
-allTestCases.testCasesFabian = require('./fabian-test-cases').testCases
-allTestCases.testCasesJan = require('./jan-test-cases').testCases
-allTestCases.testCasesSimon = require('./simon-test-cases').testCases
-allTestCases.testCasesYves = require('./yves-test-cases').testCases
-
-// throws error cause testCases are not valid
-// allTestCases = getAllTestCases()
+allTestCases = getAllTestCases()
 
 var hitCounter = 0
 var length = 0
+var table = new Table({
+  head: ['TestCase file', 'größter Index', 'größter Score'],
+  chars: {'mid': '', 'left-mid': '', 'mid-mid': '', 'right-mid': ''},
+  style: {head: ['green'], border: ['grey']}
+})
+
 for (let key in allTestCases) {
   var testCases = allTestCases[key]
   length += testCases.length
-  console.log('TestCase name: ' + key)
-  for (let index in testCases) {
-    let testCase = testCases[index]
+  for (let testCase of testCases) {
     request(app)
       .post('/api/score')
       .send(testCase)
@@ -38,7 +37,7 @@ for (let key in allTestCases) {
         if (biggestAIndex === '0') {
           hitCounter++
         }
-        console.log('groessterIndex:' + biggestAIndex + ', groesster Score:' + biggestAScore)
+        table.push([key, biggestAIndex, biggestAScore])
       })
   }
 }
@@ -46,6 +45,7 @@ for (let key in allTestCases) {
 // No better workaround found than waiting 3 seconds until hopefully all asynchronous tests have run through.
 setTimeout(function () {
   const hitRate = hitCounter / length
+  console.log(table.toString())
   console.log('Länge: ' + length)
   console.log('Hits: ' + hitCounter)
   console.log((hitRate * 100) + '% wurden korrekt bewertet.')
@@ -56,7 +56,7 @@ setTimeout(function () {
 *dynamic loads of all testcases in the folder ('./test/test-cases') with the format of <NAME>-test-cases.js
 *@param
 */
-/* function getAllTestCases () {
+function getAllTestCases () {
   let testCasesSet = {}
   let files = fs.readdirSync('./test/test-cases')
   for (let file of files) {
@@ -66,4 +66,3 @@ setTimeout(function () {
   }
   return testCasesSet
 }
-*/
