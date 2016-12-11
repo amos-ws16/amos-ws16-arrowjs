@@ -195,14 +195,6 @@ buster.testCase('ScoreManager with configuration', {
 
       let scores = manager.score({ x: {}, y: [0] })
       buster.assert.equals(scores, [{ 'total': 0.8, 'plugin-a': 0.5, 'plugin-b': 0.8 }])
-    },
-
-    '// should throw an error if no aggregator by that name exists': function () {
-      // TODO: parse config on creation, not at evaluation time
-      this.stubPluginA.returns(0.5)
-      this.stubPluginB.returns(0.8)
-      this.config.aggregator = 'no-aggregator-here'
-      buster.assert.exception(() => scoreManager.create(this.config))
     }
   },
 
