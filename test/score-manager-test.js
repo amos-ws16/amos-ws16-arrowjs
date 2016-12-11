@@ -2,7 +2,7 @@ const buster = require('buster')
 const scoreManager = require('../lib/score-manager')
 const aggregator = require('../lib/score-aggregator')
 
-const similarContextPlugin = require('../lib/plugins/similar-context-plugin')
+const similarTextPlugin = require('../lib/plugins/similar-text-plugin')
 
 buster.testCase('ScoreManager with configuration', {
   'scoreWith': {
@@ -284,12 +284,12 @@ buster.testCase('ScoreManager with configuration', {
 })
 
 buster.testCase('ScoreManager Integration', {
-  'should be able to use similarContextPlugin': function () {
+  'should be able to use similarTextPlugin': function () {
     let config = {
       aggregator: new aggregator.Largest(),
       plugins: {
-        'similar-context': {
-          use: similarContextPlugin,
+        'similar-text': {
+          use: similarTextPlugin,
           inputs: ['file.title', 'tasks[].title']
         }
       }
@@ -314,8 +314,8 @@ buster.testCase('ScoreManager Integration', {
       let config = {
         aggregator: new aggregator.Largest(),
         plugins: {
-          'similar-context': {
-            use: 'similar-context-plugin',
+          'similar-text': {
+            use: 'similar-text-plugin',
             inputs: ['file.title', 'tasks[].title']
           }
         }

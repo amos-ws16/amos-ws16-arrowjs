@@ -52,7 +52,7 @@ This plugin checks if the title of the file object is equal to the title of the 
 2.	The similar-title Plugin:
 The similar-title plugin checks the titles of the file object and the task and compares them. If they are not completely equal but nearly the same, the plugin would return a value near to 1.0.
 
-3.	The similar-context Plugin:
+3.	The similar-text Plugin:
 This plugin compares large texts like descriptions of files and tasks. If the content of the two texts are similar but have different descriptions, the result would be about 1.0
 
 4.	The close-time Plugin:
