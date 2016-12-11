@@ -298,6 +298,30 @@ buster.testCase('ScoreManager Plugin Integration', {
     buster.assert.near(result[1].total, 0.0, 1e-3)
   },
 
+  'should report total as failure when all plugins threw erros': function () {
+    let config = {
+      aggregator: {'max': ['similar-context']},
+      plugins: {
+        'similar-context': {
+          use: similarContextPlugin,
+          inputs: ['file.title', 'tasks[].title']
+        }
+      }
+    }
+    let manager = scoreManager.create(config)
+
+    let blob = {
+      file: { title: 'location' },
+      tasks: [
+        { title: NaN },
+        { title: '12345' }
+      ]
+    }
+
+    let result = manager.score(blob)
+    buster.assert.match(result[0].total, /failed/)
+  },
+
   'dynamic plugin loading': {
     'should load plugin given by string from plugin directory': function () {
       let config = {
