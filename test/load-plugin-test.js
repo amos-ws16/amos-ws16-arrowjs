@@ -1,5 +1,5 @@
 const buster = require('buster')
-const loadPlugin = require('../lib/load-plugin')
+const loadPlugin = require('../lib/utils').loadPlugin
 
 buster.testCase('loadPlugin', {
   'should load and return a plugin module': function () {
