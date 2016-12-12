@@ -20,7 +20,7 @@
     "eslintfix": "eslint --fix **/*.js",
     "dev": "cross-env NODE_ENV=development node ./bin/start-server.js",
     "start": "cross-env NODE_ENV=production node ./bin/start-server.js",
-    "test": "eslint **/*.js && buster-test",
+    "test": "eslint . && buster-test",
     "cover": "cross-env NODE_ENV=test nyc --reporter=lcov --reporter=text buster-test",
     "coveralls": "npm run cover && nyc report --reporter=text-lcov | coveralls"
   },
