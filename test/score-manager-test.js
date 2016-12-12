@@ -321,7 +321,7 @@ buster.testCase('ScoreManager Integration', {
       aggregator: {'max': ['similar-text']},
       plugins: {
         'similar-text': {
-          use: similartextPlugin,
+          use: similarTextPlugin,
           inputs: ['file.title', 'tasks[].title']
         }
       }
