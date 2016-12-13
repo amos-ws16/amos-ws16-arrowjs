@@ -11,7 +11,7 @@ allTestCases = getAllTestCases()
 var hitCounter = 0
 var length = 0
 var table = new Table({
-  head: ['TestCase file', 'größter Index', 'größter Score'],
+  head: ['TestCase file', 'größter Score', 'Index'],
   chars: {'mid': '', 'left-mid': '', 'mid-mid': '', 'right-mid': ''},
   style: {head: ['green'], border: ['grey']}
 })
@@ -37,7 +37,7 @@ for (let key in allTestCases) {
         if (biggestAIndex === '0') {
           hitCounter++
         }
-        table.push([key, biggestAIndex, biggestAScore])
+        table.push([key, biggestAScore, biggestAIndex])
       })
   }
 }
@@ -54,7 +54,6 @@ setTimeout(function () {
 
 /**
 *dynamic loads of all testcases in the folder ('./test/test-cases') with the format of <NAME>-test-cases.js
-*@param
 */
 function getAllTestCases () {
   let testCasesSet = {}
