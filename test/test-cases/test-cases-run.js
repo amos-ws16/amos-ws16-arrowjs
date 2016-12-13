@@ -7,11 +7,10 @@ const app = require('../../lib/server')
 let allTestCases = {}
 // allTestCases get loaded
 allTestCases = getAllTestCases()
-
 var hitCounter = 0
 var length = 0
 var table = new Table({
-  head: ['TestCase file', 'größter Score', 'Index'],
+  head: ['TestCase file', 'größter Score', 'Index', 'größter Teilscore', 'kleinster Teilscore'],
   chars: {'mid': '', 'left-mid': '', 'mid-mid': '', 'right-mid': ''},
   style: {head: ['green'], border: ['grey']}
 })
@@ -34,10 +33,32 @@ for (let key in allTestCases) {
             biggestAScore = res.body.result[j].total
           }
         }
+        let biggestPartialScore = -1
+        let smallestPartialScore = 2
+        // console.log('---')
+        Object.keys(res.body.result[biggestAIndex]).forEach(function (key, index) {
+        //  console.log(key + ':   ' + index)
+          if (key !== 'total') {
+            let partialScore = res.body.result[biggestAIndex][key]
+            // console.log(res.body.result[biggestAIndex][key])
+            // console.log(typeof partialScore)
+            // partialScore is Integer
+            if (typeof partialScore === 'number') {
+              // console.log('success')
+              if (partialScore > biggestPartialScore) {
+                biggestPartialScore = partialScore
+              }
+              if (partialScore < smallestPartialScore) {
+                smallestPartialScore = partialScore
+              }
+            }
+          }
+        })
         if (biggestAIndex === '0') {
           hitCounter++
         }
-        table.push([key, biggestAScore, biggestAIndex])
+      //  console.log(res.body.result)
+        table.push([key, biggestAScore, biggestAIndex, biggestPartialScore, smallestPartialScore])
       })
   }
 }
