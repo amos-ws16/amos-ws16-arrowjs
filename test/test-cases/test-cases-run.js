@@ -34,8 +34,14 @@ for (let key in allTestCases) {
           }
         }
         let numberOfPartialScores = 0
-        let biggestPartialScore = -1
-        let smallestPartialScore = 2
+        let biggestPartialScore = {
+          score: -1,
+          key: ''
+        }
+        let smallestPartialScore = {
+          score: 2,
+          key: ''
+        }
         // console.log('---')
         Object.keys(res.body.result[biggestAIndex]).forEach(function (key, index) {
         //  console.log(key + ':   ' + index)
@@ -47,11 +53,13 @@ for (let key in allTestCases) {
             if (typeof partialScore === 'number') {
               numberOfPartialScores++
               // console.log('success')
-              if (partialScore > biggestPartialScore) {
-                biggestPartialScore = partialScore
+              if (partialScore > biggestPartialScore.score) {
+                biggestPartialScore.score = partialScore
+                biggestPartialScore.key = key
               }
-              if (partialScore < smallestPartialScore) {
-                smallestPartialScore = partialScore
+              if (partialScore < smallestPartialScore.score) {
+                smallestPartialScore.score = partialScore
+                smallestPartialScore.key = key
               }
             }
           }
@@ -60,7 +68,9 @@ for (let key in allTestCases) {
           hitCounter++
         }
       //  console.log(res.body.result)
-        table.push([key, biggestAScore, biggestAIndex, numberOfPartialScores, biggestPartialScore, smallestPartialScore])
+        table.push([key, biggestAScore, biggestAIndex, numberOfPartialScores,
+          (biggestPartialScore.score + '  (' + biggestPartialScore.key + ')'),
+          (smallestPartialScore.score + '  (' + smallestPartialScore.key + ')')])
       })
   }
 }
