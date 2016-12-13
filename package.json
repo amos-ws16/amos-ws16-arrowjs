@@ -6,6 +6,7 @@
   "repository": "https://github.com/amos-ws16/amos-ws16-arrowjs",
   "devDependencies": {
     "buster": "^0.7.18",
+    "cli-table": "^0.3.1",
     "coveralls": "^2.11.14",
     "cross-env": "^3.1.3",
     "eslint": "^3.9.0",
@@ -22,7 +23,8 @@
     "start": "cross-env NODE_ENV=production node ./bin/start-server.js",
     "test": "eslint . && buster-test",
     "cover": "cross-env NODE_ENV=test nyc --reporter=lcov --reporter=text buster-test",
-    "coveralls": "npm run cover && nyc report --reporter=text-lcov | coveralls"
+    "coveralls": "npm run cover && nyc report --reporter=text-lcov | coveralls",
+    "scoretest": "node ./test/test-cases/test-cases-test.js && node ./test/test-cases/test-cases-run.js"
   },
   "dependencies": {
     "body-parser": "^1.15.2",
