@@ -48,10 +48,10 @@ There are three important concepts that facilitate assigning a score to tasks re
 
 #### 4.1 Plugins
 
-A Plugin is a function that takes two arguments - a file object that contains meta data, for example the filename, size, time of upload and/or the file contents, and a task object that contains meta data related to the task, for example the task name. It returns a floating point numeric score in the range 0.0 to 1.0 which describes the degree in which the file and the task are correlated in the aspect that this plugin is focused on. There are 4 Plugins available:
+A Plugin is a function that takes two arguments - a file object that contains meta data, for example the filename, size, time of upload and/or the file contents, and a task object that contains meta data related to the task, for example the task name. It returns a floating point numeric score in the range 0.0 to 1.0 which describes the degree in which the file and the task are correlated in the aspect that this plugin is focused on. Currently there are 2 Plugins available:
 
-1. The similar-context Plugin:
-This plugin different types of texts like descriptions or titles of files and tasks. If the content of the two texts are similar but have different descriptions, the result would be about 1.0. For information on available parameters take a look at the [source](https://github.com/amos-ws16/amos-ws16-arrowjs/blob/dev/lib/plugins/similar-context-plugin.js).
+1. The similar-text Plugin:
+This plugin compares different texts like descriptions or titles of files and tasks. If the content of the two texts are similar but have different descriptions, the result would be about 1.0. For information on available parameters take a look at the [source](https://github.com/amos-ws16/amos-ws16-arrowjs/blob/dev/lib/plugins/similar-text-plugin.js).
 
 
 2. The close-time Plugin:
@@ -129,8 +129,13 @@ There is also the possibility to configure the API by yourself, just by sending 
   "aggregator": {"mean": "*"},
   "plugins": {
     "context-file-description-task-description": {
+<<<<<<< HEAD
       "use": "similar-context-plugin",
       "inputs": ["file.description | to-lower-case", "tasks[].description"],
+=======
+      "use": "similar-text-plugin",
+      "inputs": ["file.description", "tasks[].description"],
+>>>>>>> dev
       "params": { "extractKeywords": true }
     },
     "context-file-timestamp-tasks-timestamp-long": {
@@ -141,8 +146,12 @@ There is also the possibility to configure the API by yourself, just by sending 
 }
 ```
 
+<<<<<<< HEAD
 With this configuration you are using the `mean` Aggregator over the two defined plugins For a list of all available Aggregators see [here](https://github.com/amos-ws16/amos-ws16-arrowjs/blob/dev/docs/user-guide.md#8-aggregators).
 Each defined plugin consist of three required attributes:
+=======
+This configuration is used to compare the description of file and tasks (`"inputs": ["file.description", "tasks[].description"]`) by keywords (`"params": { "extractKeywords": true }`) with the similar text (`"use": "similar-text-plugin"`) plugin.
+>>>>>>> dev
 
 1. The __name__ (`"context-file-description-task-description"`) defines how the plugin is referenced in the configuration.
 
@@ -160,7 +169,7 @@ POST Request:
         "aggregator": {"mean": "*"},
         "plugins": {
             "context-file-description-task-description": {
-                "use": "similar-context-plugin",
+                "use": "similar-text-plugin",
                 "inputs": ["file.description", "tasks[].description"],
                 "params": {
                     "extractKeywords": true
@@ -216,7 +225,7 @@ TODO
 
 ## 9. Pipes
 
-You can choose from these Aggregators:
+You can choose from these Pipes:
 
 | Name          | for Type       |
 | ------------- |:-------------: |

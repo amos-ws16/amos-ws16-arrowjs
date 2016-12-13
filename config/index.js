@@ -13,7 +13,7 @@ config.scoreManager = {
   plugins: {
     // similar-title-plugin pulls file.title from file and tasks[].title from tasks[] itself
     'similar-file-title-task-title': {
-      use: 'similar-context-plugin',
+      use: 'similar-text-plugin',
       inputs: ['file.title', 'tasks[].title']
     },
     // timestamp comparison defaults to 600 sec
@@ -27,32 +27,32 @@ config.scoreManager = {
       params: { 'time-limit': 3000 }
     },
     'context-file-title-task-description': {
-      use: 'similar-context-plugin',
+      use: 'similar-text-plugin',
       inputs: ['file.title', 'tasks[].description'],
       params: { 'extractKeywords': true }
     },
     'context-file-description-task-title': {
-      use: 'similar-context-plugin',
+      use: 'similar-text-plugin',
       inputs: ['file.description', 'tasks[].title'],
       params: { 'extractKeywords': true }
     },
     'context-file-description-task-description': {
-      use: 'similar-context-plugin',
+      use: 'similar-text-plugin',
       inputs: ['file.description', 'tasks[].description'],
       params: { 'extractKeywords': true }
     },
     'similar-file-title-task-description': {
-      use: 'similar-context-plugin',
+      use: 'similar-text-plugin',
       inputs: ['file.title', 'tasks[].description'],
       params: { 'extractKeywords': false }
     },
     'similar-file-description-task-title': {
-      use: 'similar-context-plugin',
+      use: 'similar-text-plugin',
       inputs: ['file.description', 'tasks[].title'],
       params: { 'extractKeywords': false }
     },
     'similar-file-description-task-description': {
-      use: 'similar-context-plugin',
+      use: 'similar-text-plugin',
       inputs: ['file.description', 'tasks[].description'],
       params: { 'extractKeywords': false }
     }

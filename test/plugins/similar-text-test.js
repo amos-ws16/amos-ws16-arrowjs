@@ -1,8 +1,8 @@
 const buster = require('buster')
 const stringSimilarity = require('string-similarity')
-const plugin = require('../../lib/plugins/similar-context-plugin.js')
+const plugin = require('../../lib/plugins/similar-text-plugin.js')
 
-buster.testCase('similar-context-plugin', {
+buster.testCase('similar-text-plugin', {
   'test1 - with Keywordsextraction: should return 1.0 when both strings matches': function () {
     let sString1 = 'president obama woke monday facing congressional defeat parties believed hobble presidency'
     let sString2 = 'President Obama woke up Monday facing a Congressional defeat that many in both parties believed could hobble his presidency.'
