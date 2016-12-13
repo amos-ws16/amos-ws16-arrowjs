@@ -3,3 +3,12 @@ node_js:
 - node
 after_success:
 - npm run coveralls
+deploy:
+  provider: script
+  script: deployment-scripts/post-deployment.sh $TRAVIS_TOKEN
+  on:
+    all_branches: true
+    condition: $TRAVIS_BRANCH = feature-73-npm-engine || $TRAVIS_BRANCH = master
+env:
+  global:
+    secure: EC8/Ab7ouAdLD4kLatA/GjI+5jueLnEwJglb1uy5kF0k4NF4UZT50BIxiri23UuyjpfFBOgNK5MlQ17dZQ3xnnd5TclKuD7yfmKoBHtTX1YGB4aPi2oTna+rjXwxUIUBvO+/W/SBSXm/n+UPOAM6gLHyDoa/hn9iQZkdXD7+y1cIBhwRK6mDt6F+LF/B5GUxkzqL5L2Il7kSam2qwuBWa7atZVw1eWSo54DOVRNwzVmn2YrttVo878ePreqHXtk4I28DfeZJMt0HVn2l+XTvcPxeWmLnhqij1JzpJ4eo6lApt1PjKIb4Lw1RRuE8JVQ5G4reMEqk/Bke6nRGbEI8WuSHm4+sCX7prfZjRfa0HzVsu3i+0Sb2eqZMzEYSCEXfi9PNCO23a2wRS3ZUziW36glRxJllTqRL8MAPs0lQFow/21hRdwB4qDF6WUvhwSGVBFcknHVpS563W8V1rxoDe9dkTAB08TuuVgpGuGWbqVhq+zBsJMPguXLcb+wS8EIZ+s69e9Wc4Ao7VFqqhiY0t6lRYHrvoYuTKbCWlTx2z7WD5sug9rcMqWqa4S2Tz5CRcg2lududEqvUbsgyQoNH/7VA7NmjkxtDJr5w0Hj/RNSNB+xt/OAssm76qUacl2RXd8x4pLFu9WFImwZ9/GE5Wmo/E7Qe8VvmcvGNnhkChjg=
