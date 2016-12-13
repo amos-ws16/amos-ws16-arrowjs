@@ -4,6 +4,7 @@
   "description": "Description that needs to be changed some time soon",
   "license": "AGPL-3.0",
   "repository": "https://github.com/amos-ws16/amos-ws16-arrowjs",
+  "main": "lib/score-manager",
   "devDependencies": {
     "buster": "^0.7.18",
     "cli-table": "^0.3.1",
@@ -19,16 +20,12 @@
   },
   "scripts": {
     "eslintfix": "eslint --fix **/*.js",
-    "dev": "cross-env NODE_ENV=development node ./bin/start-server.js",
-    "start": "cross-env NODE_ENV=production node ./bin/start-server.js",
     "test": "eslint . && buster-test",
     "cover": "cross-env NODE_ENV=test nyc --reporter=lcov --reporter=text buster-test",
     "coveralls": "npm run cover && nyc report --reporter=text-lcov | coveralls",
     "scoretest": "node ./test/test-cases/test-cases-test.js && node ./test/test-cases/test-cases-run.js"
   },
   "dependencies": {
-    "body-parser": "^1.15.2",
-    "express": "^4.14.0",
     "verror": "^1.9.0",
     "string-similarity": "^1.1.0",
     "keyword-extractor": "0.0.13"
