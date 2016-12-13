@@ -10,7 +10,7 @@ allTestCases = getAllTestCases()
 var hitCounter = 0
 var length = 0
 var table = new Table({
-  head: ['TestCase file', 'größter Score', 'Index', 'größter Teilscore', 'kleinster Teilscore'],
+  head: ['TestCase file', 'größter Score', 'Index', 'Teilscores', 'größter Teilscore', 'kleinster Teilscore'],
   chars: {'mid': '', 'left-mid': '', 'mid-mid': '', 'right-mid': ''},
   style: {head: ['green'], border: ['grey']}
 })
@@ -33,6 +33,7 @@ for (let key in allTestCases) {
             biggestAScore = res.body.result[j].total
           }
         }
+        let numberOfPartialScores = 0
         let biggestPartialScore = -1
         let smallestPartialScore = 2
         // console.log('---')
@@ -44,6 +45,7 @@ for (let key in allTestCases) {
             // console.log(typeof partialScore)
             // partialScore is Integer
             if (typeof partialScore === 'number') {
+              numberOfPartialScores++
               // console.log('success')
               if (partialScore > biggestPartialScore) {
                 biggestPartialScore = partialScore
@@ -58,7 +60,7 @@ for (let key in allTestCases) {
           hitCounter++
         }
       //  console.log(res.body.result)
-        table.push([key, biggestAScore, biggestAIndex, biggestPartialScore, smallestPartialScore])
+        table.push([key, biggestAScore, biggestAIndex, numberOfPartialScores, biggestPartialScore, smallestPartialScore])
       })
   }
 }
