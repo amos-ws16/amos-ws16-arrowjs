@@ -129,13 +129,8 @@ There is also the possibility to configure the API by yourself, just by sending 
   "aggregator": {"mean": "*"},
   "plugins": {
     "context-file-description-task-description": {
-<<<<<<< HEAD
-      "use": "similar-context-plugin",
-      "inputs": ["file.description | to-lower-case", "tasks[].description"],
-=======
       "use": "similar-text-plugin",
-      "inputs": ["file.description", "tasks[].description"],
->>>>>>> dev
+      "inputs": ["file.description | to-lower-case", "tasks[].description"],
       "params": { "extractKeywords": true }
     },
     "context-file-timestamp-tasks-timestamp-long": {
@@ -146,12 +141,7 @@ There is also the possibility to configure the API by yourself, just by sending 
 }
 ```
 
-<<<<<<< HEAD
-With this configuration you are using the `mean` Aggregator over the two defined plugins For a list of all available Aggregators see [here](https://github.com/amos-ws16/amos-ws16-arrowjs/blob/dev/docs/user-guide.md#8-aggregators).
-Each defined plugin consist of three required attributes:
-=======
-This configuration is used to compare the description of file and tasks (`"inputs": ["file.description", "tasks[].description"]`) by keywords (`"params": { "extractKeywords": true }`) with the similar text (`"use": "similar-text-plugin"`) plugin.
->>>>>>> dev
+This configuration is used to compare the description of file, which is first transformed to lower case, and tasks (`"inputs": ["file.description | to-lower-case", "tasks[].description"]`) by keywords (`"params": { "extractKeywords": true }`) with the similar text (`"use": "similar-text-plugin"`) plugin.
 
 1. The __name__ (`"context-file-description-task-description"`) defines how the plugin is referenced in the configuration.
 
