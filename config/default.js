@@ -1,4 +1,4 @@
-const config = {}
+
 /**
  * Default config for scoreManager
  *
@@ -8,7 +8,7 @@ const config = {}
  * context-file-description-task-title: compares keywords of file description with keywords of description of tasks
  * context-file-description-task-description: compares keywords of file description with keywords of description of tasks
 */
-config.scoreManager = {
+var config = {
   aggregator: {'mean': '*'},
   plugins: {
     // similar-title-plugin pulls file.title from file and tasks[].title from tasks[] itself
@@ -58,6 +58,5 @@ config.scoreManager = {
     }
   }
 }
-config.secretToken = '8cd96c8697d12daf4dfd135aec01fd63ee058ab4'
 
 module.exports = config
