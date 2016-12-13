@@ -1,5 +1,5 @@
 const buster = require('buster')
-const pipe = require('../../lib/pipes/to-upper-case.js')
+const pipe = require('../../lib/pipes/to-upper-case')
 
 buster.testCase('Pipe: toUpperCase', {
   'should transform the input to upper case': function () {

@@ -1,5 +1,5 @@
 const buster = require('buster')
-const pipe = require('../../lib/pipes/trim-right.js')
+const pipe = require('../../lib/pipes/trim-right')
 
 buster.testCase('Pipe: trimRight', {
   'should trim the input (right)': function () {
