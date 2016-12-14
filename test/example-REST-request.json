@@ -1,7 +1,0 @@
-{
-  "file": { "title": "location.png", "timestamp": 123456789 },
-  "tasks": [
-    { "title": "location", "timestamp": 123456789 },
-    { "title": "something_else", "timestamp": 123456789 }
-   ]
-}
