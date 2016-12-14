@@ -57,11 +57,8 @@ This plugin compares different texts like descriptions or titles of files and ta
 2. The close-time Plugin:
 It checks the time, when both objects were uploaded (or updated) and if the upload times are far away from each other the plugin would return 0.0. Otherwise if the objects are uploaded at the same time the result would be 1.0. For information on available parameters take a look at the [source](https://github.com/amos-ws16/amos-ws16-arrowjs/blob/master/lib/plugins/close-time-plugin.js).
 
-#### 4.2 Aggregator
 
-An Aggregator is a policy that combines a set of scores that were previously assigned to a task by multiple Plugins into a single final score value. For example, if the score of the close-time Plugin is 1.0 and the score of the similar-title Plugin is 0.0 the combined value would be 0.5.
-
-#### 4.3 Score Manager
+#### 4.2 Score Manager
  The purpose of the Score Manager is to provide the entry point for a scoring request, delegate the data to multiple Plugins, and combine their individual scores using an Aggregator.
 
 ## 5. Example
@@ -209,9 +206,17 @@ Example response for the request:
 
 ## 8. Aggregators
 
+An Aggregator is a policy that combines a set of scores that were previously assigned to a task by multiple Plugins into a single final score value. Aggregators can also be nested. The example above uses a mean aggregator over all plugins.
+
 You can choose from these Aggregators:
 
-TODO
+| Name          | description                                                                                      |
+| ------------- |:-------------------------------------------------------------------------------------------------|
+| max           | returns the maximum value                                                                        |
+| mean          | calculates mean of all scores                                                                    |
+| weigthed mean | calculates weighted mean of all scores <br> requires arrays of the form [weight, value] as input |
+
+
 
 ## 9. Pipes
 
