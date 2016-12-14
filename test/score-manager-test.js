@@ -2,7 +2,7 @@ const buster = require('buster')
 const scoreManager = require('../lib/score-manager')
 const aggregatorConfigParser = require('../lib/aggregator-config-parser')
 
-const similarContextPlugin = require('../lib/plugins/similar-context-plugin')
+const similarTextPlugin = require('../lib/plugins/similar-text-plugin')
 
 buster.testCase('ScoreManager with configuration', {
   'scoreWith': {
@@ -290,13 +290,13 @@ buster.testCase('ScoreManager with configuration', {
   }
 })
 
-buster.testCase('ScoreManager Plugin Integration', {
-  'should be able to use similarContextPlugin': function () {
+buster.testCase('ScoreManager Integration', {
+  'should be able to use similarTextPlugin': function () {
     let config = {
-      aggregator: {'max': ['similar-context']},
+      aggregator: {'max': ['similar-text']},
       plugins: {
-        'similar-context': {
-          use: similarContextPlugin,
+        'similar-text': {
+          use: similarTextPlugin,
           inputs: ['file.title', 'tasks[].title']
         }
       }
@@ -318,10 +318,10 @@ buster.testCase('ScoreManager Plugin Integration', {
 
   'should report total as failure when all plugins threw erros': function () {
     let config = {
-      aggregator: {'max': ['similar-context']},
+      aggregator: {'max': ['similar-text']},
       plugins: {
-        'similar-context': {
-          use: similarContextPlugin,
+        'similar-text': {
+          use: similarTextPlugin,
           inputs: ['file.title', 'tasks[].title']
         }
       }
@@ -343,10 +343,10 @@ buster.testCase('ScoreManager Plugin Integration', {
   'dynamic plugin loading': {
     'should load plugin given by string from plugin directory': function () {
       let config = {
-        aggregator: {'max': ['similar-context']},
+        aggregator: {'max': ['similar-text']},
         plugins: {
-          'similar-context': {
-            use: 'similar-context-plugin',
+          'similar-text': {
+            use: 'similar-text-plugin',
             inputs: ['file.title', 'tasks[].title']
           }
         }
