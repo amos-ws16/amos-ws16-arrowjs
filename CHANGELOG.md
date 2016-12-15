@@ -1,7 +1,24 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
-## [Unreleased](https://github.com/amos-ws16/amos-ws16-arrowjs/compare/sprint-07-release...dev)
+## [Unreleased](https://github.com/amos-ws16/amos-ws16-arrowjs/compare/sprint-08-release...dev)
+## [1.5.0](https://github.com/amos-ws16/amos-ws16-arrowjs/releases/tag/sprint-08-release) - 2016-12-15
+
+## Added
+- Nested Aggregators allow the combination of scores into one score. Nested Aggregators can be configured
+- New aggregator concepts to manage scores [PR](https://github.com/amos-ws16/amos-ws16-arrowjs/pull/52)
+- Testcases can be evaluated seperately to unit tests [PR](https://github.com/amos-ws16/amos-ws16-arrowjs/pull/55) -> moved to [arrowjs-server](https://github.com/amos-ws16/amos-ws16-arrowjs-server)
+- Pipes can be used to modify input before scoring [PR](https://github.com/amos-ws16/amos-ws16-arrowjs/pull/57)
+
+## Changed
+- Failure of one plugin does not affect other plugins. User will get the scoring of any successful plugins and an error report for all failed plugins [PR](https://github.com/amos-ws16/amos-ws16-arrowjs/pull/51)
+- rename `similar-context-plugin` to `similar-text-plugin`
+- update [Getting Started](https://github.com/amos-ws16/amos-ws16-arrowjs/blob/master/docs/user-guide.md): removed `same-title-plugin` and renamed `similar-text-plugin`, added description for pipes, added description for nested aggregators
+- seperate engine from server and make available as npm package [PR](https://github.com/amos-ws16/amos-ws16-arrowjs/pull/58) + [PR](https://github.com/amos-ws16/amos-ws16-arrowjs-server/pull/2)
+
+## Removed
+- unneeded files from git repository
+- server files removed to create npm package
 
 ## [1.4.0](https://github.com/amos-ws16/amos-ws16-arrowjs/releases/tag/sprint-07-release) - 2016-12-08
 

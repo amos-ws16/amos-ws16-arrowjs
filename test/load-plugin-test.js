@@ -1,9 +1,9 @@
 const buster = require('buster')
-const loadPlugin = require('../lib/load-plugin')
+const loadPlugin = require('../lib/utils').loadPlugin
 
 buster.testCase('loadPlugin', {
   'should load and return a plugin module': function () {
-    let plugin = loadPlugin('similar-context-plugin')
+    let plugin = loadPlugin('similar-text-plugin')
     buster.assert(plugin)
     let result = plugin('Hello', 'Gello')
     buster.assert.equals(result, 0.75)

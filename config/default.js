@@ -1,6 +1,4 @@
-const aggregator = require('../lib/score-aggregator')
 
-const config = {}
 /**
  * Default config for scoreManager
  *
@@ -10,12 +8,12 @@ const config = {}
  * context-file-description-task-title: compares keywords of file description with keywords of description of tasks
  * context-file-description-task-description: compares keywords of file description with keywords of description of tasks
 */
-config.scoreManager = {
-  aggregator: new aggregator.Mean(),
+var config = {
+  aggregator: {'mean': '*'},
   plugins: {
     // similar-title-plugin pulls file.title from file and tasks[].title from tasks[] itself
     'similar-file-title-task-title': {
-      use: 'similar-context-plugin',
+      use: 'similar-text-plugin',
       inputs: ['file.title', 'tasks[].title']
     },
     // timestamp comparison defaults to 600 sec
@@ -29,37 +27,36 @@ config.scoreManager = {
       params: { 'time-limit': 3000 }
     },
     'context-file-title-task-description': {
-      use: 'similar-context-plugin',
+      use: 'similar-text-plugin',
       inputs: ['file.title', 'tasks[].description'],
       params: { 'extractKeywords': true }
     },
     'context-file-description-task-title': {
-      use: 'similar-context-plugin',
+      use: 'similar-text-plugin',
       inputs: ['file.description', 'tasks[].title'],
       params: { 'extractKeywords': true }
     },
     'context-file-description-task-description': {
-      use: 'similar-context-plugin',
+      use: 'similar-text-plugin',
       inputs: ['file.description', 'tasks[].description'],
       params: { 'extractKeywords': true }
     },
     'similar-file-title-task-description': {
-      use: 'similar-context-plugin',
+      use: 'similar-text-plugin',
       inputs: ['file.title', 'tasks[].description'],
       params: { 'extractKeywords': false }
     },
     'similar-file-description-task-title': {
-      use: 'similar-context-plugin',
+      use: 'similar-text-plugin',
       inputs: ['file.description', 'tasks[].title'],
       params: { 'extractKeywords': false }
     },
     'similar-file-description-task-description': {
-      use: 'similar-context-plugin',
+      use: 'similar-text-plugin',
       inputs: ['file.description', 'tasks[].description'],
       params: { 'extractKeywords': false }
     }
   }
 }
-config.secretToken = '8cd96c8697d12daf4dfd135aec01fd63ee058ab4'
 
 module.exports = config
