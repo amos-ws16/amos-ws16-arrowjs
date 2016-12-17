@@ -367,6 +367,33 @@ buster.testCase('ScoreManager Integration', {
     }
   },
 
+  'plugins with more than 2 arguments': {
+    'should receive arguments given in inputs array': function () {
+      let config = {
+        aggregator: {'max': '*'},
+        plugins: {
+          'in-time': {
+            use: 'in-timespan-plugin',
+            inputs: ['file.created_at', 'tasks[].created_at', 'tasks[].due_date']
+          }
+        }
+      }
+      let manager = scoreManager.create(config)
+
+      let blob = {
+        file: { created_at: 1481924134 },
+        tasks: [
+          { created_at: 1481924000, due_date: 1481924500 }, // yes case
+          { created_at: 1481920000, due_date: 1481924000 }  // no case
+        ]
+      }
+
+      let result = manager.score(blob)
+      buster.assert.near(result[0]['in-time'], 1.0, 1e-3)
+      buster.assert.near(result[1]['in-time'], 0.0, 1e-3)
+    }
+  },
+
   'plugin parameters': {
     'should be passed as third argument': function () {
       let pluginA = this.stub().returns(0.0)
