@@ -391,6 +391,27 @@ buster.testCase('ScoreManager Integration', {
       let result = manager.score(blob)
       buster.assert.near(result[0]['in-time'], 1.0, 1e-3)
       buster.assert.near(result[1]['in-time'], 0.0, 1e-3)
+    },
+
+    'should return a length 1 array result when no array[] path is given': function () {
+      let config = {
+        aggregator: {'max': '*'},
+        plugins: {
+          'in-time': {
+            use: 'in-timespan-plugin',
+            inputs: ['file.created_at', 'file.other_date', 'file.due_date']
+          }
+        }
+      }
+      let manager = scoreManager.create(config)
+
+      let blob = {
+        file: { created_at: 1481924134, other_date: 1481924000, due_date: 1481924500 }
+      }
+
+      let result = manager.score(blob)
+      buster.assert.equals(result.length, 1)
+      buster.assert.near(result[0]['in-time'], 1.0, 1e-3)
     }
   },
 
