@@ -244,7 +244,7 @@ buster.testCase('ScoreManager with configuration', {
       buster.assert.match(result[0]['plugin-c'], /this is the error description/)
     },
 
-    'should be caught and isolated on a per plugin bases': function () {
+    'should be caught and isolated on a per plugin basis': function () {
       let aggregator = { combine: this.stub().returns(1.0) }
       let plugA = () => 1.0
       let plugB = () => 1.0
@@ -264,6 +264,27 @@ buster.testCase('ScoreManager with configuration', {
 
       let result = manager.score(blob)
       buster.assert.match(result[0]['plugin-a'], /no-attribute-here/)
+    },
+
+    'should be caught and isolated on a per task basis': function () {
+      let aggregator = { combine: this.stub().returns(1.0) }
+      let plugA = () => 1.0
+
+      let manager = scoreManager.create({
+        aggregator,
+        plugins: {
+          'plugin-a': { use: plugA, inputs: ['file', 'tasks[].description'] }
+        }
+      })
+
+      let blob = {
+        file: {},
+        tasks: [{ description: 'this is a task' }, { x: 'no description here' }]
+      }
+
+      let result = manager.score(blob)
+      buster.assert.same(result[0]['plugin-a'], 1.0)
+      buster.assert.match(result[1]['plugin-a'], /failure/)
     },
 
     'should only pass successful scores to the aggregator': function () {
