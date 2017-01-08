@@ -3,7 +3,8 @@ const pipe = require('../../lib/pipes/days-since-epoch')
 
 buster.testCase('Pipe: daysSinceEpoch', {
   'should return days since epoch': function () {
-    let input = 1483603200
+    var testTime = new Date('January 05, 2017 9:00:00 UTC')
+    let input = testTime.getTime() / 1000
     let result = pipe(input)
     buster.assert.equals(17171, result)
   },
