@@ -43,6 +43,16 @@ buster.testCase('weightedMean.create()', {
     buster.assert.near(agtr.eval(), 0.57, 1e-3)
   },
 
+  'should interpret null values as 0.0 scores': function () {
+    let stubAgtrA = { eval: this.stub().returns(0.8) }
+    let stubAgtrB = { eval: this.stub().returns(null) }
+    let stubAgtrC = { eval: this.stub().returns(0.5) }
+    let agtr = weightedMean.create([[0.1, stubAgtrA], [0.1, stubAgtrB], [0.8, stubAgtrC]])
+
+    // 0.1*0.8 + 0.1*0.0 + 0.8*0.5 = 0.48
+    buster.assert.near(agtr.eval(), 0.48, 1e-3)
+  },
+
   'should throw an error when no argument was given': function () {
     buster.assert.exception(() => weightedMean.create())
   }

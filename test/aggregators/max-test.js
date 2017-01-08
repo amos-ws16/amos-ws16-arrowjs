@@ -1,4 +1,3 @@
-
 const buster = require('buster')
 const max = require('../../lib/aggregators/max')
 
@@ -16,5 +15,23 @@ buster.testCase('max.create()', {
     let agtr = max.create([stubAgtrA, stubAgtrB])
 
     buster.assert.same(agtr.eval(), 0.5)
+  },
+
+  'should ignore null value and return max of rest': function () {
+    let stubAgtrA = { eval: this.stub().returns(0.5) }
+    let stubAgtrB = { eval: this.stub().returns(0.0) }
+    let stubAgtrC = { eval: this.stub().returns(null) }
+    let agtr = max.create([stubAgtrA, stubAgtrB, stubAgtrC])
+
+    buster.assert.same(agtr.eval(), 0.5)
+  },
+
+  'should return 0.0 if only null value is present': function () {
+    let stubAgtrA = { eval: this.stub().returns(null) }
+    let stubAgtrB = { eval: this.stub().returns(null) }
+    let stubAgtrC = { eval: this.stub().returns(null) }
+    let agtr = max.create([stubAgtrA, stubAgtrB, stubAgtrC])
+
+    buster.assert.same(agtr.eval(), 0.0)
   }
 })
