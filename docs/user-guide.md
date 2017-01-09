@@ -266,7 +266,32 @@ You can choose from these Aggregators:
 | mean          | calculates mean of all scores                                                                    |
 | weigthed mean | calculates weighted mean of all scores <br> requires arrays of the form [weight, value] as input |
 
+Some examples of how to use those aggregators can be found in the Custom Configuration section of this User Guide. They can be combined in any desired way. If you want to apply an aggregator on all plugins you can use the wildcard symbol "\*".
 
+__ATTENTION__: When using the wildcard symbol with certain aggregators like e.g. `mean` and some plugins can't return a value (e.g. because of missing optional values in the input), the returned mean value gets calculated only based on the returned values.  
+On the other hand if the wildcard is not used, missing values will be treated as a score of 0.0 in the aggregators.  
+Examples:
+ 1. mean(\*) with 5 plugins but only __2__ plugins returned values [0, 1]:
+
+  (0 + 1) / __2__ = 0.5  
+  This leads to a total score of 0.5.
+
+ 2. mean(\*) with 5 plugins and all 5 plugins returned values [0, 1, 1, 1, 1]:
+
+  (0 + 1 + 1 + 1 + 1) / 5 = 0.8  
+  This leads to a total score of 0.8.
+
+ 3. mean(...) with __5__ plugins listed in (...) but only 2 plugins returned values [0, 1]:
+
+  (0 + 1) / __5__ = 0.2  
+  This leads to a total score of 0.2.
+
+ 4. mean(...) with 5 plugins listed in (...) and all 5 plugins returned values [0, 1, 1, 1, 1]:
+
+  (0 + 1 + 1 + 1 + 1) / 5 = 0.8  
+  This leads to a total score of 0.8.   
+
+This holds similarly for the other aggregators.
 
 ## 9. Pipes
 
