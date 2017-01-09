@@ -97,8 +97,8 @@ Request:
 
 A configuration consists of plugin configurations and an aggregator configuration. The API has a default configuration.
 
-#### 6.1 Default Configuration
-The Basic-Configuration of this API makes 5 different comparisons:
+#### 6.1 Configuration options
+The Configuration of this API has 5 different comparison-plugins:
 
 1. Similar Title:
 Compares the title of the file with all task titles
@@ -107,7 +107,7 @@ Compares the title of the file with all task titles
 Compares the timestamps of file and tasks with a time limit of 600 seconds
 
 3. Context File Timestamp - Tasks Timestamp (Long):
-Compares the timestamps of file and tasks with a time limit of 3000 seconds
+Compares the timestamps of file and tasks with a time limit of 3600 seconds
 
 4. Context File Description - Task Title:
 Compares the description of a file with the title of tasks
@@ -115,9 +115,23 @@ Compares the description of a file with the title of tasks
 5. Context File Description - Task Description:
 Compares the description of a file with the description of tasks
 
-The used Aggregator is `mean` over all 5 comparisons.
+#### 6.2 Default Configuration
 
-#### 6.2 Custom Configuration
+The default configuration consists mainly of 3 three scores which are aggregated by the `mean` Aggregator:
+
+1. Description components score
+
+ First the maximum of the raw `File Description - Task Description`-Plugin and the keywords only `File Description - Task Description`-Plugin is taken. Respectively this is done for the `File Title - Task Description`-Plugin and for the `File Description - Task Title`-Plugin. After that those 3 maximum values get aggregated with the `mean` Aggregator to form the _Description components score_.
+
+2. Title-Title score
+
+ This score simply consists of the score from the `File Title - Task Title`-Plugin.
+
+3. Timestamp score
+
+ The timestamp score is calculated by taking the mean score of the `File Title - Task Title`-Plugin and the `File Timestamp - Task Timestamp`-Plugin.
+
+#### 6.3 Custom Configuration
 
 There is also the possibility to configure the API by yourself, just by sending an own configuration with the Post Request. An example could look like this:
 
