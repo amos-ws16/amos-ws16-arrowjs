@@ -162,6 +162,42 @@ This configuration is used to compare the description of file, which is first tr
 
 4. The __params__ is an object of parameters that is passed to to used plugin.
 
+Another custom configuration could look like this.
+
+```json
+{
+ "aggregator": {
+    "max": [
+      { "mean": [
+        "context-file-timestamp-tasks-timestamp-long",
+        "context-file-title-task-description"
+        ]
+      },
+     "similar-file-title-task-title"
+    ]
+  },
+ "plugins": {
+   "context-file-title-task-title": {
+     "use": "similar-text-plugin",
+     "inputs": ["file.title", "tasks[].title"],
+     "params": { "extractKeywords": true }
+   },
+   "context-file-timestamp-tasks-timestamp-long": {
+     "use": "close-time-plugin",
+     "inputs": ["file.created_at", "tasks[].created_at"],
+     "params": { "time-limit": 3000 }
+   },
+   "context-file-title-task-description": {
+     "use": "similar-text-plugin",
+     "inputs": ["file.title", "tasks[].description"],
+     "params": { "extractKeywords": true }
+   }
+ }
+}
+ ```
+
+Here we used only 3 plugins. First we took the mean of the score of the long `File Timestamp - Task Timestamp`-Plugin and the score of the keywords only `File Title - Task Description`-Plugin. After that we took the higher value (max) of this mean value and the score of the keywords only `File Title - Task Title`-Plugin.
+
 ## 7. Example Request with Configuration
 POST Request:
 ```json
