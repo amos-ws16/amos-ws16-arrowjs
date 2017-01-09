@@ -14,9 +14,14 @@ All fields are optional unless specified as required.
       "user": "(required) id string",
       "description": "string that was sent with the upload",
       "context": {
-        "chat": "...",
-        "more stuff": "...",
-        "to be defined later": "..."
+        "chat": [
+          {
+            "type": "message",
+            "user": "(required) string",
+            "text": "(required )string",
+            "ts": "(required) 1483953616.000002"
+          }, "..."
+        ]
       }
     },
     "tasks": [
@@ -29,11 +34,13 @@ All fields are optional unless specified as required.
         "last_updated_at": "unix timestamp",
         "assignees": ["userid1", "userid2", "..."],
         "description": "string",
-        "location": "..."
+        "location": "...",
+        "context": {
+          "chat": [ "..." ]
+        }
     },
     "..."]
 }
-
 ```
 
 ## Output Schema
