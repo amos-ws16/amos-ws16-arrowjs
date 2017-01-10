@@ -222,10 +222,18 @@ You can choose from these Aggregators:
 
 You can choose from these Pipes:
 
-| Name          | for Type       |
-| ------------- |:-------------: |
-| to-lower-case | string         |
-| to-upper-case | string         |
-| trim          | string         |
-| trim-left     | string         |
-| trim-right    | string         |
+| Name               | for Type       |
+| -------------------|:-------------: |
+| to-lower-case      | string         |
+| to-upper-case      | string         |
+| trim               | string         |
+| trim-left          | string         |
+| trim-right         | string         |
+| day-of-month       | timestamp      |
+| day-of-week        | timestamp      |
+| hour-of-day        | timestamp      |
+| years-since-epoch  | timestamp      |
+| months-since-epoch | timestamp      |
+| weeks-since-epoch  | timestamp      |
+| days-since-epoch   | timestamp      |
+| hours-since-epoch  | timestamp      |
