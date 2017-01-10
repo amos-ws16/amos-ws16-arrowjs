@@ -147,7 +147,7 @@ There is also the possibility to configure the API by yourself, just by sending 
     "context-file-timestamp-tasks-timestamp-long": {
       "use": "close-time-plugin",
       "inputs": ["file.created_at", "tasks[].created_at"]
-    },
+    }
   }
 }
 ```
