@@ -64,6 +64,7 @@ It checks the time, when both objects were uploaded (or updated) and if the uplo
 ## 5. Example
 
 Request:
+
 ```json
 {
     "file": {
@@ -238,6 +239,7 @@ POST Request:
 ```
 
 Example response for the request:
+
 ```json
 {
   "success": true,
