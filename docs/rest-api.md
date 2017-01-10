@@ -14,9 +14,7 @@ All fields are optional unless specified as required.
       "user": "(required) id string",
       "description": "string that was sent with the upload",
       "context": {
-        "chat": [
-          messages
-        ]
+        "chat": [ messages ]
       }
     },
     "tasks": [
@@ -31,7 +29,7 @@ All fields are optional unless specified as required.
         "description": "string",
         "location": "...",
         "context": {
-          "chat": [ "..." ]
+          "chat": [ messages ]
         }
     },
     "..."]
@@ -41,7 +39,7 @@ All fields are optional unless specified as required.
 ### Possible Message Types
 The following subset of slack messages can be given to the API:
 
-Basic message
+Basic message:
 ```json
 {
     "type": "message",
@@ -56,7 +54,7 @@ Basic message
 }
 ```
 
-A message was changed
+A message was changed:
 ```json
 {
     "type": "message",
@@ -77,7 +75,7 @@ A message was changed
 }
 ```
 
-A message was deleted
+A message was deleted:
 ```json
 {
     "type": "message",
@@ -89,7 +87,7 @@ A message was deleted
 }
 ```
 
-A file was shared
+A file was shared:
 ```json
 {
     "type": "message",
@@ -102,7 +100,7 @@ A file was shared
 }
 ```
 
-A file was mentioned in a message
+A file was mentioned in a message:
 ```json
 {
     "type": "message",
@@ -114,7 +112,7 @@ A file was mentioned in a message
 }
 ```
 
-A file was commented
+A file was commented:
 ```json
 {
     "type": "message",
@@ -126,7 +124,7 @@ A file was commented
 }
 ```
 
-A message that describes the status of the user
+A message that describes the status of the user:
 ```json
 {
     "type": "message",
@@ -138,7 +136,7 @@ A message that describes the status of the user
 }
 ```
 
-Bot message
+Bot message:
 ```json
 {
     "type": "message",
@@ -151,7 +149,7 @@ Bot message
 }
 ```
 
-Purpose of the channel changed
+Purpose of the channel changed:
 ```json
 {
     "type": "message",
@@ -163,7 +161,7 @@ Purpose of the channel changed
 }
 ```
 
-Channel topic changed
+Channel topic changed:
 ```json
 {
     "type": "message",
@@ -219,7 +217,15 @@ A file can be given in the following format:
     "channels": ["C024BE7LT", ...],
     "groups": ["G12345", ...],
     "ims": ["D12345", ...],
-    "initial_comment": {...},
+    "initial_comment": {
+        "id": "Fc2RRU1X2P",
+        "created": 1476967054,
+        "timestamp": 1476967054,
+        "user": "U2RSYQFMW",
+        "is_intro": true,
+        "comment": "Erkennt ihr das AMOS? xD",
+        "channel": ""
+    }
     "num_stars": 7,
     "is_starred": true,
     "pinned_to": ["C024BE7LT", ...],
