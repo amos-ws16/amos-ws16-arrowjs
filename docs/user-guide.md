@@ -177,7 +177,6 @@ This configuration is used to compare the description of file and tasks (`"input
 
 An aggregator is a policy that combines a set of scores that were previously assigned to a task by multiple Plugins into a single final score value. Aggregators can be nested.
 
-
 ##### 4.3.2.1 Types
 
 You can choose from these aggregators:
