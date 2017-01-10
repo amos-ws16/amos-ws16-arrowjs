@@ -9,6 +9,9 @@
 [![Standard - JavaScript Style Guide](https://cdn.rawgit.com/feross/standard/master/badge.svg)](https://github.com/feross/standard)
 
 
+## Usage
+
+Check out the [user guide](docs/user-guide.md) for information on how to use the Arrow.js Engine.
 Check out the [development guide](docs/development-guide.md).
 
 ## Repository Branches
@@ -20,4 +23,3 @@ Check out the [development guide](docs/development-guide.md).
 ## License
 
 Arrow.js is licensed under the [AGPL](LICENSE.md).
-
