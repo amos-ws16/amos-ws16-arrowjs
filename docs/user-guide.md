@@ -195,7 +195,7 @@ Another custom configuration could look like this.
    }
  }
 }
- ```
+```
 
 Here we used only 3 plugins. First we took the mean of the score of the long `File Timestamp - Task Timestamp`-Plugin and the score of the keywords only `File Title - Task Description`-Plugin. After that we took the higher value (max) of this mean value and the score of the keywords only `File Title - Task Title`-Plugin.
 
