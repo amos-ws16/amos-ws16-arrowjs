@@ -97,8 +97,8 @@ Request:
 
 A configuration consists of plugin configurations and an aggregator configuration. The API has a default configuration.
 
-#### 6.1 Default Configuration
-The Basic-Configuration of this API makes 5 different comparisons:
+#### 6.1 Configuration options
+The Configuration of this API has 5 different comparison-plugins:
 
 1. Similar Title:
 Compares the title of the file with all task titles
@@ -107,7 +107,7 @@ Compares the title of the file with all task titles
 Compares the timestamps of file and tasks with a time limit of 600 seconds
 
 3. Context File Timestamp - Tasks Timestamp (Long):
-Compares the timestamps of file and tasks with a time limit of 3000 seconds
+Compares the timestamps of file and tasks with a time limit of 3600 seconds
 
 4. Context File Description - Task Title:
 Compares the description of a file with the title of tasks
@@ -115,9 +115,23 @@ Compares the description of a file with the title of tasks
 5. Context File Description - Task Description:
 Compares the description of a file with the description of tasks
 
-The used Aggregator is `mean` over all 5 comparisons.
+#### 6.2 Default Configuration
 
-#### 6.2 Custom Configuration
+The default configuration consists mainly of 3 three scores which are aggregated by the `mean` Aggregator:
+
+1. Description components score
+
+ First the maximum of the raw `File Description - Task Description`-Plugin and the keywords only `File Description - Task Description`-Plugin is taken. Respectively this is done for the `File Title - Task Description`-Plugin and for the `File Description - Task Title`-Plugin. After that those 3 maximum values get aggregated with the `mean` Aggregator to form the _Description components score_.
+
+2. Title-Title score
+
+ This score simply consists of the score from the `File Title - Task Title`-Plugin.
+
+3. Timestamp score
+
+ The timestamp score is calculated by taking the mean score of the `File Title - Task Title`-Plugin and the `File Timestamp - Task Timestamp`-Plugin.
+
+#### 6.3 Custom Configuration
 
 There is also the possibility to configure the API by yourself, just by sending an own configuration with the Post Request. An example could look like this:
 
@@ -133,7 +147,7 @@ There is also the possibility to configure the API by yourself, just by sending 
     "context-file-timestamp-tasks-timestamp-long": {
       "use": "close-time-plugin",
       "inputs": ["file.created_at", "tasks[].created_at"]
-    },
+    }
   }
 }
 ```
@@ -147,6 +161,42 @@ This configuration is used to compare the description of file, which is first tr
 3. The __inputs__ describe the path to the value that should be compared. Additional pipes (`| to-lower-case`) will modify the value before it is passed to the scoring plugin. For a list of all available pipes see [here](https://github.com/amos-ws16/amos-ws16-arrowjs/blob/dev/docs/user-guide.md#9-pipes).
 
 4. The __params__ is an object of parameters that is passed to to used plugin.
+
+Another custom configuration could look like this.
+
+```json
+{
+ "aggregator": {
+    "max": [
+      { "mean": [
+        "context-file-timestamp-tasks-timestamp-long",
+        "context-file-title-task-description"
+        ]
+      },
+     "similar-file-title-task-title"
+    ]
+  },
+ "plugins": {
+   "context-file-title-task-title": {
+     "use": "similar-text-plugin",
+     "inputs": ["file.title", "tasks[].title"],
+     "params": { "extractKeywords": true }
+   },
+   "context-file-timestamp-tasks-timestamp-long": {
+     "use": "close-time-plugin",
+     "inputs": ["file.created_at", "tasks[].created_at"],
+     "params": { "time-limit": 3000 }
+   },
+   "context-file-title-task-description": {
+     "use": "similar-text-plugin",
+     "inputs": ["file.title", "tasks[].description"],
+     "params": { "extractKeywords": true }
+   }
+ }
+}
+ ```
+
+Here we used only 3 plugins. First we took the mean of the score of the long `File Timestamp - Task Timestamp`-Plugin and the score of the keywords only `File Title - Task Description`-Plugin. After that we took the higher value (max) of this mean value and the score of the keywords only `File Title - Task Title`-Plugin.
 
 ## 7. Example Request with Configuration
 POST Request:
@@ -216,7 +266,32 @@ You can choose from these Aggregators:
 | mean          | calculates mean of all scores                                                                    |
 | weigthed mean | calculates weighted mean of all scores <br> requires arrays of the form [weight, value] as input |
 
+Some examples of how to use those aggregators can be found in the Custom Configuration section of this User Guide. They can be combined in any desired way. If you want to apply an aggregator on all plugins you can use the wildcard symbol "\*".
 
+__ATTENTION__: When using the wildcard symbol with certain aggregators like e.g. `mean` and some plugins can't return a value (e.g. because of missing optional values in the input), the returned mean value gets calculated only based on the returned values.  
+On the other hand if the wildcard is not used, missing values will be treated as a score of 0.0 in the aggregators.  
+Examples:
+ 1. mean(\*) with 5 plugins but only __2__ plugins returned values [0, 1]:
+
+  (0 + 1) / __2__ = 0.5  
+  This leads to a total score of 0.5.
+
+ 2. mean(\*) with 5 plugins and all 5 plugins returned values [0, 1, 1, 1, 1]:
+
+  (0 + 1 + 1 + 1 + 1) / 5 = 0.8  
+  This leads to a total score of 0.8.
+
+ 3. mean(...) with __5__ plugins listed in (...) but only 2 plugins returned values [0, 1]:
+
+  (0 + 1) / __5__ = 0.2  
+  This leads to a total score of 0.2.
+
+ 4. mean(...) with 5 plugins listed in (...) and all 5 plugins returned values [0, 1, 1, 1, 1]:
+
+  (0 + 1 + 1 + 1 + 1) / 5 = 0.8  
+  This leads to a total score of 0.8.   
+
+This holds similarly for the other aggregators.
 
 ## 9. Pipes
 
