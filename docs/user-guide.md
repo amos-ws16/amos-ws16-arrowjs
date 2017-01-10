@@ -201,6 +201,7 @@ Here we used only 3 plugins. First we took the mean of the score of the long `Fi
 
 ## 7. Example Request with Configuration
 POST Request:
+
 ```json
 {
     "config": {
