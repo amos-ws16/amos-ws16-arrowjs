@@ -6,7 +6,7 @@ All notable changes to this project will be documented in this file.
 
 ## Added
 - Plugins can now take an arbitrary number of arguments [PR](https://github.com/amos-ws16/amos-ws16-arrowjs/pull/62)
-- Added in-timespan-plugin to give a relation, whether  a time stamp is in a time range [PR](https://github.com/amos-ws16/amos-ws16-arrowjs/pull/62)
+- Added `in-timespan-plugin` to give a relation, whether a time stamp is in a time range [PR](https://github.com/amos-ws16/amos-ws16-arrowjs/pull/62)
 - Engine and Server Version added for the welcome page [PR](https://github.com/amos-ws16/amos-ws16-arrowjs-server/pull/7)
 - Added logical aggregators (and, or, not, nand) [PR](https://github.com/amos-ws16/amos-ws16-arrowjs/pull/64)
 - Added a Website for this project [(click here)](https://amos-ws16.github.io/amos-ws16-arrowjs/)
@@ -14,8 +14,9 @@ All notable changes to this project will be documented in this file.
 - Added exception handling for scoring the relation with missing input fields [PR](https://github.com/amos-ws16/amos-ws16-arrowjs/pull/63)
 
 ## Changed
-- Updated [Getting Started](https://github.com/amos-ws16/amos-ws16-arrowjs/blob/master/docs/user-guide.md) with npm installation guide [PR](https://github.com/amos-ws16/amos-ws16-arrowjs/pull/71), chat inputschema (especially for Slack chats) [PR](https://github.com/amos-ws16/amos-ws16-arrowjs/pull/69)
+- Updated [Getting Started](https://github.com/amos-ws16/amos-ws16-arrowjs/blob/master/docs/user-guide.md) with npm installation guide [PR](https://github.com/amos-ws16/amos-ws16-arrowjs/pull/71) and chat inputschema (especially for Slack chats) [PR](https://github.com/amos-ws16/amos-ws16-arrowjs/pull/69)
 - Improvements of default configuration (considering aggregators) to get besser scoring results
+- Fixed aggregators missing scores: max, weighted-mean and mean now interpret missing scores as 0.0.
 
 
 ## [1.5.0](https://github.com/amos-ws16/amos-ws16-arrowjs/releases/tag/sprint-08-release) - 2016-12-15
