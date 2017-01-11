@@ -270,8 +270,8 @@ Since pipes are used by a plugin, they are added to the plugin configuration.
       "use": "close-time-plugin",
       "inputs": ["file.created_at", "tasks[].created_at"]
     }
-  }
-  ```
+}
+```
 
 Pipes can be chained with additional `|`'s.
 
