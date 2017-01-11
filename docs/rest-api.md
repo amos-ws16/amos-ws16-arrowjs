@@ -39,7 +39,7 @@ All fields are optional unless specified as required.
 ### Possible Message Types
 We support all message formats that are specified in the Slack API.
 A detailed description of possible formats can be found in the
-[Basic message formatting section](https://api.slack.com/docs/message-formatting).
+[message events section](https://api.slack.com/events/message).
 
 
 ## Output Schema
