@@ -1,29 +1,26 @@
-# Arrow.js - The correlation engine
-
-## 1. Content
-
- 1. [Content](#Content)
- 2. [Introduction](#Introduction)
- 3. [Installation](#Installation)
- 4. [Usage](#Usage)
-  1. [Example](#Example)
-  2. [Score Manager](#Score-Manager)
-  3. [Configuration](#Configuration)
-
-## 2. Introduction
+# User Guide - Arrow.js
 
 This user guide explains how to use the Arrow.js Engine.
 
-## 3. Installation
+## 1. Content
+
+ 1. [Content](#content)
+ 2. [Installation](#installation)
+ 3. [Usage](#usage)
+  1. [Example](#example)
+  2. [Score Manager](#score-Manager)
+  3. [Configuration](#configuration)
+
+## 2. Installation
 
 ```sh
 $ npm install https://github.com/amos-ws16/amos-ws16-arrowjs.git
 ```
 
-## 4. Usage
+## 3. Usage
 
 
-### 4.1 Example
+### 3.1 Example
 Here you can see a short example on how to use Arrow.js. Every component of this example is described below.
 
 ```javascript
@@ -72,11 +69,9 @@ let score = scoreManager.score(obj)
 
 ```
 
-### 4.2 Score Manager
+### 3.2 Score Manager
 
 The purpose of the score manager is to provide the entry point for a scoring request, delegate the data to multiple Plugins, and combine their individual scores using an aggregator.
-
-#### 4.2.1 Usage
 
 To get a score for an object, the object needs to be passed to the `score` function of the score manager. The result could look like this:
 
@@ -111,7 +106,7 @@ To get a score for an object, the object needs to be passed to the `score` funct
 
 The result contains each score for the configured plugins and one aggregated score for each task.
 
-### 4.3 Configuration
+### 3.3 Configuration
 
 The configuration consists of the **plugin configuration** and the **aggregator configuration**.
 
@@ -122,11 +117,11 @@ The configuration consists of the **plugin configuration** and the **aggregator 
 }
 ```
 
-#### 4.3.1 Plugins
+#### 3.3.1 Plugins
 
 A plugin is a function that takes two arguments - a file object that contains meta data, for example the filename, size, time of upload and/or the file contents, and a task object that contains meta data related to the task, for example the task name. It returns a floating point numeric score in the range 0.0 to 1.0 which describes the degree in which the file and the task are correlated in the aspect that this plugin is focused on.
 
-##### 4.3.1.1 Types
+##### 3.3.1.1 Types
 
 You can choose from these plugins:
 
@@ -143,7 +138,7 @@ This plugin compares different texts like descriptions or titles of files and ta
 It checks the time, when both objects were uploaded (or updated) and if the upload times are far away from each other the plugin would return 0.0. Otherwise if the objects are uploaded at the same time the result would be 1.0. For information on available parameters take a look at the [source](../lib/plugins/close-time-plugin.js).
 
 
-##### 4.3.1.2 Configuration
+##### 3.3.1.2 Configuration
 
 Plugins can be configured using the additional parameters. How this is done can be seen in the following example.
 
@@ -173,11 +168,11 @@ This configuration is used to compare the description of file and tasks (`"input
 
 4. The __params__ is an object of parameters that is passed to used plugin.
 
-#### 4.3.2 Aggregators
+#### 3.3.2 Aggregators
 
 An aggregator is a policy that combines a set of scores that were previously assigned to a task by multiple Plugins into a single final score value. Aggregators can be nested.
 
-##### 4.3.2.1 Types
+##### 3.3.2.1 Types
 
 You can choose from these aggregators:
 
@@ -236,11 +231,11 @@ An aggregator configuration could look like this:
 
 Here we use only 3 plugins. First we take the mean of the score of the long `File Timestamp - Task Timestamp`-Plugin and the score of the keywords only `File Title - Task Description`-Plugin. After that we take the highest value (max) of this mean value and the score of the keywords only `File Title - Task Title`-Plugin.
 
-#### 4.3.3 Pipes
+#### 3.3.3 Pipes
 
 Pipes can be used to manipulate the input for plugins.
 
-##### 4.3.3.1 Types
+##### 3.3.3.1 Types
 
 You can choose from these pipes:
 
@@ -260,7 +255,7 @@ You can choose from these pipes:
 | days-since-epoch   | timestamp      |
 | hours-since-epoch  | timestamp      |
 
-##### 4.3.3.2 Usage
+##### 3.3.3.2 Usage
 
 Since pipes are used by a plugin, they are added to the plugin configuration.
 
@@ -280,7 +275,7 @@ Since pipes are used by a plugin, they are added to the plugin configuration.
 
 Pipes can be chained with additional `|`'s.
 
-#### 4.3.4 Default Configuration
+#### 3.3.4 Default Configuration
 
 The default configuration consists mainly of 3 three scores which are aggregated by the `mean` Aggregator:
 
