@@ -14,9 +14,7 @@ All fields are optional unless specified as required.
       "user": "(required) id string",
       "description": "string that was sent with the upload",
       "context": {
-        "chat": "...",
-        "more stuff": "...",
-        "to be defined later": "..."
+        "chat": [ messages ]
       }
     },
     "tasks": [
@@ -29,12 +27,20 @@ All fields are optional unless specified as required.
         "last_updated_at": "unix timestamp",
         "assignees": ["userid1", "userid2", "..."],
         "description": "string",
-        "location": "..."
+        "location": "...",
+        "context": {
+          "chat": [ messages ]
+        }
     },
     "..."]
 }
-
 ```
+
+### Possible Message Types
+We support all message formats that are specified in the Slack API.
+A detailed description of possible formats can be found in the
+[message events section](https://api.slack.com/events/message).
+
 
 ## Output Schema
 Not yet finished.
