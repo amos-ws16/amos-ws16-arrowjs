@@ -244,7 +244,7 @@ buster.testCase('ScoreManager with configuration', {
       buster.assert.match(result[0]['plugin-c'], /this is the error description/)
     },
 
-    'should be caught and isolated on a per plugin bases': function () {
+    'should be caught and isolated on a per plugin basis': function () {
       let aggregator = { combine: this.stub().returns(1.0) }
       let plugA = () => 1.0
       let plugB = () => 1.0
@@ -264,6 +264,27 @@ buster.testCase('ScoreManager with configuration', {
 
       let result = manager.score(blob)
       buster.assert.match(result[0]['plugin-a'], /no-attribute-here/)
+    },
+
+    'should be caught and isolated on a per task basis': function () {
+      let aggregator = { combine: this.stub().returns(1.0) }
+      let plugA = () => 1.0
+
+      let manager = scoreManager.create({
+        aggregator,
+        plugins: {
+          'plugin-a': { use: plugA, inputs: ['file', 'tasks[].description'] }
+        }
+      })
+
+      let blob = {
+        file: {},
+        tasks: [{ description: 'this is a task' }, { x: 'no description here' }]
+      }
+
+      let result = manager.score(blob)
+      buster.assert.same(result[0]['plugin-a'], 1.0)
+      buster.assert.match(result[1]['plugin-a'], /failure/)
     },
 
     'should only pass successful scores to the aggregator': function () {
@@ -364,6 +385,54 @@ buster.testCase('ScoreManager Integration', {
       let result = manager.score(blob)
       buster.assert.near(result[0].total, 1.0, 1e-3)
       buster.assert.near(result[1].total, 0.0, 1e-3)
+    }
+  },
+
+  'plugins with more than 2 arguments': {
+    'should receive arguments given in inputs array': function () {
+      let config = {
+        aggregator: {'max': '*'},
+        plugins: {
+          'in-time': {
+            use: 'in-timespan-plugin',
+            inputs: ['file.created_at', 'tasks[].created_at', 'tasks[].due_date']
+          }
+        }
+      }
+      let manager = scoreManager.create(config)
+
+      let blob = {
+        file: { created_at: 1481924134 },
+        tasks: [
+          { created_at: 1481924000, due_date: 1481924500 }, // yes case
+          { created_at: 1481920000, due_date: 1481924000 }  // no case
+        ]
+      }
+
+      let result = manager.score(blob)
+      buster.assert.near(result[0]['in-time'], 1.0, 1e-3)
+      buster.assert.near(result[1]['in-time'], 0.0, 1e-3)
+    },
+
+    'should return a length 1 array result when no array[] path is given': function () {
+      let config = {
+        aggregator: {'max': '*'},
+        plugins: {
+          'in-time': {
+            use: 'in-timespan-plugin',
+            inputs: ['file.created_at', 'file.other_date', 'file.due_date']
+          }
+        }
+      }
+      let manager = scoreManager.create(config)
+
+      let blob = {
+        file: { created_at: 1481924134, other_date: 1481924000, due_date: 1481924500 }
+      }
+
+      let result = manager.score(blob)
+      buster.assert.equals(result.length, 1)
+      buster.assert.near(result[0]['in-time'], 1.0, 1e-3)
     }
   },
 

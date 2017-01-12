@@ -8,8 +8,23 @@
 
 [![Standard - JavaScript Style Guide](https://cdn.rawgit.com/feross/standard/master/badge.svg)](https://github.com/feross/standard)
 
+Arrow.js supports the user to identify the correlation between multiple contexts and a single file. We score the relation between different resources. As the result the user gets a score, which describes the probability of a connection between these data sets. This service is accessible through a REST call (read our [user guide](docs/user-guide.md) for more information).
 
-Check out the [development guide](docs/development-guide.md).
+## Table of contents
+
+- [Guides](#guides)
+- [Versioning](#versioning)
+- [Repository Branches](#repository-branches)
+- [License](#license)
+
+## Guides
+Check out the [user guide](docs/user-guide.md) and the [development guide](docs/development-guide.md).
+
+## Versioning
+
+For transparency into our release cycle and in striving to maintain backward compatibility, Arrow.js is maintained under [the Semantic Versioning guidelines](http://semver.org/).
+
+Check out our [changelog](/CHANGELOG.md) for each release version of Arrow.js.
 
 ## Repository Branches
   + `master`: only tagged releases, i.e. `sprint-xx-release`,
@@ -20,4 +35,3 @@ Check out the [development guide](docs/development-guide.md).
 ## License
 
 Arrow.js is licensed under the [AGPL](LICENSE.md).
-

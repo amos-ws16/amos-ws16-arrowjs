@@ -9,7 +9,32 @@
  * context-file-description-task-description: compares keywords of file description with keywords of description of tasks
 */
 var config = {
-  aggregator: {'mean': '*'},
+
+  aggregator: {'mean': [
+    {'mean': [
+      {'max': ['context-file-title-task-description', 'similar-file-title-task-description']},
+      {'max': ['context-file-description-task-title', 'similar-file-description-task-title']},
+      {'max': ['context-file-description-task-description', 'similar-file-description-task-description']}
+    ]},
+    'similar-file-title-task-title',
+    {'mean': [
+      'context-file-timestamp-tasks-timestamp',
+      'similar-file-title-task-title'
+    ]}
+  ]},
+  /* aggregator: {'mean': [
+    {'max': ['context-file-title-task-description', 'similar-file-title-task-description']},
+    {'max': ['context-file-description-task-title', 'similar-file-description-task-title']},
+    {'max': ['context-file-description-task-description', 'similar-file-description-task-description']},
+    'similar-file-title-task-title', 'context-file-timestamp-tasks-timestamp-long'
+  ]}, -> 52%
+  */
+  /* aggregator: {'max': [ { 'mean': ['context-file-timestamp-tasks-timestamp', 'context-file-timestamp-tasks-timestamp-long',
+    'context-file-title-task-description', 'context-file-description-task-title', 'context-file-description-task-description',
+    'similar-file-title-task-description', 'similar-file-description-task-title', 'similar-file-description-task-description'
+  ] }, 'similar-file-title-task-title' ]}, -> 54%
+  */
+  // aggregator: {'mean': '*'}, ->48%
   plugins: {
     // similar-title-plugin pulls file.title from file and tasks[].title from tasks[] itself
     'similar-file-title-task-title': {
@@ -24,7 +49,7 @@ var config = {
     'context-file-timestamp-tasks-timestamp-long': {
       use: 'close-time-plugin',
       inputs: ['file.created_at', 'tasks[].created_at'],
-      params: { 'time-limit': 3000 }
+      params: { 'time-limit': 3600 }
     },
     'context-file-title-task-description': {
       use: 'similar-text-plugin',

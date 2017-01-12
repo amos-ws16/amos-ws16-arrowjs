@@ -42,16 +42,18 @@ buster.testCase('AggregatorConfigParser', {
     buster.assert.near(abstractSyntaxTree.eval(), 0.6, 1e-3)
   },
 
-  'should throw an error if plugin is not present': function () {
+  'should return source which evaluates to null when plugin was not found / did not compute a score': function () {
     let scores = {}
     let config = 'plugin-a'
-    buster.assert.exception(() => AggregatorConfigParser.parse(config, scores))
+    let abstractSyntaxTree = AggregatorConfigParser.parse(config, scores)
+    buster.assert.isNull(abstractSyntaxTree.eval())
   },
 
-  'should throw an error if plugin is not present but other plugins are': function () {
+  'should return source which evaluates to null when plugin was not found but other plugins are present': function () {
     let scores = { 'plugin-a': 0.5, 'plugin-b': 0.9 }
     let config = 'plugin-c'
-    buster.assert.exception(() => AggregatorConfigParser.parse(config, scores))
+    let abstractSyntaxTree = AggregatorConfigParser.parse(config, scores)
+    buster.assert.isNull(abstractSyntaxTree.eval())
   },
 
   'should be able to use multiple aggregators': function () {
