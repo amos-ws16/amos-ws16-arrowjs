@@ -39,27 +39,27 @@ let scoreManager = arrow.create(config)
 
 // Create an object that we want to get a score for
 let obj = {
-    "file": {
-      "title": "Cafe abc",
-      "type": "jpeg",
-      "created_at": 1479755100,
-      "user": "5hj34thtr",
-      "description": " Great location for a meeting"
+  "file": {
+    "title": "Cafe abc",
+    "type": "jpeg",
+    "created_at": 1479755100,
+    "user": "5hj34thtr",
+    "description": " Great location for a meeting"
+  },
+  "tasks": [
+    {
+      "title": " find a location",
+      "created_at": 1479754800,
+      "due_date": 1479766305,
+      "created_by": "ikgDG94s",
+      "description": "Find a location for the next meeting"
     },
-    "tasks": [
-      {
-        "title": " find a location",
-        "created_at": 1479754800,
-        "due_date": 1479766305,
-        "created_by": "ikgDG94s",
-        "description": "Find a location for the next meeting"
-    },
-     {
-        "title": " Check your mails",
-        "created_at": 1379754800,
-        "due_date": 1454353454,
-        "created_by": "dfgj2s334",
-        "description": "Check your mails before you leave."
+    {
+      "title": " Check your mails",
+      "created_at": 1379754800,
+      "due_date": 1454353454,
+      "created_by": "dfgj2s334",
+      "description": "Check your mails before you leave."
     }
   ]
 }
