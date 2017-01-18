@@ -2,17 +2,41 @@ const buster = require('buster')
 const plugin = require('../../lib/plugins/is-assignee-plugin.js')
 
 buster.testCase('isAssigneePlugin', {
-  'should return 1.0 if  fileuploader is an assignee of a task': function () {
-    let user = 'abc'
-    let assignees = ['abc', 'cde']
-    let result = plugin(user, assignees)
-    buster.assert.equals(result, 1.0)
+  'Testcase 1: 2 tasks with 2 assignees each': function () {
+    let user = 'a'
+    let task = [{'assignees': ['b', 'c']}, {'assignees': ['a', 'c']}]
+    let testResult = [{'assignees': 0.0}, {'assignees': 1.0}]
+    let result = plugin(user, task)
+    buster.assert.equals(result, testResult)
   },
 
-  'should return 0.0 if  fileuploader is not an assignee of a task': function () {
-    let user = 'abc'
-    let assignees = ['cde', 'fgh']
-    let result = plugin(user, assignees)
-    buster.assert.equals(result, 0.0)
+  'Testcase 2: 2 tasks with 1 assignee each': function () {
+    let user = 'a'
+    let task = [{'assignees': ['b']}, {'assignees': ['a']}]
+    let testResult = [{'assignees': 0.0}, {'assignees': 1.0}]
+    let result = plugin(user, task)
+    buster.assert.equals(result, testResult)
+  },
+
+  'Testcase 3: no tasks': function () {
+    let user = 'a'
+    let task = []
+    let testResult = []
+    let result = plugin(user, task)
+    buster.assert.equals(result, testResult)
+  },
+  'Testcase 4: ': function () {
+    let user = 'a'
+    let task = [{'assignees': ['b', 'c']}, {'assignees': ['a']}]
+    let testResult = [{'assignees': 0.0}, {'assignees': 1.0}]
+    let result = plugin(user, task)
+    buster.assert.equals(result, testResult)
+  },
+  'Testcase 5: ': function () {
+    let user = 'a'
+    let task = [{'assignees': ['b']}, {'assignees': ['a', 'c']}]
+    let testResult = [{'assignees': 0.0}, {'assignees': 1.0}]
+    let result = plugin(user, task)
+    buster.assert.equals(result, testResult)
   }
 })
