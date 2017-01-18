@@ -2,7 +2,7 @@
 /**
  * Default config for scoreManager
  *
- * similar-title: compare titles if file and tasks
+ * similar-title: compare titles of file and tasks
  * context-file-timestamp-tasks-timestamp: compares timestamps of file and tasks - timeLimit = 600s (default in plugin)
  * context-file-timestamp-tasks-timestamp: compares keywords of file title with keywords of description of tasks
  * context-file-description-task-title: compares keywords of file description with keywords of description of tasks
