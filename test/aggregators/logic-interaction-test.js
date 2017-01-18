@@ -11,7 +11,7 @@ buster.testCase('logic aggregators', {
     let one = { eval: this.stub().returns(1.0) }
 
     let A = or.create([ zero, one ])
-    let B = not.create(nand.create([ zero, one ]))
+    let B = nand.create([ not.create(zero), not.create(one) ])
 
     buster.assert.near(A.eval(), B.eval(), 1e-3)
   },

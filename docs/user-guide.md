@@ -177,10 +177,14 @@ An aggregator is a policy that combines a set of scores that were previously ass
 You can choose from these aggregators:
 
 | Name          | Description                                                                                      |
-| ------------- |:-------------------------------------------------------------------------------------------------|
+| ------------- | :----------------------------------------------------------------------------------------------- |
 | max           | returns the maximum value                                                                        |
 | mean          | calculates mean of all scores                                                                    |
 | weigthed mean | calculates weighted mean of all scores <br> requires arrays of the form [weight, value] as input |
+| and           | calculates the generalized logical and (see below)                                               |
+| or            | calculates the generalized logical or (see below)                                                |
+| nand          | calculates the generalized logical nand (see below)                                              |
+| not           | calculates the generalized logical not (see below)                                               |
 
 They can be combined in any desired way. If you want to apply an aggregator on all plugins you can use the wildcard symbol "\*".
 
@@ -210,7 +214,33 @@ Examples:
 
 This holds similarly for the other aggregators.
 
-##### 4.3.2.2 Configuration
+
+##### 4.3.2.2 Logical Aggregators
+
+In addition to the statistical reduction aggregators `mean`, `weighted mean`, and `max`, there are the logical aggregators `and`, `or`, `not`, and `nand`. These are modelled after the logical operations with the same name in that, in the case of 0.0 (false) and 1.0 (true) score values, they reproduce the same results. For example:
+```
+config.aggregator = {
+  'and': ['plugin-a', 'plugin-b']
+}
+// Assume the plugins 'plugin-a' and 'plugin-b' score this data with 1.0 and 0.0 respectively
+let data = ...
+let result = scoreManager.score(data)
+// result.total === 0.0
+// because (true AND false) <=> false
+```
+More specifically the following table shows the outputs for scores 1.0 and 0.0:
+
+| A   | B   | and: [A, B] | or: [A, B] | nand: [A, B] | not: A |
+| --- | --- | ----------- | ---------- | ------------ | ------ |
+| 0.0 | 0.0 | 0.0         | 0.0        | 1.0          | 1.0    |
+| 0.0 | 1.0 | 0.0         | 1.0        | 1.0          | 1.0    |
+| 1.0 | 0.0 | 0.0         | 1.0        | 1.0          | 0.0    |
+| 1.0 | 1.0 | 1.0         | 1.0        | 0.0          | 0.0    |
+
+
+However, the logical aggregators generalize the logical operations so they are valid for floating point score values in [0.0,1.0]. For example, if you AND two values that are close to 1.0, you will get a value close to 1.0. If you AND a small value with a big value, you will get a small value. OR will give a big value if one of the inputs is big and NOT will produce a big value only if the input value was small.
+
+##### 4.3.2.3 Configuration
 
 An aggregator configuration could look like this:
 
