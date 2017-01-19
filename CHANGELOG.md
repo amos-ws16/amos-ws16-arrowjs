@@ -1,5 +1,13 @@
 # Change Log
 All notable changes to this project will be documented in this file.
+## [1.7.0](https://github.com/amos-ws16/amos-ws16-arrowjs/compare/sprint-10-release...dev) - 2017-01-19
+
+## Added
+- Plugin 'is-assignes' Added
+- Documentation for logic aggregators
+
+## Changed
+- Fix for logic aggregators
 
 ## [Unreleased](https://github.com/amos-ws16/amos-ws16-arrowjs/compare/sprint-08-release...dev)
 ## [1.6.0]() - 2017-01-12
