@@ -21,25 +21,29 @@ buster.testCase('isInSetPlugin', {
   },
 
   'Testcase 4: no user and no assignees': function () {
-    let user = 'a'
+    let user = ''
     let assignees = []
     buster.assert.equals(plugin(user, assignees), 0.0)
   },
-  'Testcase 5: no user provided': function () {
-    let user = 'b'
-    let assignees = ['a', 'c']
-    buster.assert.equals(plugin(user, assignees), 0.0)
+  'Testcase 5: should throw an error if first input is undefined': function () {
+    let user
+    buster.assert.exception(() => plugin(user))
   },
-  'Testcase 6 - should throw an error if first input is undefined': function () {
-    let assignees = 111
-    buster.assert.exception(() => plugin(assignees))
+  'Testcase 6 - should throw an error if second input is undefined': function () {
+    let user = 111
+    buster.assert.exception(() => plugin(user))
   },
-  'Testcase 7 - should throw an error if second input is not an array': function () {
+  'Testcase 7 - should throw an error if second input is undefined': function () {
+    let user = 111
+    let assignees
+    buster.assert.exception(() => plugin(user, assignees))
+  },
+  'Testcase 8 - should throw an error if second input is not an array': function () {
     let user = 'a'
     let assignees = 111
     buster.assert.exception(() => plugin(user, assignees))
   },
-  'Testcase 8 - should throw an error if first input is not type of array input type': function () {
+  'Testcase 9 - should throw an error if first input is not type of array input type': function () {
     let user = 111
     let assignees = ['a', 'c']
     buster.assert.exception(() => plugin(user, assignees))
