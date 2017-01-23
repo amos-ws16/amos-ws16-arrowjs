@@ -1,42 +1,33 @@
 const buster = require('buster')
-const plugin = require('../../lib/plugins/is-assignee-plugin.js')
+const plugin = require('../../lib/plugins/is-in-set-plugin.js')
 
-buster.testCase('isAssigneePlugin', {
-  'Testcase 1: 2 tasks with 2 assignees each': function () {
+buster.testCase('isInSetPlugin', {
+  'Testcase 1: user is not included in assignees': function () {
     let user = 'a'
-    let task = [{'assignees': ['b', 'c']}, {'assignees': ['a', 'c']}]
-    let testResult = [{'assignees': 0.0}, {'assignees': 1.0}]
-    let result = plugin(user, task)
-    buster.assert.equals(result, testResult)
+    let assignees = ['b', 'c']
+    buster.assert.equals(plugin(user, assignees), 0.0)
   },
 
-  'Testcase 2: 2 tasks with 1 assignee each': function () {
+  'Testcase 2: user is included in assignees': function () {
     let user = 'a'
-    let task = [{'assignees': ['b']}, {'assignees': ['a']}]
-    let testResult = [{'assignees': 0.0}, {'assignees': 1.0}]
-    let result = plugin(user, task)
-    buster.assert.equals(result, testResult)
+    let assignees = ['a', 'c']
+    buster.assert.equals(plugin(user, assignees), 1.0)
   },
 
-  'Testcase 3: no tasks': function () {
+  'Testcase 3: no users in assignee': function () {
     let user = 'a'
-    let task = []
-    let testResult = []
-    let result = plugin(user, task)
-    buster.assert.equals(result, testResult)
+    let assignees = []
+    buster.assert.equals(plugin(user, assignees), 0.0)
   },
-  'Testcase 4: ': function () {
-    let user = 'a'
-    let task = [{'assignees': ['b', 'c']}, {'assignees': ['a']}]
-    let testResult = [{'assignees': 0.0}, {'assignees': 1.0}]
-    let result = plugin(user, task)
-    buster.assert.equals(result, testResult)
+
+  'Testcase 4: no user and no assignees': function () {
+    let user = ''
+    let assignees = []
+    buster.assert.equals(plugin(user, assignees), 0.0)
   },
-  'Testcase 5: ': function () {
-    let user = 'a'
-    let task = [{'assignees': ['b']}, {'assignees': ['a', 'c']}]
-    let testResult = [{'assignees': 0.0}, {'assignees': 1.0}]
-    let result = plugin(user, task)
-    buster.assert.equals(result, testResult)
+  'Testcase 5: no user provided': function () {
+    let user = ''
+    let assignees = ['a', 'c']
+    buster.assert.equals(plugin(user, assignees), 0.0)
   }
 })
