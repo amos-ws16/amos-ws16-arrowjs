@@ -26,5 +26,10 @@ buster.testCase('Pipe: basename', {
     let input = ''
     let result = pipe(input)
     buster.assert.equals(result, '')
+  },
+  'a name that would be empty after filter should remain': function () {
+    let input = '.somefile'
+    let result = pipe(input)
+    buster.assert.equals(result, '.somefile')
   }
 })
