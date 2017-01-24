@@ -70,7 +70,7 @@ buster.testCase('ScoreManager with configuration', {
     'should throw error when plugin does not exist': function () {
       buster.assert.exception(() => {
         this.manager.scoreWith('nonexistent-plugin', {})
-      })
+      }, 'InvalidInputError')
     }
   },
 
@@ -118,6 +118,15 @@ buster.testCase('ScoreManager with configuration', {
         aggregator: this.stubAggregator
       }
       buster.assert.exception(() => scoreManager.create(config))
+    },
+
+    'should throw error when plugin has no valid use-string': function () {
+      let config = {
+        plugins: { 'plugin-a': { use: 'nonexistent-plugin', inputs: ['a', 'b'] } },
+        aggregator: this.stubAggregator
+      }
+      let manager = scoreManager.create(config)
+      buster.assert.exception(() => manager.score({}), 'InvalidInputError')
     }
   },
 
