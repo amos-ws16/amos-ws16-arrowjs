@@ -190,21 +190,24 @@ buster.testCase('ScoreManager with configuration', {
       buster.assert.match(score, matcher)
     },
     'appends ids to the mapping objects if they dont exist': function () {
-      this.config.idPath = 'y[].id'
+      this.config.idPath = 'y[].a.id'
       let blob = {
         x: 'something',
         y: [
           { },
-          { },
-          { 'id': 'abc' }
+          { a: { } },
+          { a: { 'id': 'abc' } }
         ]
       }
 
       var manager = scoreManager.create(this.config)
       let score = manager.score(blob)
-      buster.refute.equals(score[0], undefined)
-      buster.refute.equals(score[1], undefined)
+      buster.refute.equals(score[0].id, undefined)
+      buster.refute.equals(score[1].id, undefined)
       buster.assert.match(score[2], { id: 'abc' })
+      buster.refute.equals(blob.y[0].a.id, undefined)
+      buster.refute.equals(blob.y[1].a.id, undefined)
+      buster.refute.equals(blob.y[2].a.id, undefined)
     }
   },
   'score using Aggregator': {
