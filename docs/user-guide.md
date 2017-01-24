@@ -325,97 +325,98 @@ The default configuration consists mainly of 3 three scores which are aggregated
 
 #### 3.3.5 Identify Scores with IDs
 
-The API supports IDs that will be returned for each score in the response. There are 3 different possibilites how to use the IDs and you can specify your own ID field that will be returned:
+The API supports IDs that will be returned for each score in the response. There are 3 different possibilites how to use IDs and you can specify an ID field (idPath) to match your data structure:
 
 1. Use Default Configuration
 
  The Default Configuration specifies the ID field (idPath) as follows:
  ```javascript
-var config = {
-  idPath: 'tasks[].id',
-  aggregator: { ... },
-  plugins: { ... }
-}
-```
- This means that if you provide this field in your tasks, the corresponding score will also return the ID. If you, don't insert the ID, then the API will generate and return a random ID:
+ {
+     idPath: 'tasks[].id',
+     aggregator: { ... },
+     plugins: { ... }
+ }
+ ```
+ This means that if you provide this field in your tasks array, the corresponding score will also return the ID. If you, don't insert an ID in a task, then the API will generate and return a random ID:
 
  Request:
-  ```javascript
-{ "token": "yourTokenHere",
-  "file": { "title": "hello" },
-  "tasks": [
-    { "title": "taskWithID", "id": "YOUROWNID" },
-    { "title": "taskWithoutID" }
-  ]
-}
-```
+ ```javascript
+ { 
+     "token": "yourTokenHere",
+     "file": { "title": "hello" },
+     "tasks": [
+        { "title": "taskWithID", "id": "YOUROWNID" },
+        { "title": "taskWithoutID" }
+     ]
+ }
+ ```
 
  Response:
-  ```javascript
-{
+ ```javascript
+ {
   "success": true,
   "result": [
-    {
-      "similar-file-title-task-title": 0,
-      ...
-      "id": "YOUROWNID",
-      "total": 0
-    },
-    {
-      "similar-file-title-task-title": 0,
-      ...
-      "id": 1485300049420,
-      "total": 0
-    }
-  ]
+      {
+          "similar-file-title-task-title": 0,
+          ...
+          "id": "YOUROWNID",
+          "total": 0
+      },
+      {
+          "similar-file-title-task-title": 0,
+          ...
+          "id": 1485300049420,
+          "total": 0
+      }
+   ]
 }
 ```
 
 2. Specify your own ID field
 
- In case you will provide your own configuration. Then you can specify your own ID field so that it will match your own data structure. As we map one object against an array of objects, your ID has to be specified somewhere in the array. The following example explains how to use it with your own configuration:
+ In case you will provide your own configuration. Then you can specify your own ID field so that it will match your own data structure. As we map one object against an array of objects, your ID has to be specified somewhere in an array. The following example shows how to use IDs with your own configuration:
  
  Request:
  ```javascript
-{
-  "token": "yourTokenHere",
-  "config": {
-    "idPath": "myObjects[].id.idIWantToReceive",
-    "aggregator": {"mean": [ "my-plugin" ] },
-    "plugins": {
-      "my-plugin": {
-        "use": "similar-text-plugin",
-        "inputs": ["myObject.name", "myObjects[].name"]
-      }
-    }
-  },
-  "myObject": { "name": "hello" },
-  "myObjects": [
-    { "name": "taskWithID", "id": { "idIWantToReceive": "YOUROWNID" } },
-    { "name": "taskWithoutID" }
-  ]
-}
+ {
+     "token": "yourTokenHere",
+     "config": {
+         "idPath": "myObjects[].id.idIWantToReceive",
+         "aggregator": {"mean": [ "my-plugin" ] },
+         "plugins": {
+             "my-plugin": {
+                 "use": "similar-text-plugin",
+                 "inputs": ["myObject.name", "myObjects[].name"]
+             }
+          }
+     },
+     "myObject": { "name": "hello" },
+     "myObjects": [
+         { "name": "taskWithID", "id": { "idIWantToReceive": "YOUROWNID" } },
+         { "name": "taskWithoutID" }
+     ]
+ }
  ```
 
  Response:
  ```javascript
-{
-  "success": true,
-  "result": [
-    {
-      "my-plugin": 0,
-      "id": "YOUROWNID",
-      "total": 0
-    },
-    {
-      "my-plugin": 0,
-      "id": 1485301111119,
-      "total": 0
-    }
-  ]
-}
-```
+ {
+     "success": true,
+     "result": [
+         {
+             "my-plugin": 0,
+             "id": "YOUROWNID",
+             "total": 0
+         },
+         {
+             "my-plugin": 0,
+             "id": 1485301111119,
+             "total": 0
+         }
+     ]
+ }
+ ```
 
 3. Don't use IDs
 
- It is not necessary to specify an idPath in your own configuration. Then you will not receive an ID in the response. The order of the result scores will be the same as in the request
+ It is not necessary to specify an idPath in the configuration. Then you will not receive an ID in the response. The order of the result scores will be the same as in the request.
