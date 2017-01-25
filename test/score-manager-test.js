@@ -460,9 +460,13 @@ buster.testCase('ScoreManager Integration', {
   }
 })
 
-buster.testCase('Input Groups', {
+/*
+  FINAL TESTCASE!
+
+  buster.testCase('Input Groups', {
   'should use similarTextPlugin and inputgroups for file.title with tasks.title and file.title with tasks.description': function () {
     let config = {
+      aggregator: {},
       plugins: {
         'similar-text': {
           use: similarTextPlugin,
@@ -486,4 +490,4 @@ buster.testCase('Input Groups', {
     }
     buster.assert.equals(testResult, res)
   }
-})
+}) */
