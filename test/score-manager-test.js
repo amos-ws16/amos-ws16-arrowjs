@@ -158,8 +158,8 @@ buster.testCase('ScoreManager with configuration', {
 
       this.manager.score({ x: {}, y: [0] })
 
-      buster.assert.calledWith(this.stubParse,
-        'aggregator configuration', { 'plugin-a': 0.5, 'plugin-b': 0.8 })
+      buster.assert.calledWith(this.stubParse, 'aggregator configuration')
+      buster.assert.calledWith(this.stubEval, { 'plugin-a': 0.5, 'plugin-b': 0.8 })
     },
 
     'should return the scores returned by the aggregator in field total': function () {
@@ -205,7 +205,8 @@ buster.testCase('ScoreManager with configuration', {
   'plugin failures': {
     setUp: function () {
       this.stubParse = this.stub(aggregatorConfigParser, 'parse')
-      this.stubParse.returns({ eval: this.stub() })
+      this.stubEval = this.stub()
+      this.stubParse.returns({ eval: this.stubEval })
       this.aggregatorSpec = 'not null but not used'
     },
 
@@ -315,7 +316,8 @@ buster.testCase('ScoreManager with configuration', {
 
       manager.score(blob)
 
-      buster.assert.calledWith(this.stubParse, this.aggregatorSpec, {'plugin-a': 1.0})
+      buster.assert.calledWith(this.stubParse, this.aggregatorSpec)
+      buster.assert.calledWith(this.stubEval, {'plugin-a': 1.0})
     }
   }
 })
