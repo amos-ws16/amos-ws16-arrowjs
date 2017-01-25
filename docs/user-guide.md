@@ -269,21 +269,22 @@ Pipes can be used to manipulate the input for plugins.
 
 You can choose from these pipes:
 
-| Name               | for Type       |
-| -------------------|:-------------: |
-| to-lower-case      | string         |
-| to-upper-case      | string         |
-| trim               | string         |
-| trim-left          | string         |
-| trim-right         | string         |
-| day-of-month       | timestamp      |
-| day-of-week        | timestamp      |
-| hour-of-day        | timestamp      |
-| years-since-epoch  | timestamp      |
-| months-since-epoch | timestamp      |
-| weeks-since-epoch  | timestamp      |
-| days-since-epoch   | timestamp      |
-| hours-since-epoch  | timestamp      |
+| Name               | for Type       | Description                                                    |
+| -------------------|:-------------: |----------------------------------------------------------------|
+| to-lower-case      | string         | Only lower cases in string (i.e. 'TeXt' => 'text')             |
+| to-upper-case      | string         | Only upper cases in string (i.e. 'tExT' => 'TEXT')             |
+| trim               | string         | Removes whitespaces on both sides (i.e. ' text ' => 'text')    |
+| trim-left          | string         | Removes whitespaces on left side  (i.e. ' text ' => 'text ')   |
+| trim-right         | string         | Removes whitespaces on right side (i.e. ' text ' => ' text')   |
+| basename           | string         | Removes a dot-extension (i.e. 'file.ext' => 'file')            |
+| day-of-month       | timestamp      | Extracts the day of the month (1 - 31)                         |
+| day-of-week        | timestamp      | Extracts the day of the week (i.e. Thursday)                   |
+| hour-of-day        | timestamp      | Extracts the hour of the day (0 - 24)                          |
+| years-since-epoch  | timestamp      | Extracts the passed amount of years since 1970                 |                                               
+| months-since-epoch | timestamp      | Extracts the passed amount of months since 1970                |
+| weeks-since-epoch  | timestamp      | Extracts the passed amount of weeks since 1970                 |
+| days-since-epoch   | timestamp      | Extracts the passed amount of days since 1970                  |
+| hours-since-epoch  | timestamp      | Extracts the passed amount of hours since 1970                 |
 
 ##### 3.3.3.2 Usage
 
