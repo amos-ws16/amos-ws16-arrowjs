@@ -35,8 +35,8 @@ buster.testCase('parseInputGroups', {
     buster.assert.isObject(result)
     buster.assert.defined(result.plugins['plugin-a-x-y.a'])
     buster.assert.defined(result.plugins['plugin-a-x-y.b'])
-    buster.assert.equals(result.plugins['plugin-a-x-y.a'].input, ['x', 'y[].a'])
-    buster.assert.equals(result.plugins['plugin-a-x-y.b'].input, ['x', 'y[].b'])
+    buster.assert.equals(result.plugins['plugin-a-x-y.a'].inputs, ['x', 'y[].a'])
+    buster.assert.equals(result.plugins['plugin-a-x-y.b'].inputs, ['x', 'y[].b'])
   },
 
   'should return the plugins with the generated plugins based on the inputGroup (3 inputs)': function () {
