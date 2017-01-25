@@ -337,11 +337,11 @@ The API supports IDs that will be returned for each score in the response. There
      plugins: { ... }
  }
  ```
- This means that if you provide this field in your tasks array, the corresponding score will also return the ID. If you, don't insert an ID in a task, then the API will generate and return a random ID:
+ This means that if you provide this field in your tasks array, the corresponding score will also return the ID. If you don't insert an ID in a task, then the API will generate and return a random ID:
 
  Request:
  ```javascript
- { 
+ {
      "token": "yourTokenHere",
      "file": { "title": "hello" },
      "tasks": [
@@ -374,8 +374,8 @@ The API supports IDs that will be returned for each score in the response. There
 
 2. Specify your own ID field
 
- In case you will provide your own configuration. Then you can specify your own ID field so that it will match your own data structure. As we map one object against an array of objects, your ID has to be specified somewhere in an array. The following example shows how to use IDs with your own configuration:
- 
+ In case you will provide your own configuration. Then you can specify your own ID field so that it will match your own data structure. As we map one object against an array of objects, your ID has to be specified somewhere in an array. The following example shows how to use IDs with your own configuration.
+
  Request:
  ```javascript
  {
