@@ -86,5 +86,11 @@ buster.testCase('AggregatorConfigParser', {
     let abstractSyntaxTree = AggregatorConfigParser.parse(config, scores)
 
     buster.assert.near(abstractSyntaxTree.eval(), 0.7, 1e-3)
+  },
+
+  'should throw an InvalidInputError when aggregator does not exist': function () {
+    let scores = { 'plugin-a': 0.5, 'plugin-b': 0.9 }
+    let config = { 'blubb-aggregator': '*' }
+    buster.assert.exception(() => AggregatorConfigParser.parse(config, scores))
   }
 })
