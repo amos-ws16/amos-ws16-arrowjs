@@ -459,3 +459,31 @@ buster.testCase('ScoreManager Integration', {
     }
   }
 })
+
+buster.testCase('Input Groups', {
+  'should use similarTextPlugin and inputgroups for file.title with tasks.title and file.title with tasks.description': function () {
+    let config = {
+      plugins: {
+        'similar-text': {
+          use: similarTextPlugin,
+          inputGroup: [['file.title'], ['tasks.title', 'tasks[].description']]
+        }
+      }
+    }
+    let manager = scoreManager.create(config)
+
+    let blob = {
+      file: { title: 'location' },
+      tasks: [
+        { title: 'location', description: 'location 12345678' }
+      ]
+    }
+
+    let testResult = manager.score(blob)
+    const res = {
+      'similar-text-0-0': 1.0,
+      'similar-text-0-1': 0.5
+    }
+    buster.assert.equals(testResult, res)
+  }
+})
