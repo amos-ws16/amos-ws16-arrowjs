@@ -33,5 +33,24 @@ buster.testCase('max.create()', {
     let agtr = max.create([stubAgtrA, stubAgtrB, stubAgtrC])
 
     buster.assert.same(agtr.eval(), 0.0)
+  },
+
+  'should pass arguments to eval to the inner aggregators': function () {
+    let stubAgtr = { eval: this.stub().returns(null) }
+    let agtr = max.create([stubAgtr])
+    agtr.eval({ 'plugin-a': 1.0 })
+
+    buster.assert.calledWith(stubAgtr.eval, { 'plugin-a': 1.0 })
+  },
+
+  'should throw an InvalidInputError when argument is not an array': function () {
+    let stubAgtrA = { eval: this.stub().returns(null) }
+    buster.assert.exception(() => max.create(stubAgtrA), 'InvalidInputError')
+  },
+
+  'should be able to use *': function () {
+    let agtr = max.create('*')
+    const result = agtr.eval({ 'plugin-a': 0.0, 'plugin-b': 0.5 })
+    buster.assert.near(result, 0.5, 1.0e-3)
   }
 })
