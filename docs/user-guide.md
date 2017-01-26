@@ -168,6 +168,19 @@ This configuration is used to compare the description of file and tasks (`"input
 
 4. The __params__ is an object of parameters that is passed to used plugin.
 
+5. The __inputGroup__ is an optional parameter. Its use and usage is described below.
+
+###### inputGroup
+
+If you dont want to configure multiple plugins that use the same __use__ function and the same __params__ but use different __inputs__, you can use __inputGroup__ instead. An __inputGroup__ looks like this
+
+```js
+"inputGroup": [ ["file.description"], ["tasks[].description", "tasks[].title"]]
+```
+
+and is used instead of __inputs__. This will automatically generate plugins for you that use each combination of the entries as __inputs__. For example, this __inputGroup__ would create two plugins.
+The first one would compare `file.description` and `tasks[].description` and the second one `file.description` and `tasks[].title`. You can still use __params__. They will apply for all generated plugins.
+
 #### 3.3.2 Aggregators
 
 An aggregator is a policy that combines a set of scores that were previously assigned to a task by multiple Plugins into a single final score value. Aggregators can be nested.
