@@ -142,6 +142,7 @@ buster.testCase('ScoreManager with configuration', {
         aggregator: this.stubAggregator
       }
       buster.assert.exception(() => scoreManager.create(config))
+    },
 
     'should throw error when plugin has no valid use-string': function () {
       let config = {
@@ -150,7 +151,6 @@ buster.testCase('ScoreManager with configuration', {
       }
       let manager = scoreManager.create(config)
       buster.assert.exception(() => manager.score({}), 'InvalidInputError')
-
     }
   },
 
