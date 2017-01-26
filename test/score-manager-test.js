@@ -104,7 +104,7 @@ buster.testCase('ScoreManager with configuration', {
       buster.assert.exception(() => scoreManager.create(config))
     },
 
-    'should throw error when plugin was defined without inputs field': function () {
+    'should throw error when plugin was defined without inputs field and inputGroup field': function () {
       let config = {
         plugins: { 'plugin-a': { use: this.stub() } },
         aggregator: this.stubAggregator
@@ -115,6 +115,30 @@ buster.testCase('ScoreManager with configuration', {
     'should throw error when plugin inputs field is not an array of length 2': function () {
       let config = {
         plugins: { 'plugin-a': { use: this.stub(), inputs: 'not an array' } },
+        aggregator: this.stubAggregator
+      }
+      buster.assert.exception(() => scoreManager.create(config))
+    },
+
+    'should throw error when plugin was defined with invalid inputGroup field': function () {
+      let config = {
+        plugins: { 'plugin-a': { use: this.stub(), inputGroup: 'not an array' } },
+        aggregator: this.stubAggregator
+      }
+      buster.assert.exception(() => scoreManager.create(config))
+    },
+
+    'should throw error when plugin was defined with inputGroup field but with invalid content': function () {
+      let config = {
+        plugins: { 'plugin-a': { use: this.stub(), inputGroup: ['invalid content'] } },
+        aggregator: this.stubAggregator
+      }
+      buster.assert.exception(() => scoreManager.create(config))
+    },
+
+    'should throw error when plugin was defined with inputGroup field but with valid and invalid content': function () {
+      let config = {
+        plugins: { 'plugin-a': { use: this.stub(), inputGroup: [['valid'], 'invalid content'] } },
         aggregator: this.stubAggregator
       }
       buster.assert.exception(() => scoreManager.create(config))
@@ -469,4 +493,5 @@ buster.testCase('ScoreManager Integration', {
       buster.assert.calledWith(pluginA, { xkey: 'xvalue' }, { ykey: 'yvalue' }, { 'my-special-arg': 100 })
     }
   }
+
 })
