@@ -28,5 +28,19 @@ buster.testCase('and.create()', {
     let a = { eval: this.stub().returns(0.1) }
     let b = { eval: this.stub().returns(0.1) }
     buster.assert.less(and.create([a, b]).eval(), 0.1)
+  },
+
+  'should pass arguments to eval to the inner aggregators': function () {
+    let stubAgtr = { eval: this.stub().returns(null) }
+    let agtr = and.create([stubAgtr])
+    agtr.eval({ 'plugin-a': 1.0 })
+
+    buster.assert.calledWith(stubAgtr.eval, { 'plugin-a': 1.0 })
+  },
+
+  'should be able to use *': function () {
+    let agtr = and.create('*')
+    const result = agtr.eval({ 'plugin-a': 1.0, 'plugin-b': 0.0 })
+    buster.assert.same(result, 0.0)
   }
 })

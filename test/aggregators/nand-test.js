@@ -21,5 +21,19 @@ buster.testCase('nand.create()', {
     let a = { eval: this.stub().returns(0.95) }
     let b = { eval: this.stub().returns(0.95) }
     buster.assert.less(nand.create([a, b]).eval(), 0.2)
+  },
+
+  'should pass arguments to eval to the inner aggregators': function () {
+    let stubAgtr = { eval: this.stub().returns(null) }
+    let agtr = nand.create([stubAgtr])
+    agtr.eval({ 'plugin-a': 1.0 })
+
+    buster.assert.calledWith(stubAgtr.eval, { 'plugin-a': 1.0 })
+  },
+
+  'should be able to use *': function () {
+    let agtr = nand.create('*')
+    const result = agtr.eval({ 'plugin-a': 1.0, 'plugin-b': 0.0 })
+    buster.assert.same(result, 1.0)
   }
 })
