@@ -153,7 +153,96 @@ buster.testCase('ScoreManager with configuration', {
       buster.assert.exception(() => manager.score({}), 'InvalidInputError')
     }
   },
+  'ids in mapping objects': {
+    setUp: function () {
+      let aggregator = { combine: this.stub() }
+      this.config = {
+        aggregator,
+        plugins: {}
+      }
+    },
+    'idPath exists with a valid field': function () {
+      this.config.idPath = 'a.b.c[].d.e'
+      buster.refute.exception(() => scoreManager.create(this.config))
+    },
+    'idPath exists but is not a string -> throw error': function () {
+      this.config.idPath = 123
+      buster.assert.exception(() => scoreManager.create(this.config))
+    },
+    'idPath exists but does not contain an': function () {
+      this.config.idPath = 'a.b.c'
+      buster.assert.exception(() => scoreManager.create(this.config))
+    },
+    'idPath exists in the configuration but ends with []': function () {
+      this.config.idPath = 'a[]'
+      buster.assert.exception(() => scoreManager.create(this.config))
+    },
+    'idPath exists but no valid array name': function () {
+      this.config.idPath = '[].c'
+      buster.assert.exception(() => scoreManager.create(this.config))
+    },
+    'idPath exists correct but has more arrays inside': function () {
+      this.config.idPath = 'a.b[].c.d[].e'
+      buster.assert.exception(() => scoreManager.create(this.config))
+    },
+    'iPath does not exist, no error should be given': function () {
+      buster.refute.exception(() => scoreManager.create(this.config))
+    }
+  },
+  'id creation': {
+    setUp: function () {
+      this.stubPluginA = this.stub()
+      this.stubPluginA.returns(0.5)
+      this.stubEval = this.stub()
+      this.stubEval.returns(0.5)
+      this.stubParse = this.stub(aggregatorConfigParser, 'parse').returns({ eval: this.stubEval })
+      this.config = {
+        aggregator: 'aggregator configuration',
+        plugins: {
+          'plugin-a': {
+            use: this.stubPluginA,
+            inputs: ['x', 'y[]']
+          }
+        }
+      }
+    },
+    'return an id if configured correct and id is given': function () {
+      this.config.idPath = 'y[].id'
+      let blob = {
+        x: 'something',
+        y: [
+          { 'id': '123' },
+          { 'id': '321' },
+          { 'id': 'abc' }
+        ]
+      }
 
+      var manager = scoreManager.create(this.config)
+      let score = manager.score(blob)
+      let matcher = [ { id: '123' }, { id: '321' }, { id: 'abc' } ]
+      buster.assert.match(score, matcher)
+    },
+    'appends ids to the mapping objects if they dont exist': function () {
+      this.config.idPath = 'y[].a.id'
+      let blob = {
+        x: 'something',
+        y: [
+          { },
+          { a: { } },
+          { a: { 'id': 'abc' } }
+        ]
+      }
+
+      var manager = scoreManager.create(this.config)
+      let score = manager.score(blob)
+      buster.refute.equals(score[0].id, undefined)
+      buster.refute.equals(score[1].id, undefined)
+      buster.assert.match(score[2], { id: 'abc' })
+      buster.refute.equals(blob.y[0].a.id, undefined)
+      buster.refute.equals(blob.y[1].a.id, undefined)
+      buster.refute.equals(blob.y[2].a.id, undefined)
+    }
+  },
   'score using Aggregator': {
     setUp: function () {
       this.stubPluginA = this.stub()

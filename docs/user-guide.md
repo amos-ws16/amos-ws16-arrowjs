@@ -228,7 +228,7 @@ Examples:
 This holds similarly for the other aggregators.
 
 
-##### 4.3.2.2 Logical Aggregators
+##### 3.3.2.2 Logical Aggregators
 
 In addition to the statistical reduction aggregators `mean`, `weighted mean`, and `max`, there are the logical aggregators `and`, `or`, `not`, and `nand`. These are modelled after the logical operations with the same name in that, in the case of 0.0 (false) and 1.0 (true) score values, they reproduce the same results. For example:
 ```
@@ -253,7 +253,7 @@ More specifically the following table shows the outputs for scores 1.0 and 0.0:
 
 However, the logical aggregators generalize the logical operations so they are valid for floating point score values in [0.0,1.0]. For example, if you AND two values that are close to 1.0, you will get a value close to 1.0. If you AND a small value with a big value, you will get a small value. OR will give a big value if one of the inputs is big and NOT will produce a big value only if the input value was small.
 
-##### 4.3.2.3 Configuration
+##### 3.3.2.3 Configuration
 
 An aggregator configuration could look like this:
 
@@ -336,3 +336,101 @@ The default configuration consists mainly of 3 three scores which are aggregated
  The timestamp score is calculated by taking the mean score of the `File Title - Task Title`-Plugin and the `File Timestamp - Task Timestamp`-Plugin.
 
  The default configuration can be found [here](../config/default.js).
+
+#### 3.3.5 Identify Scores with IDs
+
+The API supports IDs that will be returned for each score in the response. There are 3 different possibilites how to use IDs and you can specify an ID field (idPath) to match your data structure:
+
+1. Use Default Configuration
+
+ The Default Configuration specifies the ID field (idPath) as follows:
+ ```javascript
+ {
+     idPath: 'tasks[].id',
+     aggregator: { ... },
+     plugins: { ... }
+ }
+ ```
+ This means that if you provide this field in your tasks array, the corresponding score will also return the ID. If you don't insert an ID in a task, then the API will generate and return a random ID:
+
+ Request:
+ ```javascript
+ {
+     "token": "yourTokenHere",
+     "file": { "title": "hello" },
+     "tasks": [
+        { "title": "taskWithID", "id": "YOUROWNID" },
+        { "title": "taskWithoutID" }
+     ]
+ }
+ ```
+
+ Response:
+ ```javascript
+ {
+  "success": true,
+  "result": [
+      {
+          "similar-file-title-task-title": 0,
+          ...
+          "id": "YOUROWNID",
+          "total": 0
+      },
+      {
+          "similar-file-title-task-title": 0,
+          ...
+          "id": 1485300049420,
+          "total": 0
+      }
+   ]
+}
+```
+
+2. Specify your own ID field
+
+ In case you will provide your own configuration. Then you can specify your own ID field so that it will match your own data structure. As we map one object against an array of objects, your ID has to be specified somewhere in an array. The following example shows how to use IDs with your own configuration.
+
+ Request:
+ ```javascript
+ {
+     "token": "yourTokenHere",
+     "config": {
+         "idPath": "myObjects[].id.idIWantToReceive",
+         "aggregator": {"mean": [ "my-plugin" ] },
+         "plugins": {
+             "my-plugin": {
+                 "use": "similar-text-plugin",
+                 "inputs": ["myObject.name", "myObjects[].name"]
+             }
+          }
+     },
+     "myObject": { "name": "hello" },
+     "myObjects": [
+         { "name": "taskWithID", "id": { "idIWantToReceive": "YOUROWNID" } },
+         { "name": "taskWithoutID" }
+     ]
+ }
+ ```
+
+ Response:
+ ```javascript
+ {
+     "success": true,
+     "result": [
+         {
+             "my-plugin": 0,
+             "id": "YOUROWNID",
+             "total": 0
+         },
+         {
+             "my-plugin": 0,
+             "id": 1485301111119,
+             "total": 0
+         }
+     ]
+ }
+ ```
+
+3. Don't use IDs
+
+ It is not necessary to specify an idPath in the configuration. Then you will not receive an ID in the response. The order of the result scores will be the same as in the request.
