@@ -17,5 +17,13 @@ buster.testCase('not.create()', {
   'should return low score when input has high score': function () {
     let a = { eval: this.stub().returns(0.9) }
     buster.assert.less(not.create(a).eval(), 0.2)
+  },
+
+  'should pass arguments to eval to the inner aggregators': function () {
+    let stubAgtr = { eval: this.stub().returns(null) }
+    let agtr = not.create(stubAgtr)
+    agtr.eval({ 'plugin-a': 1.0 })
+
+    buster.assert.calledWith(stubAgtr.eval, { 'plugin-a': 1.0 })
   }
 })

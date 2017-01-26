@@ -40,5 +40,11 @@ buster.testCase('mean.create()', {
   'should throw an error if any array element has no eval method': function () {
     let agtrs = [ 'one' ]
     buster.assert.exception(() => mean.create(agtrs))
+  },
+
+  'should be able to use *': function () {
+    let agtr = mean.create('*')
+    const result = agtr.eval({ 'plugin-a': 1.0, 'plugin-b': 0.0 })
+    buster.assert.near(result, 0.5, 1.0e-3)
   }
 })
