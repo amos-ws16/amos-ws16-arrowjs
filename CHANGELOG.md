@@ -1,5 +1,15 @@
 # Change Log
 All notable changes to this project will be documented in this file.
+
+## [Unreleased](https://github.com/amos-ws16/amos-ws16-arrowjs/compare/sprint-11-release...dev) - 2017-01-26
+
+## Added
+- Pipe for base names
+- Assignees Plugin
+- Automatic iput ids
+- Exception handling for configuration
+- Inputgroups
+
 ## [1.7.0](https://github.com/amos-ws16/amos-ws16-arrowjs/compare/sprint-10-release...dev) - 2017-01-19
 
 ## Added
@@ -9,8 +19,7 @@ All notable changes to this project will be documented in this file.
 ## Changed
 - Fix for logic aggregators
 
-## [Unreleased](https://github.com/amos-ws16/amos-ws16-arrowjs/compare/sprint-08-release...dev)
-## [1.6.0]() - 2017-01-12
+## [1.6.0](https://github.com/amos-ws16/amos-ws16-arrowjs/compare/sprint-08-release...dev) - 2017-01-12
 
 ## Added
 - Added a Website for this project [(click here)](https://amos-ws16.github.io/amos-ws16-arrowjs/)

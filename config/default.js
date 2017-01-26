@@ -9,7 +9,7 @@
  * context-file-description-task-description: compares keywords of file description with keywords of description of tasks
 */
 var config = {
-
+  idPath: 'tasks[].id',
   aggregator: {'mean': [
     {'mean': [
       {'max': ['context-file-title-task-description', 'similar-file-title-task-description']},

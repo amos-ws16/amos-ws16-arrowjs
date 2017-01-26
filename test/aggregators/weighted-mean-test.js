@@ -55,5 +55,19 @@ buster.testCase('weightedMean.create()', {
 
   'should throw an error when no argument was given': function () {
     buster.assert.exception(() => weightedMean.create())
+  },
+
+  'should pass arguments to eval to the inner aggregators': function () {
+    let stubAgtr = { eval: this.stub().returns(null) }
+    let agtr = weightedMean.create([[1.0, stubAgtr]])
+    agtr.eval({ 'plugin-a': 1.0 })
+
+    buster.assert.calledWith(stubAgtr.eval, { 'plugin-a': 1.0 })
+  },
+
+  'should be able to use * which is equivalent to the mean of all scores with weights 1': function () {
+    let agtr = weightedMean.create('*')
+    const result = agtr.eval({ 'plugin-a': 1.0, 'plugin-b': 0.0 })
+    buster.assert.near(result, 0.5, 1.0e-3)
   }
 })
