@@ -49,9 +49,14 @@ buster.testCase('Chat Scorer', {
     let result = plugin(testChat, compareText)
     buster.assert.near(result, 1.0, 0.3)
   },
-  'should score low if low similarity between messages and text': function () {
-    let compareText = 'underwater'
+  'should score medium if medium similarity between messages and text': function () {
+    let compareText = 'Hello'
     let result = plugin(testChat, compareText)
-    buster.assert.near(result, 0.0, 0.3)
+    buster.assert.near(result, 0.5, 0.3)
+  },
+  'should score low if low similarity between messages and text': function () {
+    let compareText = 'water'
+    let result = plugin(testChat, compareText)
+    buster.assert.near(result, 0.0, 0.2)
   }
 })
