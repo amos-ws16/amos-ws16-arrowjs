@@ -39,6 +39,9 @@ buster.testCase('Chat Scorer', {
   'should throw error if no text to compare to': function () {
     buster.assert.exception(() => plugin(testChat, ''))
   },
+  'should throw error if second arg is not a valid string': function () {
+    buster.assert.exception(() => plugin(testChat, 1))
+  },
   'should score 1 if chatmessage matches text': function () {
     let compareText = testChatSimple.chat[0].text
     let result = plugin(testChatSimple, compareText)
