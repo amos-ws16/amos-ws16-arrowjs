@@ -116,41 +116,41 @@ A plugin is a function that takes two arguments - a file object that contains me
   You can choose from these plugins:
 
   1. __similar-text plugin__:
-  
+
      This plugin compares different texts like descriptions or titles of files and tasks. If the content of the two texts are similar but have different descriptions, the result would be about 1.0. For information on available parameters take a look at the [source](../lib/plugins/similar-text-plugin.js).
      - Input: _text_ (string), _text_ (string)
      - Parameters:
        1. _extractKeywords_ (boolean, default: false): defines if only keywords should be compared from the strings.
      - Returns: [0.0, 1.0]
-     - [Example](..docs/examples/plugin-similar-text.md)
+     - [Example](examples/plugin-similar-text.md)
      - [Source](../lib/plugins/similar-text-plugin.js)
 
   2. __is-in-set-plugin__:
-  
+
      This plugin checks if a given object is included in a given set (array). The score evaluates to 1.0 if it is included, otherwise 0.0.
      - Input: _variable_ (no specified type), _set_ (array)
      - Parameters: none
      - Returns: {0.0, 1.0}
-     - [Example](..docs/examples/plugin-is-in-set.md)
+     - [Example](examples/plugin-is-in-set.md)
      - [Source](../lib/plugins/is-in-set.js)
 
   3. __in-timespan-plugin__:
-  
+
      This plugin checks if a given timestamp ('time') is in a given period ('start', 'end') of time.
      - Input: _time_ (timestamp), _start_ (timestamp), _end_ (timestamp)
      - Parameters: none
      - Returns: {0.0, 1.0}
-     - [Example](..docs/examples/plugin-in-timespan.md)
+     - [Example](examples/plugin-in-timespan.md)
      - [Source](../lib/plugins/in-timespan-plugin.js)
 
   4. __close-time plugin__:
-  
-     It checks the time, when both objects were uploaded (or updated) and if the upload times are far away from each other the plugin would return 0.0. Otherwise if the objects are uploaded at the same time the result would be 1.0. For information on available parameters take a look at the [source](../lib/plugins/close-time-plugin.js).
+
+     It checks the time, when both objects were uploaded (or updated) and if the upload times are far away from each other the plugin would return 0.0. Otherwise if the objects are uploaded at the same time the result would be 1.0.
      - Input: _time1_ (timestamp), _time2_ (timestamp)
      - Parameters:
        1. _time-limit_: defines the maximum time in seconds. Everything larger that this time will be scored 0.0.
      - Returns: [0.0, 1.0]
-     - [Example](..docs/examples/plugin-close-time.md)
+     - [Example](examples/plugin-close-time.md)
      - [Source](../lib/plugins/close-time-plugin.js)
 
 ##### 3.3.1.2 Configuration
