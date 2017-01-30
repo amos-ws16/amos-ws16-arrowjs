@@ -78,27 +78,17 @@ To get a score for an object, the object needs to be passed to the `score` funct
 ```javascript
 [
   {
+    'id': 1485792981600,
     'similar-file-title-task-title': 0.13333333333333333,
     'context-file-timestamp-tasks-timestamp': 0.5,
-    'context-file-timestamp-tasks-timestamp-long': 0.9,
-    'context-file-title-task-description': 0.09523809523809523,
-    'context-file-description-task-title': 0.5925925925925926,
-    'context-file-description-task-description': 0.7878787878787878,
-    'similar-file-title-task-description': 0.07142857142857142,
-    'similar-file-description-task-title': 0.5517241379310345,
-    'similar-file-description-task-description': 0.7142857142857143,
+    ...,
     'total': 0.4829423591875699
   },
   {
+    'id': 1485792981601,
     'similar-file-title-task-title': 0,
     'context-file-timestamp-tasks-timestamp': 0,
-    'context-file-timestamp-tasks-timestamp-long': 0,
-    'context-file-title-task-description': 0,
-    'context-file-description-task-title': 0,
-    'context-file-description-task-description': 0.06896551724137931,
-    'similar-file-title-task-description': 0,
-    'similar-file-description-task-title': 0,
-    'similar-file-description-task-description': 0.19047619047619047,
+    '...',
     'total': 0.028826856413063307
   }
 ]
@@ -123,27 +113,52 @@ A plugin is a function that takes two arguments - a file object that contains me
 
 ##### 3.3.1.1 Types
 
-You can choose from these plugins:
+  You can choose from these plugins:
 
-| Name          | Description                                                   | Input       | Additional Parameters | Source                                          |
-| ------------- |:--------------------------------------------------------------|:------------|:----------------------|:------------------------------------------------|
-| close-time    | calculates a score based on the difference of time            | timestamps  | 'time-limit'          | [Source](../lib/plugins/close-time-plugin.js)   |
-| similar-text  | calculates a score based on the similarity of two texts       | strings     | 'extractKeywords'     | [Source](../lib/plugins/similar-text-plugin.js) |
+  1. __similar-text plugin__:
+  
+     This plugin compares different texts like descriptions or titles of files and tasks. If the content of the two texts are similar but have different descriptions, the result would be about 1.0. For information on available parameters take a look at the [source](../lib/plugins/similar-text-plugin.js).
+     - Input: _text_ (string), _text_ (string)
+     - Parameters:
+       1. _extractKeywords_ (boolean, default: false): defines if only keywords should be compared from the strings.
+     - Returns: [0.0, 1.0]
+     - [Example](..docs/examples/plugin-similar-text.md)
+     - [Source](../lib/plugins/similar-text-plugin.js)
 
-1. The similar-text plugin:
-This plugin compares different texts like descriptions or titles of files and tasks. If the content of the two texts are similar but have different descriptions, the result would be about 1.0. For information on available parameters take a look at the [source](../lib/plugins/similar-text-plugin.js).
+  2. __is-in-set-plugin__:
+  
+     This plugin checks if a given object is included in a given set (array). The score evaluates to 1.0 if it is included, otherwise 0.0.
+     - Input: _variable_ (no specified type), _set_ (array)
+     - Parameters: none
+     - Returns: {0.0, 1.0}
+     - [Example](..docs/examples/plugin-is-in-set.md)
+     - [Source](../lib/plugins/is-in-set.js)
 
+  3. __in-timespan-plugin__:
+  
+     This plugin checks if a given timestamp ('time') is in a given period ('start', 'end') of time.
+     - Input: _time_ (timestamp), _start_ (timestamp), _end_ (timestamp)
+     - Parameters: none
+     - Returns: {0.0, 1.0}
+     - [Example](..docs/examples/plugin-in-timespan.md)
+     - [Source](../lib/plugins/in-timespan-plugin.js)
 
-2. The close-time plugin:
-It checks the time, when both objects were uploaded (or updated) and if the upload times are far away from each other the plugin would return 0.0. Otherwise if the objects are uploaded at the same time the result would be 1.0. For information on available parameters take a look at the [source](../lib/plugins/close-time-plugin.js).
-
+  4. __close-time plugin__:
+  
+     It checks the time, when both objects were uploaded (or updated) and if the upload times are far away from each other the plugin would return 0.0. Otherwise if the objects are uploaded at the same time the result would be 1.0. For information on available parameters take a look at the [source](../lib/plugins/close-time-plugin.js).
+     - Input: _time1_ (timestamp), _time2_ (timestamp)
+     - Parameters:
+       1. _time-limit_: defines the maximum time in seconds. Everything larger that this time will be scored 0.0.
+     - Returns: [0.0, 1.0]
+     - [Example](..docs/examples/plugin-close-time.md)
+     - [Source](../lib/plugins/close-time-plugin.js)
 
 ##### 3.3.1.2 Configuration
 
 Plugins can be configured using the additional parameters. How this is done can be seen in the following example.
 
 ```javascript
-{
+  {
   "plugins": {
     "context-file-description-task-description": {
       "use": "similar-text-plugin",
