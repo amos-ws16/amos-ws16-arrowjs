@@ -5,17 +5,11 @@ const testChat = {
   chat: [
     {
       'type': 'message',
-      'channel': 'C2147483705',
-      'user': 'U2147483697',
-      'text': 'Hello world',
-      'ts': 1355517523.000005
+      'text': 'Hello world'
     },
     {
       'type': 'message',
-      'channel': 'C2147483705',
-      'user': 'U2147483698',
-      'text': 'Hello underworld',
-      'ts': 1355517545.000005
+      'text': 'Hello underworld'
     }
   ]
 }
@@ -24,20 +18,74 @@ const testChatSimple = {
   chat: [
     {
       'type': 'message',
-      'channel': 'C2147483705',
-      'user': 'U2147483697',
-      'text': 'Hello world',
-      'ts': 1355517523.000005
+      'text': 'Hello world'
     }
   ]
 }
 
+const brokenChat = {
+  chat: [
+    {
+      'type': 'message',
+      'notext': 1234
+    },
+    {
+      'type': 'message',
+      'notext': 'Hello underworld'
+    }
+  ]
+}
+
+const halfChat = {
+  chat: [
+    {
+      'type': 'message',
+      'notext': 1234
+    },
+    {
+      'type': 'message',
+      'text': 'Hello'
+    }
+  ]
+}
+
+const wrongeTypeChat = {
+  chat: [
+    {
+      'type': 'message',
+      'notext': 1234
+    },
+    {
+      'type': 'message',
+      'text': 'Hello'
+    }
+  ]
+}
+
+const extractObjectBroken = {
+  chat: 'chat value'
+}
+
 buster.testCase('Chat Scorer', {
-  'should throw error if no text in chat': function () {
+  'should throw error if chat': function () {
     buster.assert.exception(() => plugin('', 'testphrase'))
   },
   'should throw error if no text to compare to': function () {
     buster.assert.exception(() => plugin(testChat, ''))
+  },
+  'should throw error if no text in chat messages': function () {
+    buster.assert.exception(() => plugin(brokenChat, 'testphrase'))
+  },
+  'should throw error if chat messages cannot be extracted': function () {
+    buster.assert.exception(() => plugin(extractObjectBroken, 'Hello'))
+  },
+  'should ignore chat messages without text if others do have text': function () {
+    let result = plugin(halfChat, 'Hello')
+    buster.assert.equals(result, 1.0)
+  },
+  'should ignore chat messages without text': function () {
+    let result = plugin(wrongeTypeChat, 'Hello')
+    buster.assert.equals(result, 1.0)
   },
   'should throw error if second arg is not a valid string': function () {
     buster.assert.exception(() => plugin(testChat, 1))
