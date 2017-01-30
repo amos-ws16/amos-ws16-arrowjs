@@ -1,6 +1,8 @@
-1. Request
+## Request
+
   ```javascript
   {
+    "idPath": "mappedObjects[].id",
     "token": "YOUR_TOKEN_HERE",
     "config": {
       "aggregator": { "mean": "*" },
@@ -22,7 +24,8 @@
   }
   ```
 
-2. Response
+## Response
+
   ```javascript
   {
     "success": true,

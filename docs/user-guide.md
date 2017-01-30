@@ -117,13 +117,12 @@ A plugin is a function that takes two arguments - a file object that contains me
 
   1. __similar-text plugin__:
 
-     This plugin compares different texts like descriptions or titles of files and tasks. If the content of the two texts are similar but have different descriptions, the result would be about 1.0. For information on available parameters take a look at the [source](../lib/plugins/similar-text-plugin.js).
+     This plugin compares different texts like descriptions or titles of files and tasks. If the content of the two texts are similar but have different descriptions, the result would be about 1.0.
      - Input: _text_ (string), _text_ (string)
      - Parameters:
        1. _extractKeywords_ (boolean, default: false): defines if only keywords should be compared from the strings.
      - Returns: [0.0, 1.0]
-     - [Example](examples/plugin-similar-text.md)
-     - [Source](../lib/plugins/similar-text-plugin.js)
+     - [Example](examples/plugin-similar-text.md), [Source](../lib/plugins/similar-text-plugin.js)
 
   2. __is-in-set-plugin__:
 
@@ -131,8 +130,7 @@ A plugin is a function that takes two arguments - a file object that contains me
      - Input: _variable_ (no specified type), _set_ (array)
      - Parameters: none
      - Returns: {0.0, 1.0}
-     - [Example](examples/plugin-is-in-set.md)
-     - [Source](../lib/plugins/is-in-set.js)
+     - [Example](examples/plugin-is-in-set.md), [Source](../lib/plugins/is-in-set.js)
 
   3. __in-timespan-plugin__:
 
@@ -140,8 +138,7 @@ A plugin is a function that takes two arguments - a file object that contains me
      - Input: _time_ (timestamp), _start_ (timestamp), _end_ (timestamp)
      - Parameters: none
      - Returns: {0.0, 1.0}
-     - [Example](examples/plugin-in-timespan.md)
-     - [Source](../lib/plugins/in-timespan-plugin.js)
+     - [Example](examples/plugin-in-timespan.md), [Source](../lib/plugins/in-timespan-plugin.js)
 
   4. __close-time plugin__:
 
@@ -150,8 +147,7 @@ A plugin is a function that takes two arguments - a file object that contains me
      - Parameters:
        1. _time-limit_: defines the maximum time in seconds. Everything larger that this time will be scored 0.0.
      - Returns: [0.0, 1.0]
-     - [Example](examples/plugin-close-time.md)
-     - [Source](../lib/plugins/close-time-plugin.js)
+     - [Example](examples/plugin-close-time.md), [Source](../lib/plugins/close-time-plugin.js)
 
 ##### 3.3.1.2 Configuration
 
