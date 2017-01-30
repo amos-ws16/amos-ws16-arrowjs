@@ -1,4 +1,4 @@
-## Request
+### Request
 
   ```javascript
   {
@@ -24,7 +24,7 @@
   }
   ```
 
-## Response
+### Response
 
   ```javascript
   {

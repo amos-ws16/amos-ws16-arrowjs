@@ -1,6 +1,6 @@
 ## Example 1
 
-_Request_
+### Request
 ```javascript
 {
   "idPath": "mappedObjects[].id",
@@ -25,7 +25,7 @@ _Request_
 }
 ```
 
-## Response
+### Response
 ```javascript
 {
   "success": true,
@@ -47,7 +47,8 @@ _Request_
 
 # Example 2 (Not working)
 
-_Request_
+### Request
+
 ```javascript
 {
   "idPath": "mappedObjects[].id",
@@ -72,7 +73,8 @@ _Request_
 }
 ```
 
-_Response_
+### Response
+
 ```javascript
 {
   "success": true,
