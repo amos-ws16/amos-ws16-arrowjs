@@ -593,7 +593,7 @@ buster.testCase('ScoreManager Integration', {
         plugins: {
           'plugin-a': {
             use: this.stub(),
-            inputs: ['x | to-upper-case', 'y[]'],
+            inputs: ['x | to-upper-case', 'y[]']
           }
         }
       }
