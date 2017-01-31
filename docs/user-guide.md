@@ -149,6 +149,14 @@ A plugin is a function that takes two arguments - a file object that contains me
      - Returns: [0.0, 1.0]
      - [Example](examples/plugin-close-time.md), [Source](../lib/plugins/close-time-plugin.js)
 
+  4. __chat-text plugin__:
+
+     This plugin scores the similarity of a given string (e.g title or name of a file) and a set of texts (like a chat - text in array form).
+     - Input: _text_ (array), _text_ (string)
+     - Parameters: none
+     - Returns: [0.0, 1.0]
+     - [Example](examples/plugin-chat-text.md), [Source](../lib/plugins/chat-text-plugin.js)
+
 ##### 3.3.1.2 Configuration
 
 Plugins can be configured using the additional parameters. How this is done can be seen in the following example.
