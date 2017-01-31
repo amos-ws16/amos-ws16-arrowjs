@@ -317,7 +317,7 @@ You can choose from these pipes:
 | weeks-since-epoch  | timestamp      | Extracts the passed amount of weeks since 1970                       |
 | days-since-epoch   | timestamp      | Extracts the passed amount of days since 1970                        |
 | hours-since-epoch  | timestamp      | Extracts the passed amount of hours since 1970                       |
-| chat               | [object]       | Extracts all keywords out of an array of [chat messages](rest-api)|
+| chat               | [object]       | Extracts all keywords out of an array of [chat messages](rest-api.md)|
 
 ##### 3.3.3.2 Usage
 
