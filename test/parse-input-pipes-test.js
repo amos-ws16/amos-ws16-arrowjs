@@ -54,7 +54,7 @@ buster.testCase('PipeParser', {
     let pipe = 'to-upper-case'
     let value = ['some value', 'another value']
 
-    let result = PipeParser.applyPipe(pipe, value);
+    let result = PipeParser.applyPipe(pipe, value)
 
     buster.assert.equals(result[0], 'SOME VALUE')
     buster.assert.equals(result[1], 'ANOTHER VALUE')
@@ -64,8 +64,8 @@ buster.testCase('PipeParser', {
     let pipe = 'to-upper-case'
     let value = 'some value'
 
-    let result = PipeParser.applyPipe(pipe, value);
+    let result = PipeParser.applyPipe(pipe, value)
 
     buster.assert.equals(result, 'SOME VALUE')
-  },
+  }
 })

@@ -153,6 +153,7 @@ buster.testCase('ScoreManager with configuration', {
       buster.assert.exception(() => manager.score({}), 'InvalidInputError')
     }
   },
+
   'ids in mapping objects': {
     setUp: function () {
       let aggregator = { combine: this.stub() }
