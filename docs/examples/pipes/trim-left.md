@@ -4,7 +4,7 @@
   {
     "token": "YOUR_TOKEN_HERE",
     "config": {
-	      "idPath": "tasks[].id",
+        "idPath": "tasks[].id",
         "aggregator": {"mean": "*"},
         "plugins": {
             "context-file-description-task-description": {
@@ -19,13 +19,15 @@
     "file": {
         "description": "                                   Great location for a meeting"
     },
-    "tasks": [{
-    	"id": 1,
-        "description": "Find a location for the next meeting"
-    }, {
-    	"id": 2,
-        "description": "Check your mails before you leave."
-    }]
+    "tasks": [
+    	{
+			"id": 1,
+			"description": "Find a location for the next meeting"
+    	}, {
+			"id": 2,
+			"description": "Check your mails before you leave."
+    	}
+    ]
 }
   ```
 
