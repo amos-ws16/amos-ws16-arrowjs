@@ -1,6 +1,7 @@
 const buster = require('buster')
 const scoreManager = require('../lib/score-manager')
 const aggregatorConfigParser = require('../lib/aggregator-config-parser')
+const pipeParser = require('../lib/parse-input-pipes')
 
 const similarTextPlugin = require('../lib/plugins/similar-text-plugin')
 
@@ -153,6 +154,7 @@ buster.testCase('ScoreManager with configuration', {
       buster.assert.exception(() => manager.score({}), 'InvalidInputError')
     }
   },
+
   'ids in mapping objects': {
     setUp: function () {
       let aggregator = { combine: this.stub() }
@@ -580,6 +582,28 @@ buster.testCase('ScoreManager Integration', {
       }
       manager.score(blob)
       buster.assert.calledWith(pluginA, { xkey: 'xvalue' }, { ykey: 'yvalue' }, { 'my-special-arg': 100 })
+    }
+  },
+
+  'plugin pipes': {
+    'should apply the pipe': function () {
+      let piper = this.stub(pipeParser, 'applyPipe')
+      let config = {
+        aggregator: 'plugin-a',
+        plugins: {
+          'plugin-a': {
+            use: this.stub(),
+            inputs: ['x | to-upper-case', 'y[]']
+          }
+        }
+      }
+      let manager = scoreManager.create(config)
+      let blob = {
+        x: { xkey: 'xvalue' },
+        y: [{ ykey: 'yvalue' }]
+      }
+      manager.score(blob)
+      buster.assert.equals(piper.callCount, 1)
     }
   }
 

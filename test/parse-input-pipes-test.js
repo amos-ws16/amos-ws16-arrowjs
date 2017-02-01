@@ -41,5 +41,31 @@ buster.testCase('PipeParser', {
     let pipes = PipeParser.removePipes(input)
 
     buster.assert.equals(pipes, 'file.title')
+  },
+
+  'should throw an exception if the pipe is unknown': function () {
+    let pipe = 'unknown pipe'
+    let value = 'some value'
+
+    buster.assert.exception(() => PipeParser.applyPipe(pipe, value))
+  },
+
+  'should return an array of parsed values': function () {
+    let pipe = 'to-upper-case'
+    let value = ['some value', 'another value']
+
+    let result = PipeParser.applyPipe(pipe, value)
+
+    buster.assert.equals(result[0], 'SOME VALUE')
+    buster.assert.equals(result[1], 'ANOTHER VALUE')
+  },
+
+  'should return the parsed values': function () {
+    let pipe = 'to-upper-case'
+    let value = 'some value'
+
+    let result = PipeParser.applyPipe(pipe, value)
+
+    buster.assert.equals(result, 'SOME VALUE')
   }
 })
