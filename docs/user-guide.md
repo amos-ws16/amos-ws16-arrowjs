@@ -189,7 +189,7 @@ This configuration is used to compare the description of file and tasks (`"input
 
 5. The __inputGroup__ is an optional parameter. Its use and usage is described below.
 
-###### inputGroup
+##### inputGroup
 
 If you dont want to configure multiple plugins that use the same __use__ function and the same __params__ but use different __inputs__, you can use __inputGroup__ instead. An __inputGroup__ looks like this
 
@@ -301,23 +301,23 @@ Pipes can be used to manipulate the input for plugins.
 
 You can choose from these pipes:
 
-| Name               | for Type       | Description                                                          |
-| -------------------|:-------------: |----------------------------------------------------------------------|
-| to-lower-case      | string         | Only lower cases in string (i.e. 'TeXt' => 'text')                   |
-| to-upper-case      | string         | Only upper cases in string (i.e. 'tExT' => 'TEXT')                   |
-| trim               | string         | Removes whitespaces on both sides (i.e. ' text ' => 'text')          |
-| trim-left          | string         | Removes whitespaces on left side  (i.e. ' text ' => 'text ')         |
-| trim-right         | string         | Removes whitespaces on right side (i.e. ' text ' => ' text')         |
-| basename           | string         | Removes a dot-extension (i.e. 'file.ext' => 'file')                  |
-| day-of-month       | timestamp      | Extracts the day of the month (1 - 31)                               |
-| day-of-week        | timestamp      | Extracts the day of the week (i.e. Thursday)                         |
-| hour-of-day        | timestamp      | Extracts the hour of the day (0 - 24)                                |
-| years-since-epoch  | timestamp      | Extracts the passed amount of years since 1970                       |
-| months-since-epoch | timestamp      | Extracts the passed amount of months since 1970                      |
-| weeks-since-epoch  | timestamp      | Extracts the passed amount of weeks since 1970                       |
-| days-since-epoch   | timestamp      | Extracts the passed amount of days since 1970                        |
-| hours-since-epoch  | timestamp      | Extracts the passed amount of hours since 1970                       |
-| chat               | [object]       | Extracts all keywords out of an array of [chat messages](rest-api.md)|
+| Name               | for Type       | Description                                                          |                                            |
+| -------------------|:-------------: |----------------------------------------------------------------------|--------------------------------------------|
+| to-lower-case      | string         | Only lower cases in string (i.e. 'TeXt' => 'text')                   |[Example](examples/pipe-to-lower-case.md)   |
+| to-upper-case      | string         | Only upper cases in string (i.e. 'tExT' => 'TEXT')                   |[Example](examples/pipe-to-upper-case.md)   |
+| trim               | string         | Removes whitespaces on both sides (i.e. ' text ' => 'text')          |[Example](examples/pipe-trim.md)            |
+| trim-left          | string         | Removes whitespaces on left side  (i.e. ' text ' => 'text ')         |[Example](examples/pipe-trim-left.md)       |
+| trim-right         | string         | Removes whitespaces on right side (i.e. ' text ' => ' text')         |[Example](examples/pipe-trim-right.md)      |
+| basename           | string         | Removes a dot-extension (i.e. 'file.ext' => 'file')                  |[Example](examples/pipe-basename.md)        |
+| day-of-month       | timestamp      | Extracts the day of the month (1 - 31)                               |                                            |
+| day-of-week        | timestamp      | Extracts the day of the week (i.e. Thursday)                         |                                            |
+| hour-of-day        | timestamp      | Extracts the hour of the day (0 - 24)                                |                                            |
+| years-since-epoch  | timestamp      | Extracts the passed amount of years since 1970                       |                                            |
+| months-since-epoch | timestamp      | Extracts the passed amount of months since 1970                      |                                            |
+| weeks-since-epoch  | timestamp      | Extracts the passed amount of weeks since 1970                       |                                            |
+| days-since-epoch   | timestamp      | Extracts the passed amount of days since 1970                        |                                            |
+| hours-since-epoch  | timestamp      | Extracts the passed amount of hours since 1970                       |                                            |
+| chat               | [object]       | Extracts all keywords out of an array of [chat messages](rest-api.md)|[Example](examples/pipe-chat.md)            |
 
 ##### 3.3.3.2 Usage
 
