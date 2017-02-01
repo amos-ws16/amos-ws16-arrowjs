@@ -6,25 +6,25 @@
   {
     "token": "YOUR_TOKEN_HERE",
     "config": {
-      "idPath": "mappedObjects[].id",
-      "aggregator": { "and": [ "compare-text1", "compare-text2" ] },
-      "plugins": {
-        "compare-text1": {
-          "use": "similar-text-plugin",
-          "inputs": [ "object.title", "mappedObjects[].text1"]
-        },
-        "compare-text2": {
-          "use": "similar-text-plugin",
-          "inputs": [ "object.title", "mappedObjects[].text2"]
-        },
-        "compare-text3": {
-          "use": "similar-text-plugin",
-          "inputs": [ "object.title", "mappedObjects[].text3"]
+        "idPath": "mappedObjects[].id",
+        "aggregator": { "and": [ "compare-text1", "compare-text2" ] },
+        "plugins": {
+            "compare-text1": {
+              "use": "similar-text-plugin",
+              "inputs": [ "object.title", "mappedObjects[].text1"]
+            },
+            "compare-text2": {
+              "use": "similar-text-plugin",
+              "inputs": [ "object.title", "mappedObjects[].text2"]
+            },
+            "compare-text3": {
+              "use": "similar-text-plugin",
+              "inputs": [ "object.title", "mappedObjects[].text3"]
+            }
         }
-      }
     },
     "object": {
-      "title": "my title"
+        "title": "my title"
     },
     "mappedObjects": [
       	{

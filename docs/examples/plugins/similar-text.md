@@ -2,9 +2,9 @@
 
   ```javascript
   {
-    "idPath": "mappedObjects[].id",
     "token": "YOUR_TOKEN_HERE",
     "config": {
+      "idPath": "mappedObjects[].id",
       "aggregator": { "mean": "*" },
       "plugins": {
         "compare-text": {

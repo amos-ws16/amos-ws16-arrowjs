@@ -199,8 +199,7 @@ If you dont want to configure multiple plugins that use the same __use__ functio
 
 and is used instead of __inputs__. This will automatically generate plugins for you that use each combination of the entries as __inputs__. For example, this __inputGroup__ would create two plugins.
 The first one would compare `file.description` and `tasks[].description` and the second one `file.description` and `tasks[].title`. You can still use __params__. They will apply for all generated plugins.
-
-[Example](examples/input-groups.md)
+[Example of inputGroup](examples/input-groups.md)
 
 #### 3.3.2 Aggregators
 

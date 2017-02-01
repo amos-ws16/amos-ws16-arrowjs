@@ -3,7 +3,6 @@
 ### Request
 ```javascript
 {
-  "idPath": "mappedObjects[].id",
   "token": "YOUR_TOKEN_HERE",
   "config": {
 	  "idPath": "mappedObjects[].id",
