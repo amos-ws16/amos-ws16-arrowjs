@@ -4,22 +4,22 @@
   {
     "token": "YOUR_TOKEN_HERE",
     "config": {
-      "idPath": "mappedObjects[].id",
-      "aggregator": { "mean": "*" },
-      "plugins": {
-        "compare-text": {
-          "use": "similar-text-plugin",
-          "inputs": ["object.text", "mappedObjects[].text"],
-          "params": { "extractKeywords": true }
+        "idPath": "mappedObjects[].id",
+        "aggregator": { "mean": "*" },
+        "plugins": {
+          "compare-text": {
+            "use": "similar-text-plugin",
+            "inputs": ["object.text", "mappedObjects[].text"],
+            "params": { "extractKeywords": true }
+          }
         }
-      }
     },
     "object": {
-      "text": "some text that could be similar"
+        "text": "some text that could be similar"
     },
     "mappedObjects": [
-      { "text": "similar" },
-      { "text": "this is different" }
+        { "text": "similar" },
+        { "text": "this is different" }
     ]
   }
   ```

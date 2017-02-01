@@ -8,13 +8,13 @@
       "aggregator": { "mean": "*" },
       "plugins": {
         "compare-chat": {
-          "use": "chat-text-plugin",
-          "inputs": ["tasks[]", "file.title"]
+            "use": "chat-text-plugin",
+            "inputs": ["tasks[]", "file.title"]
         }
       }
     },
     "file": {
-      "title": "Hello world"
+        "title": "Hello world"
     },
     "tasks": [
     	{

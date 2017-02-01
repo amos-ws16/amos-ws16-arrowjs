@@ -5,21 +5,21 @@
 {
   "token": "YOUR_TOKEN_HERE",
   "config": {
-	  "idPath": "mappedObjects[].id",
-    "aggregator": { "mean": "*" },
-    "plugins": {
-      "check-user": {
-        "use": "is-in-set-plugin",
-        "inputs": [ "object.user", "mappedObjects[].users" ]
+  	  "idPath": "mappedObjects[].id",
+      "aggregator": { "mean": "*" },
+      "plugins": {
+        "check-user": {
+          "use": "is-in-set-plugin",
+          "inputs": [ "object.user", "mappedObjects[].users" ]
+        }
       }
-    }
   },
   "object": {
-    "user": "User A"
+      "user": "User A"
   },
   "mappedObjects": [
-    { "users": [ "User A", "User B", "User C" ] },
-    { "users": [ "No User A", "User B", "User C" ] }
+      { "users": [ "User A", "User B", "User C" ] },
+      { "users": [ "No User A", "User B", "User C" ] }
   ]
 }
 ```

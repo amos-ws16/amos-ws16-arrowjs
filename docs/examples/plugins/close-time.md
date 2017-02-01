@@ -8,9 +8,9 @@
       "aggregator": { "mean": "*" },
       "plugins": {
         "close-time": {
-          "use": "close-time-plugin",
-          "inputs": [ "object.time", "mappedObjects[].time" ],
-          "params": { "time-limit": 500 }
+            "use": "close-time-plugin",
+            "inputs": [ "object.time", "mappedObjects[].time" ],
+            "params": { "time-limit": 500 }
         }
       }
     },
