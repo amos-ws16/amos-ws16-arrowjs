@@ -1,7 +1,7 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
-## [Unreleased](https://github.com/amos-ws16/amos-ws16-arrowjs/compare/sprint-12-release...dev) - 2017-02-02
+## [1.9.0](https://github.com/amos-ws16/amos-ws16-arrowjs/compare/sprint-12-release...dev) - 2017-02-02
 
 ## Added
 - new chat pipe
