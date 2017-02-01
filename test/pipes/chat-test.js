@@ -3,35 +3,47 @@ const pipe = require('../../lib/pipes/chat')
 
 buster.testCase('Pipe: chat', {
   'should get all keywords from chat': function () {
-    let chat = [
-      {
-        'text': 'Hello world'
-      }, {
-        'text': 'Hello underworld'
-      }
-    ]
+    let context = {
+      chat: [
+        {
+          'text': 'Hello world'
+        }, {
+          'text': 'Hello underworld'
+        }
+      ]
+    }
 
-    let result = pipe(chat)
+    let result = pipe(context)
     buster.assert.equals(result, 'world underworld')
   },
 
   'should get all keywords from chat, even if the messages are empty': function () {
-    let chat = [
-      {
-        'text': ''
-      }, {
-        'text': ''
-      }
-    ]
+    let context = {
+      chat: [
+        {
+          'text': ''
+        }, {
+          'text': ''
+        }
+      ]
+    }
 
-    let result = pipe(chat)
+    let result = pipe(context)
     buster.assert.equals(result, '')
   },
 
   'should get all keywords from chat, even if the chat array is empty': function () {
-    let chat = []
+    let context = {
+      chat: []
+    }
 
-    let result = pipe(chat)
+    let result = pipe(context)
     buster.assert.equals(result, '')
+  },
+
+  'should throw an error if there is no chat': function () {
+    let context = {}
+
+    buster.assert.exception(() => pipe(context))
   }
 })
