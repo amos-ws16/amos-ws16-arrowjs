@@ -2,7 +2,7 @@
 
   ```javascript
   {
-    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjowLCJpYXQiOjE0ODU5NzUzNDksImV4cCI6MTQ4NjA2MTc0OX0.uG5wyKgEc3sc3gYKs_LmA-_vw-FJylOggDf3XiUg6-E",
+    "token": "YOUR_TOKEN_HERE",
     "config": {
       "idPath": "tasks[].id",
       "aggregator": { "mean": "*" },

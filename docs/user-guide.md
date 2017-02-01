@@ -122,7 +122,7 @@ A plugin is a function that takes two arguments - a file object that contains me
      - Parameters:
        1. _extractKeywords_ (boolean, default: false): defines if only keywords should be compared from the strings.
      - Returns: [0.0, 1.0]
-     - [Example](examples/plugin-similar-text.md), [Source](../lib/plugins/similar-text-plugin.js)
+     - [Example](examples/plugins/similar-text.md), [Source](../lib/plugins/similar-text-plugin.js)
 
   2. __is-in-set-plugin__:
 
@@ -130,7 +130,7 @@ A plugin is a function that takes two arguments - a file object that contains me
      - Input: _variable_ (no specified type), _set_ (array)
      - Parameters: none
      - Returns: {0.0, 1.0}
-     - [Example](examples/plugin-is-in-set.md), [Source](../lib/plugins/is-in-set.js)
+     - [Example](examples/plugins/is-in-set.md), [Source](../lib/plugins/is-in-set.js)
 
   3. __in-timespan-plugin__:
 
@@ -138,7 +138,7 @@ A plugin is a function that takes two arguments - a file object that contains me
      - Input: _time_ (timestamp), _start_ (timestamp), _end_ (timestamp)
      - Parameters: none
      - Returns: {0.0, 1.0}
-     - [Example](examples/plugin-in-timespan.md), [Source](../lib/plugins/in-timespan-plugin.js)
+     - [Example](examples/plugins/in-timespan.md), [Source](../lib/plugins/in-timespan-plugin.js)
 
   4. __close-time plugin__:
 
@@ -147,7 +147,7 @@ A plugin is a function that takes two arguments - a file object that contains me
      - Parameters:
        1. _time-limit_: defines the maximum time in seconds. Everything larger that this time will be scored 0.0.
      - Returns: [0.0, 1.0]
-     - [Example](examples/plugin-close-time.md), [Source](../lib/plugins/close-time-plugin.js)
+     - [Example](examples/plugins/close-time.md), [Source](../lib/plugins/close-time-plugin.js)
 
   4. __chat-text plugin__:
 
@@ -155,7 +155,7 @@ A plugin is a function that takes two arguments - a file object that contains me
      - Input: _chatobject_ (object with 'chat' array, in array objects with key 'text'), _text_ (string)
      - Parameters: none
      - Returns: [0.0, 1.0]
-     - [Example](examples/plugin-chat-text.md), [Source](../lib/plugins/chat-text-plugin.js)
+     - [Example](examples/plugins/chat-text.md), [Source](../lib/plugins/chat-text-plugin.js)
 
 ##### 3.3.1.2 Configuration
 
@@ -200,7 +200,7 @@ If you dont want to configure multiple plugins that use the same __use__ functio
 and is used instead of __inputs__. This will automatically generate plugins for you that use each combination of the entries as __inputs__. For example, this __inputGroup__ would create two plugins.
 The first one would compare `file.description` and `tasks[].description` and the second one `file.description` and `tasks[].title`. You can still use __params__. They will apply for all generated plugins.
 
-[Example](examples/input-groups.md) 
+[Example](examples/input-groups.md)
 
 #### 3.3.2 Aggregators
 
@@ -210,17 +210,19 @@ An aggregator is a policy that combines a set of scores that were previously ass
 
 You can choose from these aggregators:
 
-| Name          | Description                                                                                      |
-| ------------- | :----------------------------------------------------------------------------------------------- |
-| max           | returns the maximum value                                                                        |
-| mean          | calculates mean of all scores                                                                    |
-| weigthed mean | calculates weighted mean of all scores <br> requires arrays of the form [weight, value] as input |
-| and           | calculates the generalized logical and (see below)                                               |
-| or            | calculates the generalized logical or (see below)                                                |
-| nand          | calculates the generalized logical nand (see below)                                              |
-| not           | calculates the generalized logical not (see below)                                               |
+| Name          | Description                                                                                      |                                                  |
+| ------------- | :----------------------------------------------------------------------------------------------- |--------------------------------------------------|
+| max           | returns the maximum value                                                                        |[Example](examples/aggregators/max.md)            |
+| mean          | calculates mean of all scores                                                                    |[Example](examples/aggregators/mean.md)           |
+| weigthed-mean | calculates weighted mean of all scores <br> requires arrays of the form [weight, value] as input |[Example](examples/aggregators/weighted-mean.md)  |
+| and           | calculates the generalized logical and (see below)                                               |[Example](examples/aggregators/and.md)            |
+| or            | calculates the generalized logical or (see below)                                                |[Example](examples/aggregators/or.md)             |
+| nand          | calculates the generalized logical nand (see below)                                              |[Example](examples/aggregators/nand.md)           |
+| not           | calculates the generalized logical not (see below)                                               |[Example](examples/aggregators/not.md)            |
 
 They can be combined in any desired way. If you want to apply an aggregator on all plugins you can use the wildcard symbol "\*".
+A combination of multiple aggregators is show here: [Example](examples/advanced-aggregators.md).
+
 
 __ATTENTION__: When using the wildcard symbol with certain aggregators like e.g. `mean` and some plugins can't return a value (e.g. because of missing optional values in the input), the returned mean value gets calculated only based on the returned values.  
 On the other hand if the wildcard is not used, missing values will be treated as a score of 0.0 in the aggregators.  
@@ -305,12 +307,12 @@ You can choose from these pipes:
 
 | Name               | for Type       | Description                                                          |                                            |
 | -------------------|:-------------: |----------------------------------------------------------------------|--------------------------------------------|
-| to-lower-case      | string         | Only lower cases in string (i.e. 'TeXt' => 'text')                   |[Example](examples/pipe-to-lower-case.md)   |
-| to-upper-case      | string         | Only upper cases in string (i.e. 'tExT' => 'TEXT')                   |[Example](examples/pipe-to-upper-case.md)   |
-| trim               | string         | Removes whitespaces on both sides (i.e. ' text ' => 'text')          |[Example](examples/pipe-trim.md)            |
-| trim-left          | string         | Removes whitespaces on left side  (i.e. ' text ' => 'text ')         |[Example](examples/pipe-trim-left.md)       |
-| trim-right         | string         | Removes whitespaces on right side (i.e. ' text ' => ' text')         |[Example](examples/pipe-trim-right.md)      |
-| basename           | string         | Removes a dot-extension (i.e. 'file.ext' => 'file')                  |[Example](examples/pipe-basename.md)        |
+| to-lower-case      | string         | Only lower cases in string (i.e. 'TeXt' => 'text')                   |[Example](examples/pipes/to-lower-case.md)  |
+| to-upper-case      | string         | Only upper cases in string (i.e. 'tExT' => 'TEXT')                   |[Example](examples/pipes/to-upper-case.md)  |
+| trim               | string         | Removes whitespaces on both sides (i.e. ' text ' => 'text')          |[Example](examples/pipes/trim.md)           |
+| trim-left          | string         | Removes whitespaces on left side  (i.e. ' text ' => 'text ')         |[Example](examples/pipes/trim-left.md)      |
+| trim-right         | string         | Removes whitespaces on right side (i.e. ' text ' => ' text')         |[Example](examples/pipes/trim-right.md)     |
+| basename           | string         | Removes a dot-extension (i.e. 'file.ext' => 'file')                  |[Example](examples/pipes/basename.md)       |
 | day-of-month       | timestamp      | Extracts the day of the month (1 - 31)                               |                                            |
 | day-of-week        | timestamp      | Extracts the day of the week (i.e. Thursday)                         |                                            |
 | hour-of-day        | timestamp      | Extracts the hour of the day (0 - 24)                                |                                            |
@@ -319,7 +321,7 @@ You can choose from these pipes:
 | weeks-since-epoch  | timestamp      | Extracts the passed amount of weeks since 1970                       |                                            |
 | days-since-epoch   | timestamp      | Extracts the passed amount of days since 1970                        |                                            |
 | hours-since-epoch  | timestamp      | Extracts the passed amount of hours since 1970                       |                                            |
-| chat               | [object]       | Extracts all keywords out of an array of [chat messages](rest-api.md)|[Example](examples/pipe-chat.md)            |
+| chat               | [object]       | Extracts all keywords out of an array of [chat messages](rest-api.md)|[Example](examples/pipes/chat.md)            |
 
 ##### 3.3.3.2 Usage
 
