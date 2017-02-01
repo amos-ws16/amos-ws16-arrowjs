@@ -4,7 +4,7 @@
   {
     "token": "YOUR_TOKEN_HERE",
     "config": {
-    	  "idPath": "tasks[].id",
+    	"idPath": "tasks[].id",
         "aggregator": {"mean": "*"},
         "plugins": {
             "context-file-description-task-description": {
