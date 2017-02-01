@@ -1,7 +1,15 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
-## [Unreleased](https://github.com/amos-ws16/amos-ws16-arrowjs/compare/sprint-11-release...dev) - 2017-01-26
+## [Unreleased](https://github.com/amos-ws16/amos-ws16-arrowjs/compare/sprint-12-release...dev) - 2017-02-02
+
+## Added
+- new chat pipe
+- new chat plugin
+- example requests in documentation
+
+
+## [1.8.0](https://github.com/amos-ws16/amos-ws16-arrowjs/compare/sprint-11-release...dev) - 2017-01-26
 
 ## Added
 - Pipe for base names
