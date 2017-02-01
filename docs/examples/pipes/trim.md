@@ -19,13 +19,16 @@
     "file": {
         "description": "                                Great location for a meeting                                "
     },
-    "tasks": [{
-    	"id": 1,
+    "tasks": [
+      {
+      	"id": 1,
         "description": "Find a location for the next meeting"
-    }, {
-    	"id": 2,
+      },
+      {
+      	"id": 2,
         "description": "Check your mails before you leave."
-    }]
+      }
+    ]
   }
   ```
 
