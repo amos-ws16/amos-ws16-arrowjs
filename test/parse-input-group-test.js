@@ -88,5 +88,15 @@ buster.testCase('parseInputGroups', {
 
     buster.assert.isArray(result)
     buster.assert.equals(result, [[ 'a', 'x' ], [ 'a', 'y' ], [ 'b', 'x' ], [ 'b', 'y' ]])
+  },
+
+  'should return a combination of two arrays, when one array consists of an array': function () {
+    let arr1 = [['a', 'b'], 'c']
+    let arr2 = ['x', 'y']
+
+    let result = combineArrays(arr1, arr2)
+
+    buster.assert.isArray(result)
+    buster.assert.equals(result, [[ 'a, b', 'x' ], [ 'a, b', 'y' ], [ 'c', 'x' ], [ 'c', 'y' ]])
   }
 })
