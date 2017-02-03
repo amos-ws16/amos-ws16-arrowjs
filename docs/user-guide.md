@@ -157,7 +157,7 @@ A plugin is a function that takes two arguments - a file object that contains me
      - Returns: [0.0, 1.0]
      - [Example](examples/plugins/chat-text.md), [Source](../lib/plugins/chat-text-plugin.js)
 
-   5. __compare-numbers-plugin__:
+  6. __compare-numbers-plugin__:
 
       This plugin compares two numbers with the operator: '<', '<=', '=', '>=', '>'. Therefore, the operator must
       be specified as parameter of the plugin
