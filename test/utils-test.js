@@ -38,5 +38,20 @@ buster.testCase('utils', {
       buster.assert.exception(() => utils.insertByPath({ }, 'a.b.c', undefined))
       buster.assert.exception(() => utils.insertByPath({ }, 'a.b.c', null))
     }
+  },
+  'isNumber': {
+    'throw an exception if not a valid number': function () {
+      buster.assert.exception(() => utils.isNumber('asd'))
+      buster.assert.exception(() => utils.isNumber())
+      buster.assert.exception(() => utils.isNumber({}))
+      buster.assert.exception(() => utils.isNumber(null))
+      buster.assert.exception(() => utils.isNumber())
+    },
+    'dont throw exception is valid number': function () {
+      buster.refute.exception(() => utils.isNumber(321))
+      buster.refute.exception(() => utils.isNumber(-123))
+      buster.refute.exception(() => utils.isNumber(1.0001))
+      buster.refute.exception(() => utils.isNumber(-1.23))
+    }
   }
 })
