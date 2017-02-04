@@ -5,11 +5,17 @@ const testChat = {
   chat: [
     {
       'type': 'message',
-      'text': 'Hello world'
+      'text': 'Hello world',
+      'channel': 'C2147483705',
+      'user': 'U2147483697',
+      'ts': 1355517523.000005
     },
     {
       'type': 'message',
-      'text': 'Hello underworld'
+      'text': 'Hello underworld',
+      'channel': 'C2147483705',
+      'user': 'U2147483697',
+      'ts': 1355517523.000005
     }
   ]
 }
@@ -18,7 +24,10 @@ const testChatSimple = {
   chat: [
     {
       'type': 'message',
-      'text': 'Hello world'
+      'text': 'Hello world',
+      'channel': 'C2147483705',
+      'user': 'U2147483697',
+      'ts': 1355517523.000005
     }
   ]
 }
@@ -27,11 +36,17 @@ const brokenChat = {
   chat: [
     {
       'type': 'message',
-      'notext': 1234
+      'notext': 1234,
+      'channel': 'C2147483705',
+      'user': 'U2147483697',
+      'ts': 1355517523.000005
     },
     {
       'type': 'message',
-      'notext': 'Hello underworld'
+      'notext': 'Hello underworld',
+      'channel': 'C2147483705',
+      'user': 'U2147483697',
+      'ts': 1355517523.000005
     }
   ]
 }
@@ -40,11 +55,17 @@ const halfChat = {
   chat: [
     {
       'type': 'message',
-      'notext': 1234
+      'notext': 1234,
+      'channel': 'C2147483705',
+      'user': 'U2147483697',
+      'ts': 1355517523.000005
     },
     {
       'type': 'message',
-      'text': 'Hello'
+      'text': 'Hello',
+      'channel': 'C2147483705',
+      'user': 'U2147483697',
+      'ts': 1355517523.000005
     }
   ]
 }
@@ -53,11 +74,17 @@ const wrongeTypeChat = {
   chat: [
     {
       'type': 'message',
-      'notext': 1234
+      'notext': 1234,
+      'channel': 'C2147483705',
+      'user': 'U2147483697',
+      'ts': 1355517523.000005
     },
     {
       'type': 'message',
-      'text': 'Hello'
+      'text': 'Hello',
+      'channel': 'C2147483705',
+      'user': 'U2147483697',
+      'ts': 1355517523.000005
     }
   ]
 }
@@ -109,5 +136,13 @@ buster.testCase('Chat Scorer', {
     let compareText = 'water'
     let result = plugin(testChat, compareText)
     buster.assert.near(result, 0.0, 0.2)
+  }
+})
+
+buster.testCase('Chat Scorer with params', {
+  'should throw error if timestamp is not a number': function () {
+    let params = {timestamp: 'abc'}
+    let compareText = 'Hello world'
+    buster.assert.exception(() => plugin(testChat, compareText, params))
   }
 })
