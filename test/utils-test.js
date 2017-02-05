@@ -38,5 +38,203 @@ buster.testCase('utils', {
       buster.assert.exception(() => utils.insertByPath({ }, 'a.b.c', undefined))
       buster.assert.exception(() => utils.insertByPath({ }, 'a.b.c', null))
     }
+  },
+  'chatFilters': {
+    'should return an chat array only with objects in time interval': function () {
+      const inputChat = {
+        chat: [
+          {
+            'type': 'message',
+            'text': 'test test',
+            'channel': 'C2147483705',
+            'user': 'U2147483697',
+            'ts': 200
+          },
+          {
+            'type': 'message',
+            'text': 'Hello world',
+            'channel': 'C2147483705',
+            'user': 'U2147483697',
+            'ts': 400
+          },
+          {
+            'type': 'message',
+            'text': 'Hello underworld',
+            'channel': 'C2147483705',
+            'user': 'U2147483697',
+            'ts': 500
+          },
+          {
+            'type': 'message',
+            'text': 'Hello hello',
+            'channel': 'C2147483705',
+            'user': 'U2147483697',
+            'ts': 1200
+          }
+        ]
+      }
+      const res = {
+        chat: [
+          {
+            'type': 'message',
+            'text': 'Hello world',
+            'channel': 'C2147483705',
+            'user': 'U2147483697',
+            'ts': 400
+          },
+          {
+            'type': 'message',
+            'text': 'Hello underworld',
+            'channel': 'C2147483705',
+            'user': 'U2147483697',
+            'ts': 500
+          }
+        ]
+      }
+      buster.assert.equals(utils.deleteChatMessagesNotInTimeIntervall(inputChat, 300, 1000), res)
+    },
+    'should return an chat array with objects in time interval and without timestamps': function () {
+      const inputChat = {
+        chat: [
+          {
+            'type': 'message',
+            'text': 'test test',
+            'channel': 'C2147483705',
+            'user': 'U2147483697',
+            'ts': 200
+          },
+          {
+            'type': 'message',
+            'text': 'Hello world',
+            'channel': 'C2147483705',
+            'user': 'U2147483697',
+            'ts': 400
+          },
+          {
+            'type': 'message',
+            'text': 'Hello underworld',
+            'channel': 'C2147483705',
+            'user': 'U2147483697',
+            'ts': 500
+          },
+          {
+            'type': 'message',
+            'text': 'Hello hello',
+            'channel': 'C2147483705',
+            'user': 'U2147483697',
+            'ts': 1200
+          },
+          {
+            'type': 'message',
+            'text': 'Hello amos',
+            'channel': 'C2147483705',
+            'user': 'U2147483697'
+          }
+        ]
+      }
+      const res = {
+        chat: [
+          {
+            'type': 'message',
+            'text': 'Hello world',
+            'channel': 'C2147483705',
+            'user': 'U2147483697',
+            'ts': 400
+          },
+          {
+            'type': 'message',
+            'text': 'Hello underworld',
+            'channel': 'C2147483705',
+            'user': 'U2147483697',
+            'ts': 500
+          },
+          {
+            'type': 'message',
+            'text': 'Hello amos',
+            'channel': 'C2147483705',
+            'user': 'U2147483697'
+          }
+        ]
+      }
+      buster.assert.equals(utils.deleteChatMessagesNotInTimeIntervall(inputChat, 300, 1000), res)
+    },
+    'should return an chat array only with objects from specific user': function () {
+      const inputChat = {
+        chat: [
+          {
+            'type': 'message',
+            'text': 'test test',
+            'channel': 'C2147483705',
+            'user': 'abc',
+            'ts': 200
+          },
+          {
+            'type': 'message',
+            'text': 'Hello world',
+            'channel': 'C2147483705',
+            'user': 'def',
+            'ts': 400
+          },
+          {
+            'type': 'message',
+            'text': 'Hello underworld',
+            'channel': 'C2147483705',
+            'user': 'ghi',
+            'ts': 500
+          }
+        ]
+      }
+      const res = {
+        chat: [
+          {
+            'type': 'message',
+            'text': 'Hello world',
+            'channel': 'C2147483705',
+            'user': 'def',
+            'ts': 400
+          }
+        ]
+      }
+      buster.assert.equals(utils.deleteChatMessagesNotFromUser(inputChat, 'def'), res)
+    },
+    'should return an chat array only with objects from multiple users using an array as input': function () {
+      const inputChat = {
+        chat: [
+          {
+            'type': 'message',
+            'text': 'test test',
+            'channel': 'C2147483705',
+            'user': 'abc',
+            'ts': 200
+          },
+          {
+            'type': 'message',
+            'text': 'Hello world',
+            'channel': 'C2147483705',
+            'user': 'def',
+            'ts': 400
+          },
+          {
+            'type': 'message',
+            'text': 'Hello underworld',
+            'channel': 'C2147483705',
+            'user': 'ghi',
+            'ts': 500
+          }
+        ]
+      }
+      const res = {
+        chat: [
+          {
+            'type': 'message',
+            'text': 'Hello world',
+            'channel': 'C2147483705',
+            'user': 'def',
+            'ts': 400
+          }
+        ]
+      }
+      buster.assert.equals(utils.deleteChatMessagesNotFromUser(inputChat, 'def'), res)
+    }
   }
 })
