@@ -139,10 +139,80 @@ buster.testCase('Chat Scorer', {
   }
 })
 
+const intervallChat = {
+  chat: [
+    {
+      'type': 'message',
+      'text': 'test test',
+      'channel': 'C2147483705',
+      'user': 'U2147483697',
+      'ts': 200
+    },
+    {
+      'type': 'message',
+      'text': 'Hello world',
+      'channel': 'C2147483705',
+      'user': 'U2147483697',
+      'ts': 300
+    },
+    {
+      'type': 'message',
+      'text': 'Hello underworld',
+      'channel': 'C2147483705',
+      'user': 'U2147483697',
+      'ts': 500
+    },
+    {
+      'type': 'message',
+      'text': 'Hello hello',
+      'channel': 'C2147483705',
+      'user': 'U2147483697',
+      'ts': 1200
+    }
+  ]
+}
+
+// const startTimeStamp = 400
+// const endTimeStamp = 1000
+
 buster.testCase('Chat Scorer with params', {
-  'should throw error if timestamp is not a number': function () {
-    let params = {timestamp: 'abc'}
+  'should throw error if startTimestamp is not a number': function () {
+    let params = {startTime: 'abc'}
     let compareText = 'Hello world'
-    buster.assert.exception(() => plugin(testChat, compareText, params))
+    buster.assert.exception(() => plugin(intervallChat, compareText, params))
+  },
+  'should throw error if endTimestamp is not a number': function () {
+    let params = {endTime: 'abc'}
+    let compareText = 'Hello world'
+    buster.assert.exception(() => plugin(intervallChat, compareText, params))
+  }
+  /*
+
+  'should score only chat in intervall': function () {
+    let compareText = 'Hello world'
+    let params = {startTime: startTimeStamp, endTime: endTimeStamp}
+    let result = plugin(intervallChat, compareText, params)
+    buster.assert.near(result, 1.0, 0.3)
+  } */
+})
+
+const transformedChat = {
+  chat: [
+    {
+      'type': 'message',
+      'text': 'Hello underworld',
+      'channel': 'C2147483705',
+      'user': 'U2147483697',
+      'ts': 500
+    }
+  ]
+}
+
+buster.testCase('Chat Scorer with params', {
+  'should return the transformedChat with the deleteChatMessagesNotInTimeIntervall-function': function () {
+    let compareText = 'Hello underworld'
+    let res1 = plugin(intervallChat, compareText, 400, 1000)
+    let res2 = plugin(transformedChat, compareText)
+    buster.assert.equals(res1, res2)
   }
 })
