@@ -27,5 +27,19 @@
 ### Response
 
 ```javascript
-
+{
+  "success": true,
+  "result": [
+    {
+      "check-time": 0,
+      "id": 1486386390706,
+      "total": 0
+    },
+    {
+      "check-time": 1,
+      "id": 1486386390707,
+      "total": 1
+    }
+  ]
+}
 ```
