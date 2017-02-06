@@ -313,7 +313,10 @@ You can choose from these pipes:
 | trim-right         | string         | Removes whitespaces on right side (i.e. ' text ' => ' text')         |[Example](examples/pipes/trim-right.md)     |
 | basename           | string         | Removes a dot-extension (i.e. 'file.ext' => 'file')                  |[Example](examples/pipes/basename.md)       |
 | day-of-month       | timestamp      | Extracts the day of the month (1 - 31)                               |                                            |
-| day-of-week        | timestamp      | Extracts the day of the week (i.e. Thursday)                         |                                            |
+| day-name-of-week        | timestamp      | Extracts the day of the week (i.e. Thursday)                         |[Example](examples/pipes/day-name-week.md)  |
+| day-number-of-week        | timestamp      | Extracts the day of the week (i.e. 4(Thursday))                         |[Example](examples/pipes/day-number-week.md)|
+| month-name-of-year        | timestamp      | Extracts the month of the year (i.e. March)                         |[Example](examples/pipes/month-name-year.md)  |
+| month-number-of-year        | timestamp      | Extracts the month of the year (i.e. 3(March))                         |[Example](examples/pipes/month-number-year.md)|
 | hour-of-day        | timestamp      | Extracts the hour of the day (0 - 24)                                |                                            |
 | years-since-epoch  | timestamp      | Extracts the passed amount of years since 1970                       |                                            |
 | months-since-epoch | timestamp      | Extracts the passed amount of months since 1970                      |                                            |
