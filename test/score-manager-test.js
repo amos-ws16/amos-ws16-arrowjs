@@ -16,14 +16,13 @@ buster.testCase('ScoreManager with configuration', {
     setUp: function () {
       this.stubPlugin = this.stub()
       let config = {
+        aggregator: 'not used',
         plugins: {
           'plugin-a': {
             use: this.stubPlugin,
             inputs: ['x.y.z', 'a.b[].c']
           }
-        },
-        // Not used.
-        aggregator: { combine: this.stub() }
+        }
       }
       this.manager = scoreManager.create(config)
     },
@@ -83,8 +82,8 @@ buster.testCase('ScoreManager with configuration', {
 
   'construction failures': {
     setUp: function () {
-      this.stubAggregator = { combine: this.stub() }
       this.stubPlugin = { use: this.stub(), inputs: ['', ''] }
+      this.config = { aggregator: 'not used' }
     },
 
     'should throw error when config was not used': function () {
@@ -93,79 +92,60 @@ buster.testCase('ScoreManager with configuration', {
 
     'should throw error when config has no plugins': function () {
       // Valid aggregator but no plugins.
-      let config = { aggregator: this.stubAggregator }
-      buster.assert.exception(() => scoreManager.create(config))
+      buster.assert.exception(() => scoreManager.create(this.config))
     },
 
     'should throw error when config has no aggregator': function () {
       // Valid plugin configuration but no aggregator.
-      let config = { plugins: { 'plugin-a': this.stubPlugin } }
+      const config = { plugins: { 'plugin-a': this.stubPlugin } }
       buster.assert.exception(() => scoreManager.create(config))
     },
 
     'should throw error when plugin was defined without score function': function () {
-      let config = {
-        plugins: { 'plugin-a': { inputs: ['', ''] } },
-        aggregator: this.stubAggregator
-      }
-      buster.assert.exception(() => scoreManager.create(config))
+      this.config.plugins = { 'plugin-a': { inputs: ['', ''] } }
+      buster.assert.exception(() => scoreManager.create(this.config))
     },
 
     'should throw error when plugin was defined without inputs field and inputGroup field': function () {
-      let config = {
-        plugins: { 'plugin-a': { use: this.stub() } },
-        aggregator: this.stubAggregator
-      }
-      buster.assert.exception(() => scoreManager.create(config))
+      this.config.plugins = { 'plugin-a': { use: this.stub() } }
+      buster.assert.exception(() => scoreManager.create(this.config))
     },
 
-    'should throw error when plugin inputs field is not an array of length 2': function () {
-      let config = {
-        plugins: { 'plugin-a': { use: this.stub(), inputs: 'not an array' } },
-        aggregator: this.stubAggregator
-      }
-      buster.assert.exception(() => scoreManager.create(config))
+    'should throw error when plugin inputs field is not an array': function () {
+      this.config.plugins = { 'plugin-a': { use: this.stub(), inputs: 'not an array' } }
+      buster.assert.exception(() => scoreManager.create(this.config))
     },
 
     'should throw error when plugin was defined with invalid inputGroup field': function () {
-      let config = {
-        plugins: { 'plugin-a': { use: this.stub(), inputGroup: 'not an array' } },
-        aggregator: this.stubAggregator
-      }
-      buster.assert.exception(() => scoreManager.create(config))
+      this.config.plugins = { 'plugin-a': { use: this.stub(), inputGroup: 'not an array' } }
+
+      buster.assert.exception(() => scoreManager.create(this.config))
     },
 
     'should throw error when plugin was defined with inputGroup field but with invalid content': function () {
-      let config = {
-        plugins: { 'plugin-a': { use: this.stub(), inputGroup: ['invalid content'] } },
-        aggregator: this.stubAggregator
-      }
-      buster.assert.exception(() => scoreManager.create(config))
+      this.config.plugins = { 'plugin-a': { use: this.stub(), inputGroup: ['invalid content'] } }
+
+      buster.assert.exception(() => scoreManager.create(this.config))
     },
 
     'should throw error when plugin was defined with inputGroup field but with valid and invalid content': function () {
-      let config = {
-        plugins: { 'plugin-a': { use: this.stub(), inputGroup: [['valid'], 'invalid content'] } },
-        aggregator: this.stubAggregator
-      }
-      buster.assert.exception(() => scoreManager.create(config))
+      this.config.plugins = { 'plugin-a': { use: this.stub(), inputGroup: [['valid'], 'invalid content'] } }
+
+      buster.assert.exception(() => scoreManager.create(this.config))
     },
 
     'should throw error when plugin has no valid use-string': function () {
-      let config = {
-        plugins: { 'plugin-a': { use: 'nonexistent-plugin', inputs: ['a', 'b'] } },
-        aggregator: this.stubAggregator
-      }
-      let manager = scoreManager.create(config)
+      this.config.plugins = { 'plugin-a': { use: 'nonexistent-plugin', inputs: ['a', 'b'] } }
+
+      let manager = scoreManager.create(this.config)
       buster.assert.exception(() => manager.score({}), 'InvalidInputError')
     }
   },
 
   'ids in mapping objects': {
     setUp: function () {
-      let aggregator = { combine: this.stub() }
       this.config = {
-        aggregator,
+        aggregator: 'not used',
         plugins: {}
       }
     },
