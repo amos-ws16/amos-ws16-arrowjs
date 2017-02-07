@@ -6,6 +6,12 @@ const pipeParser = require('../lib/parse-input-pipes')
 const similarTextPlugin = require('../lib/plugins/similar-text-plugin')
 
 buster.testCase('ScoreManager with configuration', {
+  setUp: function () {
+    // Aggregator stub
+    this.cpEval = this.stub()
+    this.cpParse = this.stub(aggregatorConfigParser, 'parse')
+    this.cpParse.returns({ eval: this.cpEval })
+  },
   'scoreWith': {
     setUp: function () {
       this.stubPlugin = this.stub()
@@ -195,9 +201,7 @@ buster.testCase('ScoreManager with configuration', {
     setUp: function () {
       this.stubPluginA = this.stub()
       this.stubPluginA.returns(0.5)
-      this.stubEval = this.stub()
-      this.stubEval.returns(0.5)
-      this.stubParse = this.stub(aggregatorConfigParser, 'parse').returns({ eval: this.stubEval })
+      this.cpEval.returns(0.5)
       this.config = {
         aggregator: 'aggregator configuration',
         plugins: {
@@ -249,8 +253,6 @@ buster.testCase('ScoreManager with configuration', {
     setUp: function () {
       this.stubPluginA = this.stub()
       this.stubPluginB = this.stub()
-      this.stubEval = this.stub()
-      this.stubParse = this.stub(aggregatorConfigParser, 'parse').returns({ eval: this.stubEval })
       let config = {
         aggregator: 'aggregator configuration',
         plugins: {
@@ -273,14 +275,14 @@ buster.testCase('ScoreManager with configuration', {
 
       this.manager.score({ x: {}, y: [0] })
 
-      buster.assert.calledWith(this.stubParse, 'aggregator configuration')
-      buster.assert.calledWith(this.stubEval, { 'plugin-a': 0.5, 'plugin-b': 0.8 })
+      buster.assert.calledWith(this.cpParse, 'aggregator configuration')
+      buster.assert.calledWith(this.cpEval, { 'plugin-a': 0.5, 'plugin-b': 0.8 })
     },
 
     'should return the scores returned by the aggregator in field total': function () {
       this.stubPluginA.returns(0.5)
       this.stubPluginB.returns(0.8)
-      this.stubEval.returns(0.1)
+      this.cpEval.returns(0.1)
 
       let scores = this.manager.score({ x: {}, y: [0] })
 
@@ -288,54 +290,25 @@ buster.testCase('ScoreManager with configuration', {
     }
   },
 
-  'score using string aggregator': {
-    setUp: function () {
-      this.stubPluginA = this.stub()
-      this.stubPluginB = this.stub()
-      this.config = {
-        plugins: {
-          'plugin-a': {
-            use: this.stubPluginA,
-            inputs: ['x', 'y[]']
-          },
-          'plugin-b': {
-            use: this.stubPluginB,
-            inputs: ['x', 'y[]']
-          }
-        }
-      }
-    },
-
-    'should dynamically assign aggregator function from string': function () {
-      this.stubPluginA.returns(0.5)
-      this.stubPluginB.returns(0.8)
-      this.config.aggregator = {'max': ['plugin-a', 'plugin-b']}
-      let manager = scoreManager.create(this.config)
-
-      let scores = manager.score({ x: {}, y: [0] })
-      buster.assert.equals(scores, [{ 'total': 0.8, 'plugin-a': 0.5, 'plugin-b': 0.8 }])
-    }
-  },
-
   'plugin failures': {
     setUp: function () {
-      this.stubParse = this.stub(aggregatorConfigParser, 'parse')
-      this.stubEval = this.stub()
-      this.stubParse.returns({ eval: this.stubEval })
       this.aggregatorSpec = 'not null but not used'
+      this.config = {
+        aggregator: 'not null but not used',
+        plugins: {}
+      }
     },
 
     'should be caught and returned as a special value': function () {
       let plugA = () => 1.0
       let plugB = () => { throw new Error() }
 
-      let manager = scoreManager.create({
-        aggregator: this.aggregatorSpec,
-        plugins: {
-          'plugin-a': { use: plugA, inputs: ['file', 'tasks[]'] },
-          'plugin-b': { use: plugB, inputs: ['file', 'tasks[]'] }
-        }
-      })
+      this.config.plugins = {
+        'plugin-a': { use: plugA, inputs: ['file', 'tasks[]'] },
+        'plugin-b': { use: plugB, inputs: ['file', 'tasks[]'] }
+      }
+
+      let manager = scoreManager.create(this.config)
 
       let blob = {
         file: {},
@@ -351,13 +324,11 @@ buster.testCase('ScoreManager with configuration', {
       let plugA = () => 1.0
       let plugB = () => { throw new Error('this is the error description') }
 
-      let manager = scoreManager.create({
-        aggregator: this.aggregatorSpec,
-        plugins: {
-          'plugin-a': { use: plugA, inputs: ['file', 'tasks[]'] },
-          'plugin-c': { use: plugB, inputs: ['file', 'tasks[]'] }
-        }
-      })
+      this.config.plugins = {
+        'plugin-a': { use: plugA, inputs: ['file', 'tasks[]'] },
+        'plugin-c': { use: plugB, inputs: ['file', 'tasks[]'] }
+      }
+      let manager = scoreManager.create(this.config)
 
       let blob = {
         file: {},
@@ -370,17 +341,14 @@ buster.testCase('ScoreManager with configuration', {
     },
 
     'should be caught and isolated on a per plugin basis': function () {
-      let aggregator = { combine: this.stub().returns(1.0) }
       let plugA = () => 1.0
       let plugB = () => 1.0
 
-      let manager = scoreManager.create({
-        aggregator,
-        plugins: {
-          'plugin-a': { use: plugA, inputs: ['no-attribute-here', 'tasks[]'] },
-          'plugin-b': { use: plugB, inputs: ['file', 'tasks[]'] }
-        }
-      })
+      this.config.plugins = {
+        'plugin-a': { use: plugA, inputs: ['no-attribute-here', 'tasks[]'] },
+        'plugin-b': { use: plugB, inputs: ['file', 'tasks[]'] }
+      }
+      let manager = scoreManager.create(this.config)
 
       let blob = {
         file: {},
@@ -392,15 +360,12 @@ buster.testCase('ScoreManager with configuration', {
     },
 
     'should be caught and isolated on a per task basis': function () {
-      let aggregator = { combine: this.stub().returns(1.0) }
       let plugA = () => 1.0
 
-      let manager = scoreManager.create({
-        aggregator,
-        plugins: {
-          'plugin-a': { use: plugA, inputs: ['file', 'tasks[].description'] }
-        }
-      })
+      this.config.plugins = {
+        'plugin-a': { use: plugA, inputs: ['file', 'tasks[].description'] }
+      }
+      let manager = scoreManager.create(this.config)
 
       let blob = {
         file: {},
@@ -416,13 +381,11 @@ buster.testCase('ScoreManager with configuration', {
       let plugA = () => 1.0
       let plugB = () => { throw new Error('this is the error description') }
 
-      let manager = scoreManager.create({
-        aggregator: this.aggregatorSpec,
-        plugins: {
-          'plugin-a': { use: plugA, inputs: ['file', 'tasks[]'] },
-          'plugin-b': { use: plugB, inputs: ['file', 'tasks[]'] }
-        }
-      })
+      this.config.plugins = {
+        'plugin-a': { use: plugA, inputs: ['file', 'tasks[]'] },
+        'plugin-b': { use: plugB, inputs: ['file', 'tasks[]'] }
+      }
+      let manager = scoreManager.create(this.config)
 
       let blob = {
         file: {},
@@ -431,13 +394,37 @@ buster.testCase('ScoreManager with configuration', {
 
       manager.score(blob)
 
-      buster.assert.calledWith(this.stubParse, this.aggregatorSpec)
-      buster.assert.calledWith(this.stubEval, {'plugin-a': 1.0})
+      buster.assert.calledWith(this.cpEval, {'plugin-a': 1.0})
     }
   }
 })
 
 buster.testCase('ScoreManager Integration', {
+  'should dynamically assign aggregator function from string': function () {
+    const stubPluginA = this.stub()
+    const stubPluginB = this.stub()
+    const config = {
+      aggregator: {'max': ['plugin-a', 'plugin-b']},
+      plugins: {
+        'plugin-a': {
+          use: stubPluginA,
+          inputs: ['x', 'y[]']
+        },
+        'plugin-b': {
+          use: stubPluginB,
+          inputs: ['x', 'y[]']
+        }
+      }
+    }
+    stubPluginA.returns(0.5)
+    stubPluginB.returns(0.8)
+
+    let manager = scoreManager.create(config)
+
+    let scores = manager.score({ x: {}, y: [0] })
+    buster.assert.equals(scores, [{ 'total': 0.8, 'plugin-a': 0.5, 'plugin-b': 0.8 }])
+  },
+
   'should be able to use similarTextPlugin': function () {
     let config = {
       aggregator: {'max': ['similar-text']},
