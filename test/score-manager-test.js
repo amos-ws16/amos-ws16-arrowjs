@@ -12,6 +12,27 @@ buster.testCase('ScoreManager with configuration', {
     this.cpParse = this.stub(aggregatorConfigParser, 'parse')
     this.cpParse.returns({ eval: this.cpEval })
   },
+
+  'array input': {
+    'should pass array to plugin if input path is not an array but points to one': function () {
+      this.plugin = this.stub()
+      const config = {
+        aggregator: 'not used',
+        plugins: { 'plugin': { use: this.plugin, inputs: ['a.b', 'x[].y'] } }
+      }
+      this.manager = scoreManager.create(config)
+      this.plugin.returns(0.0)
+
+      const blob = {
+        a: { b: ['b1', 'b2', 'b3'] },
+        x: [{ y: 'y1' }, { y: 'y2' }]
+      }
+      this.manager.scoreWith('plugin', blob)
+      buster.assert.calledWith(this.plugin, ['b1', 'b2', 'b3'], 'y1')
+      buster.assert.calledWith(this.plugin, ['b1', 'b2', 'b3'], 'y2')
+    }
+  },
+
   'scoreWith': {
     setUp: function () {
       this.stubPlugin = this.stub()
