@@ -14,15 +14,17 @@ buster.testCase('ScoreManager with configuration', {
   },
 
   'array input': {
-    'should pass array to plugin if input path is not an array but points to one': function () {
+    setUp: function () {
       this.plugin = this.stub()
-      const config = {
+      this.config = {
         aggregator: 'not used',
         plugins: { 'plugin': { use: this.plugin, inputs: ['a.b', 'x[].y'] } }
       }
-      this.manager = scoreManager.create(config)
+      this.manager = scoreManager.create(this.config)
       this.plugin.returns(0.0)
+    },
 
+    'should pass array to plugin when last segment of the non array path is an array': function () {
       const blob = {
         a: { b: ['b1', 'b2', 'b3'] },
         x: [{ y: 'y1' }, { y: 'y2' }]
@@ -30,6 +32,28 @@ buster.testCase('ScoreManager with configuration', {
       this.manager.scoreWith('plugin', blob)
       buster.assert.calledWith(this.plugin, ['b1', 'b2', 'b3'], 'y1')
       buster.assert.calledWith(this.plugin, ['b1', 'b2', 'b3'], 'y2')
+    },
+
+    'should pass array to plugin when last segment of the array path is an array': function () {
+      const blob = {
+        a: { b: 'b' },
+        x: [{ y: ['y11', 'y12'] }, { y: ['y21', 'y22'] }]
+      }
+      this.manager.scoreWith('plugin', blob)
+      buster.assert.calledWith(this.plugin, 'b', ['y11', 'y12'])
+      buster.assert.calledWith(this.plugin, 'b', ['y21', 'y22'])
+    },
+
+    'should pass array to plugin when last segment of the input path is an array for more than 2 inputs': function () {
+      this.config.plugins['plugin'].inputs = ['a.b', 'x[].y', 'x[].z']
+      this.manager = scoreManager.create(this.config)
+      const blob = {
+        a: { b: 'b' },
+        x: [{ y: 'y1', z: ['z11', 'z12'] }, { y: 'y2', z: ['z21', 'z22'] }]
+      }
+      this.manager.scoreWith('plugin', blob)
+      buster.assert.calledWith(this.plugin, 'b', 'y1', ['z11', 'z12'])
+      buster.assert.calledWith(this.plugin, 'b', 'y2', ['z21', 'z22'])
     }
   },
 
