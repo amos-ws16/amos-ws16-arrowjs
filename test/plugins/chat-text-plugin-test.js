@@ -98,43 +98,43 @@ buster.testCase('Chat Scorer', {
     buster.assert.exception(() => plugin('', 'testphrase'))
   },
   'should throw error if no text to compare to': function () {
-    buster.assert.exception(() => plugin(testChat, ''))
+    buster.assert.exception(() => plugin(testChat.chat, ''))
   },
   'should throw error if no text in chat messages': function () {
-    buster.assert.exception(() => plugin(brokenChat, 'testphrase'))
+    buster.assert.exception(() => plugin(brokenChat.chat, 'testphrase'))
   },
   'should throw error if chat messages cannot be extracted': function () {
-    buster.assert.exception(() => plugin(extractObjectBroken, 'Hello'))
+    buster.assert.exception(() => plugin(extractObjectBroken.chat, 'Hello'))
   },
   'should ignore chat messages without text if others do have text': function () {
-    let result = plugin(halfChat, 'Hello')
+    let result = plugin(halfChat.chat, 'Hello')
     buster.assert.equals(result, 1.0)
   },
   'should ignore chat messages without text': function () {
-    let result = plugin(wrongeTypeChat, 'Hello')
+    let result = plugin(wrongeTypeChat.chat, 'Hello')
     buster.assert.equals(result, 1.0)
   },
   'should throw error if second arg is not a valid string': function () {
-    buster.assert.exception(() => plugin(testChat, 1))
+    buster.assert.exception(() => plugin(testChat.chat, 1))
   },
   'should score 1 if chatmessage matches text': function () {
     let compareText = testChatSimple.chat[0].text
-    let result = plugin(testChatSimple, compareText)
+    let result = plugin(testChatSimple.chat, compareText)
     buster.assert.equals(result, 1.0)
   },
   'should score high if high similarity between messages and text': function () {
     let compareText = 'Hello world'
-    let result = plugin(testChat, compareText)
+    let result = plugin(testChat.chat, compareText)
     buster.assert.near(result, 1.0, 0.3)
   },
   'should score medium if medium similarity between messages and text': function () {
     let compareText = 'Hello'
-    let result = plugin(testChat, compareText)
+    let result = plugin(testChat.chat, compareText)
     buster.assert.near(result, 0.5, 0.3)
   },
   'should score low if low similarity between messages and text': function () {
     let compareText = 'water'
-    let result = plugin(testChat, compareText)
+    let result = plugin(testChat.chat, compareText)
     buster.assert.near(result, 0.0, 0.2)
   }
 })
@@ -188,30 +188,29 @@ buster.testCase('Chat Scorer with params', {
   'should throw error if startTimestamp is not a number': function () {
     let params = {startTime: 'abc'}
     let compareText = 'Hello world'
-    buster.assert.exception(() => plugin(intervallChat, compareText, params))
+    buster.assert.exception(() => plugin(intervallChat.chat, compareText, params))
   },
   'should throw error if endTimestamp is not a number': function () {
     let params = {endTime: 'abc'}
     let compareText = 'Hello world'
-    buster.assert.exception(() => plugin(intervallChat, compareText, params))
+    buster.assert.exception(() => plugin(intervallChat.chat, compareText, params))
   },
   'should return the transformedChat with the deleteChatMessagesNotInTimeIntervall-function': function () {
     let compareText = 'Hello underworld'
-    let testChat = intervallChat
-    let res1 = plugin(testChat, compareText, { startTime: 400, endTime: 1000 })
-    let res2 = plugin(transformedChat, compareText)
+    let res1 = plugin(intervallChat.chat, compareText, { startTime: 400, endTime: 1000 })
+    let res2 = plugin(transformedChat.chat, compareText)
     buster.assert.equals(res1, res2)
   },
   'should throw error if user is not a string': function () {
     let params = {user: 123}
     let compareText = 'Hello world'
-    buster.assert.exception(() => plugin(intervallChat, compareText, params))
+    buster.assert.exception(() => plugin(intervallChat.chat, compareText, params))
   },
   'should return the transformedChat filtered for user': function () {
     let params = {user: 'theOne'}
     let compareText = 'Hello world'
-    let res1 = plugin(intervallChat, compareText, params)
-    let res2 = plugin(transformedChat, compareText)
+    let res1 = plugin(intervallChat.chat, compareText, params)
+    let res2 = plugin(transformedChat.chat, compareText)
     buster.assert.equals(res1, res2)
   }
 
