@@ -115,7 +115,7 @@ A plugin is a function that takes two arguments - a file object that contains me
 
   You can choose from these plugins:
 
-  1. __similar-text plugin__:
+  1. __similar-text-plugin__:
 
      This plugin compares different texts like descriptions or titles of files and tasks. If the content of the two texts are similar but have different descriptions, the result would be about 1.0.
      - Input: _text_ (string), _text_ (string)
@@ -140,7 +140,7 @@ A plugin is a function that takes two arguments - a file object that contains me
      - Returns: {0.0, 1.0}
      - [Example](examples/plugins/in-timespan.md), [Source](../lib/plugins/in-timespan-plugin.js)
 
-  4. __close-time plugin__:
+  4. __close-time-plugin__:
 
      It checks the time, when both objects were uploaded (or updated) and if the upload times are far away from each other the plugin would return 0.0. Otherwise if the objects are uploaded at the same time the result would be 1.0.
      - Input: _time1_ (timestamp), _time2_ (timestamp)
@@ -149,7 +149,7 @@ A plugin is a function that takes two arguments - a file object that contains me
      - Returns: [0.0, 1.0]
      - [Example](examples/plugins/close-time.md), [Source](../lib/plugins/close-time-plugin.js)
 
-  5. __chat-text plugin__:
+  5. __chat-text-plugin__:
 
      This plugin scores the similarity of a given string (e.g title or name of a file) and a set of texts (like a chat). It is necessary to have this structure for the chat input: An object with an array named 'chat'. Inside that array it has to be objects with a key named 'text'. ([Click for more information](examples/plugins/plugin-chat-text.md))
      - Input: _chatobject_ (object with 'chat' array, in array objects with key 'text'), _text_ (string)
@@ -163,6 +163,17 @@ A plugin is a function that takes two arguments - a file object that contains me
      - [Example with user filter](examples/plugins/chat-text/chat-text-user.md)
      - [Example time intervall and user filters](examples/plugins/chat-text/chat-text-allfilter.md)
      - [Source](../lib/plugins/chat-text-plugin.js)
+
+  6. __compare-numbers-plugin__:
+
+      This plugin compares two numbers with the operator: '<', '<=', '=', '>=', '>'. Therefore, the operator must
+      be specified as parameter of the plugin
+      - Input: _number_, _number_
+      - Parameters:
+        1. _operator_: defines the operator which is used to compare the numbers. This can be: '<', '<=', '=', '>=', '>'.
+      - Returns: {0.0, 1.0}
+      - [Example](examples/plugins/compare-numbers.md), [Source](../lib/plugins/compare-numbers-plugin.js)
+
 
 ##### 3.3.1.2 Configuration
 
@@ -311,23 +322,26 @@ Pipes can be used to manipulate the input for plugins.
 
 You can choose from these pipes:
 
-| Name               | for Type       | Description                                                          |                                            |
-| -------------------|:-------------: |----------------------------------------------------------------------|--------------------------------------------|
-| to-lower-case      | string         | Only lower cases in string (i.e. 'TeXt' => 'text')                   |[Example](examples/pipes/to-lower-case.md)  |
-| to-upper-case      | string         | Only upper cases in string (i.e. 'tExT' => 'TEXT')                   |[Example](examples/pipes/to-upper-case.md)  |
-| trim               | string         | Removes whitespaces on both sides (i.e. ' text ' => 'text')          |[Example](examples/pipes/trim.md)           |
-| trim-left          | string         | Removes whitespaces on left side  (i.e. ' text ' => 'text ')         |[Example](examples/pipes/trim-left.md)      |
-| trim-right         | string         | Removes whitespaces on right side (i.e. ' text ' => ' text')         |[Example](examples/pipes/trim-right.md)     |
-| basename           | string         | Removes a dot-extension (i.e. 'file.ext' => 'file')                  |[Example](examples/pipes/basename.md)       |
-| day-of-month       | timestamp      | Extracts the day of the month (1 - 31)                               |                                            |
-| day-of-week        | timestamp      | Extracts the day of the week (i.e. Thursday)                         |                                            |
-| hour-of-day        | timestamp      | Extracts the hour of the day (0 - 24)                                |                                            |
-| years-since-epoch  | timestamp      | Extracts the passed amount of years since 1970                       |                                            |
-| months-since-epoch | timestamp      | Extracts the passed amount of months since 1970                      |                                            |
-| weeks-since-epoch  | timestamp      | Extracts the passed amount of weeks since 1970                       |                                            |
-| days-since-epoch   | timestamp      | Extracts the passed amount of days since 1970                        |                                            |
-| hours-since-epoch  | timestamp      | Extracts the passed amount of hours since 1970                       |                                            |
-| chat               | [object]       | Extracts all keywords out of an array of [chat messages](rest-api.md)|[Example](examples/pipes/chat.md)            |
+| Name               | for Type       | Description                                                          |                                                |
+| -------------------|:-------------: |----------------------------------------------------------------------|------------------------------------------------|
+| to-lower-case      | string         | Only lower cases in string (i.e. 'TeXt' => 'text')                   |[Example](examples/pipes/to-lower-case.md)      |
+| to-upper-case      | string         | Only upper cases in string (i.e. 'tExT' => 'TEXT')                   |[Example](examples/pipes/to-upper-case.md)      |
+| trim               | string         | Removes whitespaces on both sides (i.e. ' text ' => 'text')          |[Example](examples/pipes/trim.md)               |
+| trim-left          | string         | Removes whitespaces on left side  (i.e. ' text ' => 'text ')         |[Example](examples/pipes/trim-left.md)          |
+| trim-right         | string         | Removes whitespaces on right side (i.e. ' text ' => ' text')         |[Example](examples/pipes/trim-right.md)         |
+| basename           | string         | Removes a dot-extension (i.e. 'file.ext' => 'file')                  |[Example](examples/pipes/basename.md)           |
+| day-of-month       | timestamp      | Extracts the day of the month (1 - 31)                               |[Example](examples/pipes/day-of-month.md)       |
+| day-name-of-week        | timestamp      | Extracts the day of the week (i.e. Thursday)                         |[Example](examples/pipes/day-name-week.md)  |
+| day-number-of-week        | timestamp      | Extracts the day of the week (i.e. 4(Thursday))                         |[Example](examples/pipes/day-number-week.md)|
+| month-name-of-year        | timestamp      | Extracts the month of the year (i.e. March)                         |[Example](examples/pipes/month-name-year.md)  |
+| month-number-of-year        | timestamp      | Extracts the month of the year (i.e. 3(March))                         |[Example](examples/pipes/month-number-year.md)|
+| hour-of-day        | timestamp      | Extracts the hour of the day (0 - 24)                                |[Example](examples/pipes/hour-of-day.md)        |
+| years-since-epoch  | timestamp      | Extracts the passed amount of years since 1970                       |[Example](examples/pipes/years-since-epoch.md)  |
+| months-since-epoch | timestamp      | Extracts the passed amount of months since 1970                      |[Example](examples/pipes/months-since-epoch.md) |
+| weeks-since-epoch  | timestamp      | Extracts the passed amount of weeks since 1970                       |[Example](examples/pipes/weeks-since-epoch.md)  |
+| days-since-epoch   | timestamp      | Extracts the passed amount of days since 1970                        |[Example](examples/pipes/days-since-epoch.md)   |
+| hours-since-epoch  | timestamp      | Extracts the passed amount of hours since 1970                       |[Example](examples/pipes/hours-since-epoch.md)  |
+| chat               | [object]       | Extracts all keywords out of an array of [chat messages](rest-api.md)|[Example](examples/pipes/chat.md)               |
 
 ##### 3.3.3.2 Usage
 
