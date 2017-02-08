@@ -160,7 +160,7 @@ A plugin is a function that takes two arguments - a file object that contains me
      - Returns: [0.0, 1.0]
      - [Example without filters](examples/plugins/chat-text/chat-text-nofilter.md)
      - [Example with time intervall filter](examples/plugins//chat-text/chat-text-intervall.md)
-     - [Example with user filter](examples/plugins/chat-text/chat-text-nofilter-user.md)
+     - [Example with user filter](examples/plugins/chat-text/chat-text-user.md)
      - [Example time intervall and user filters](examples/plugins/chat-text/chat-text-allfilter.md)
      - [Source](../lib/plugins/chat-text-plugin.js)
 
