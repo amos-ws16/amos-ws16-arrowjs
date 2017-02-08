@@ -9,7 +9,7 @@
       "plugins": {
         "compare-chat": {
             "use": "chat-text-plugin",
-            "inputs": ["tasks[]", "file.title"],
+            "inputs": ["tasks[].chat", "file.title"],
             "params": { "startTime": 300, "endTime": 600, "user": ["def", "abc"] }
         }
       }

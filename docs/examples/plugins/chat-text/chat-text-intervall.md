@@ -12,7 +12,7 @@
         "compare-chat": {
           "use": "chat-text-plugin",
           "inputs": [
-            "tasks[]",
+            "tasks[].chat",
             "file.title"
           ],
           "params": {
