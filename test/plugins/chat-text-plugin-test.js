@@ -1,7 +1,6 @@
 const buster = require('buster')
 const plugin = require('../../lib/plugins/chat-text-plugin.js')
 
-/*
 const testChat = {
   chat: [
     {
@@ -139,7 +138,6 @@ buster.testCase('Chat Scorer', {
     buster.assert.near(result, 0.0, 0.2)
   }
 })
-*/
 
 const intervallChat = {
   chat: [
