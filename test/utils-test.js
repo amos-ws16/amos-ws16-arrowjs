@@ -93,7 +93,7 @@ buster.testCase('utils', {
       buster.refute.exception(() => utils.isNumber(-1.23))
     }
   },
-  getChatMessagesInTimeIntervalTests: {
+  filterChatByTimeTests: {
     'should return an chat array with objects in time interval and without timestamps': function () {
       const res = {
         chat: [
@@ -119,7 +119,7 @@ buster.testCase('utils', {
           }
         ]
       }
-      buster.assert.equals(utils.getChatMessagesInTimeInterval(inputChatUnfiltered.chat, 300, 1000), res.chat)
+      buster.assert.equals(utils.filterChatByTime(inputChatUnfiltered.chat, 300, 1000), res.chat)
     }
   },
   getChatMessagesFromUsersTests: {
