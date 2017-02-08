@@ -154,9 +154,9 @@ A plugin is a function that takes two arguments - a file object that contains me
      This plugin scores the similarity of a given string (e.g title or name of a file) and a set of texts (like a chat). It is necessary to have this structure for the chat input: An object with an array named 'chat'. Inside that array it has to be objects with a key named 'text'. ([Click for more information](examples/plugins/plugin-chat-text.md))
      - Input: _chatobject_ (object with 'chat' array, in array objects with key 'text'), _text_ (string)
      - Parameters:
-       1. _startTime_: (timestamp, default: 1)
-       2. _endTime_: (timestamp, default: 9999999999)
-       3. _users_: (username, default: *)
+       1. _startTime_: (timestamp, default: 1) from which start time should the chat content be considered for the scoring (Attention: If chat content don't have a 'ts' attribute the chat content is always part of the scoring content)
+       2. _endTime_: (timestamp, default: 9999999999) until when should the chat content be considered for the scoring (Attention: If chat content don't have a 'ts' attribute the chat content is always part of the scoring content)
+       3. _user_: (username or array of usernames, default: *) chat from specific user/users are considered for scoring
      - Returns: [0.0, 1.0]
      - [Example without filters](examples/plugins/chat-text/chat-text-nofilter.md)
      - [Example with time intervall filter](examples/plugins//chat-text/chat-text-intervall.md)
