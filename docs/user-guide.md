@@ -149,13 +149,20 @@ A plugin is a function that takes two arguments - a file object that contains me
      - Returns: [0.0, 1.0]
      - [Example](examples/plugins/close-time.md), [Source](../lib/plugins/close-time-plugin.js)
 
-  4. __chat-text plugin__:
+  5. __chat-text plugin__:
 
-     This plugin scores the similarity of a given string (e.g title or name of a file) and a set of texts (like a chat). It is necessary to have this structure for the chat input: An object with an array named 'chat'. Inside that array it has to be objects with a key named 'text'. ([Click for more information](examples/plugin-chat-text.md))
+     This plugin scores the similarity of a given string (e.g title or name of a file) and a set of texts (like a chat). It is necessary to have this structure for the chat input: An object with an array named 'chat'. Inside that array it has to be objects with a key named 'text'. ([Click for more information](examples/plugins/plugin-chat-text.md))
      - Input: _chatobject_ (object with 'chat' array, in array objects with key 'text'), _text_ (string)
-     - Parameters: none
+     - Parameters:
+       1. _startTime_: (timestamp, default: 1)
+       2. _endTime_: (timestamp, default: 9999999999)
+       3. _users_: (username, default: *)
      - Returns: [0.0, 1.0]
-     - [Example](examples/plugins/chat-text.md), [Source](../lib/plugins/chat-text-plugin.js)
+     - [Example without filters](examples/plugins/chat-text/chat-text-nofilter.md)
+     - [Example with time intervall filter](examples/plugins//chat-text/chat-text-intervall.md)
+     - [Example with user filter](examples/plugins/chat-text/chat-text-nofilter-user.md)
+     - [Example time intervall and user filters](examples/plugins/chat-text/chat-text-allfilter.md)
+     - [Source](../lib/plugins/chat-text-plugin.js)
 
 ##### 3.3.1.2 Configuration
 
