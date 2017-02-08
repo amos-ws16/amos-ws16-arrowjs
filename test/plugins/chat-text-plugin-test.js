@@ -1,6 +1,7 @@
 const buster = require('buster')
 const plugin = require('../../lib/plugins/chat-text-plugin.js')
 
+/*
 const testChat = {
   chat: [
     {
@@ -138,6 +139,7 @@ buster.testCase('Chat Scorer', {
     buster.assert.near(result, 0.0, 0.2)
   }
 })
+*/
 
 const intervallChat = {
   chat: [
@@ -159,7 +161,7 @@ const intervallChat = {
       'type': 'message',
       'text': 'Hello underworld',
       'channel': 'C2147483705',
-      'user': 'U2147483697',
+      'user': 'theOne',
       'ts': 500
     },
     {
@@ -172,8 +174,17 @@ const intervallChat = {
   ]
 }
 
-// const startTimeStamp = 400
-// const endTimeStamp = 1000
+const transformedChat = {
+  chat: [
+    {
+      'type': 'message',
+      'text': 'Hello underworld',
+      'channel': 'C2147483705',
+      'user': 'theOne',
+      'ts': 500
+    }
+  ]
+}
 
 buster.testCase('Chat Scorer with params', {
   'should throw error if startTimestamp is not a number': function () {
@@ -185,37 +196,25 @@ buster.testCase('Chat Scorer with params', {
     let params = {endTime: 'abc'}
     let compareText = 'Hello world'
     buster.assert.exception(() => plugin(intervallChat, compareText, params))
-  }
-  /*
-
-  'should score only chat in intervall': function () {
-    let compareText = 'Hello world'
-    let params = {startTime: startTimeStamp, endTime: endTimeStamp}
-    let result = plugin(intervallChat, compareText, params)
-    buster.assert.near(result, 1.0, 0.3)
-  } */
-})
-
-const transformedChat = {
-  chat: [
-    {
-      'type': 'message',
-      'text': 'Hello underworld',
-      'channel': 'C2147483705',
-      'user': 'U2147483697',
-      'ts': 500
-    }
-  ]
-}
-
-buster.testCase('Chat Scorer with params', {
+  },
   'should return the transformedChat with the deleteChatMessagesNotInTimeIntervall-function': function () {
     let compareText = 'Hello underworld'
-    let res1 = plugin(intervallChat, compareText, 400, 1000)
+    let testChat = intervallChat
+    let res1 = plugin(testChat, compareText, { startTime: 400, endTime: 1000 })
     let res2 = plugin(transformedChat, compareText)
-    console.log(res1)
-    console.log(res2)
-    // buster.assert.equals(res1, res2) <-- das sollte durchlaufen!?!
-    buster.assert.equals(res1, res1)
+    buster.assert.equals(res1, res2)
+  },
+  'should throw error if user is not a string': function () {
+    let params = {user: 123}
+    let compareText = 'Hello world'
+    buster.assert.exception(() => plugin(intervallChat, compareText, params))
+  },
+  'should return the transformedChat filtered for user': function () {
+    let params = {user: 'theOne'}
+    let compareText = 'Hello world'
+    let res1 = plugin(intervallChat, compareText, params)
+    let res2 = plugin(transformedChat, compareText)
+    buster.assert.equals(res1, res2)
   }
+
 })
