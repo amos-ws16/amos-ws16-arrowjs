@@ -135,7 +135,7 @@ buster.testCase('utils', {
           }
         ]
       }
-      buster.assert.equals(utils.getChatMessagesFromUsers(inputChatUnfiltered.chat, 'def'), res.chat)
+      buster.assert.equals(utils.filterByUser(inputChatUnfiltered.chat, 'def'), res.chat)
     },
     'should return an chat array only with objects from multiple users using an array as input': function () {
       const res = {
@@ -156,7 +156,7 @@ buster.testCase('utils', {
           }
         ]
       }
-      buster.assert.equals(utils.getChatMessagesFromUsers(inputChatUnfiltered.chat, ['def', 'ghi']), res.chat)
+      buster.assert.equals(utils.filterByUser(inputChatUnfiltered.chat, ['def', 'ghi']), res.chat)
     }
   }
 })
