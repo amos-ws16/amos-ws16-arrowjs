@@ -1,7 +1,9 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
-## [Unreleased](https://github.com/amos-ws16/amos-ws16-arrowjs/compare/sprint-12-release...dev)
+## [Unreleased](https://github.com/amos-ws16/amos-ws16-arrowjs/compare/sprint-13-release...dev)
+
+## [1.10.0](https://github.com/amos-ws16/amos-ws16-arrowjs/releases/tag/sprint-13-release) - 2017-02-09
 
 ## Added
 - Several new pipes [(click here)](https://github.com/amos-ws16/amos-ws16-arrowjs/pull/87)
