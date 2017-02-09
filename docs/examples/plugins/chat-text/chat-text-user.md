@@ -108,7 +108,7 @@
       "plugins": {
         "compare-chat": {
             "use": "chat-text-plugin",
-            "inputs": ["tasks[]", "file.title"],
+            "inputs": ["tasks[].chat", "file.title"],
             "params": { "user": ["def", "abc"] }
         }
       }
