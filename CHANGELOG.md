@@ -1,7 +1,20 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
-## [1.9.0](https://github.com/amos-ws16/amos-ws16-arrowjs/compare/sprint-12-release...dev) - 2017-02-02
+## [Unreleased](https://github.com/amos-ws16/amos-ws16-arrowjs/compare/sprint-13-release...dev)
+
+## [1.10.0](https://github.com/amos-ws16/amos-ws16-arrowjs/releases/tag/sprint-13-release) - 2017-02-09
+
+## Added
+- Several new pipes [(click here)](https://github.com/amos-ws16/amos-ws16-arrowjs/pull/87)
+- Support for array inputs [(click here)](https://github.com/amos-ws16/amos-ws16-arrowjs/pull/88)
+- Compare-plugin [(click here)](https://github.com/amos-ws16/amos-ws16-arrowjs/pull/86)
+
+## Changed
+- Chat-text plugin [(click here)](https://github.com/amos-ws16/amos-ws16-arrowjs/pull/90)
+- Return a uid [(click here)](https://github.com/amos-ws16/amos-ws16-arrowjs-server/pull/31)
+
+## [1.9.0](https://github.com/amos-ws16/amos-ws16-arrowjs/releases/tag/sprint-12-release) - 2017-02-02
 
 ## Added
 - new chat pipe
@@ -9,7 +22,7 @@ All notable changes to this project will be documented in this file.
 - example requests in documentation
 
 
-## [1.8.0](https://github.com/amos-ws16/amos-ws16-arrowjs/compare/sprint-11-release...dev) - 2017-01-26
+## [1.8.0](https://github.com/amos-ws16/amos-ws16-arrowjs/releases/tag/sprint-11-release) - 2017-01-26
 
 ## Added
 - Pipe for base names
@@ -18,7 +31,7 @@ All notable changes to this project will be documented in this file.
 - Exception handling for configuration
 - Inputgroups
 
-## [1.7.0](https://github.com/amos-ws16/amos-ws16-arrowjs/compare/sprint-10-release...dev) - 2017-01-19
+## [1.7.0](https://github.com/amos-ws16/amos-ws16-arrowjs/releases/tag/sprint-10-release) - 2017-01-19
 
 ## Added
 - Plugin 'is-assignes' Added
@@ -27,7 +40,7 @@ All notable changes to this project will be documented in this file.
 ## Changed
 - Fix for logic aggregators
 
-## [1.6.0](https://github.com/amos-ws16/amos-ws16-arrowjs/compare/sprint-08-release...dev) - 2017-01-12
+## [1.6.0](https://github.com/amos-ws16/amos-ws16-arrowjs/releases/tag/sprint-09-release) - 2017-01-12
 
 ## Added
 - Added a Website for this project [(click here)](https://amos-ws16.github.io/amos-ws16-arrowjs/)
