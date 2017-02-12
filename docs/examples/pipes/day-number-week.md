@@ -1,3 +1,5 @@
+In this example the file was created on a monday and 2 tasks were created on a monday and on a wednesday, respectively. With the "compare-numbers-plugin" in combination with the "day-number-of-week"-pipe the tasks get a score of 1 if they were created on the same day as the file, 0 otherwise.
+
 ### Request
 
   ```javascript

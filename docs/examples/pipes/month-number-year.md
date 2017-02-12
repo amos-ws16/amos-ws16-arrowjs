@@ -1,3 +1,5 @@
+In this example the file was created in february and 2 tasks were created in february and in january, respectively. With the "compare-numbers-plugin" in combination with the "month-number-of-year"-pipe the tasks get a score of 1 if they were created in the same month as the file, 0 otherwise.
+
 ### Request
 
   ```javascript
