@@ -6,12 +6,12 @@
     "config": {
     	"idPath": "tasks[].id",
         "aggregator": {"mean": "*"},
-        "aggregator": {"mean": "*"},
        	"plugins": {
-        "context-file-timestamp-tasks-timestamp-long": {
-          "use": "similar-text-plugin",
-          "inputs": ["file.created_at | day-name-of-week", "tasks[].created_at | day-name-of-week"]
-        }
+	        "context-file-timestamp-tasks-timestamp-long": {
+	          "use": "similar-text-plugin",
+	          "inputs": ["file.created_at | day-name-of-week", "tasks[].created_at | day-name-of-week"]
+	        }
+	    }
     },
     "file": {
       	"title": "monday report",
@@ -50,6 +50,7 @@
       "id": 2,
       "total": 0.3076923076923077
     }
-  ]
+  ],
+  "uid": "58a0b3b9d192384b4dcb52b3"
 }
   ```

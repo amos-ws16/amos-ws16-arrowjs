@@ -5,13 +5,13 @@
     "token": "YOUR_TOKEN_HERE",
     "config": {
     	"idPath": "tasks[].id",
-   	"aggregator": {"mean": "*"},
-   	"plugins": {
-    "context-file-timestamp-tasks-timestamp-long": {
-      "use": "similar-text-plugin",
-      "inputs": ["file.created_at | month-name-of-year", "tasks[].created_at | month-name-of-year"]
-    }
-}
+	   	"aggregator": {"mean": "*"},
+	   	"plugins": {
+		    "context-file-timestamp-tasks-timestamp-long": {
+		      "use": "similar-text-plugin",
+		      "inputs": ["file.created_at | month-name-of-year", "tasks[].created_at | month-name-of-year"]
+		    }
+		}
    },
    "file": {
      	"title": "february report",
@@ -50,6 +50,7 @@
       "id": 2,
       "total": 0.46153846153846156
     }
-  ]
+  ],
+  "uid": "58a0b446d192384b4dcb52b5"
 }
   ```

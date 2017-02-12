@@ -5,14 +5,14 @@
     "token": "YOUR_TOKEN_HERE",
     "config": {
     	"idPath": "tasks[].id",
-   	"aggregator": {"mean": "*"},
-   	"plugins": {
-    "context-file-timestamp-tasks-timestamp-long": {
-      "use": "close-time-plugin",
-      "inputs": ["file.created_at | day-number-of-week", "tasks[].created_at | day-number-of-week"],
-      "params": { "time-limit": 1 }
-    }
-}
+	   	"aggregator": {"mean": "*"},
+	   	"plugins": {
+		    "context-file-timestamp-tasks-timestamp-long": {
+		      "use": "close-time-plugin",
+		      "inputs": ["file.created_at | day-number-of-week", "tasks[].created_at | day-number-of-week"],
+		      "params": { "time-limit": 1 }
+		    }
+		}
    },
    "file": {
      	"title": "monday report",
@@ -51,6 +51,7 @@
       "id": 2,
       "total": 0
     }
-  ]
+  ],
+  "uid": "58a0b485d192384b4dcb52b6"
 }
   ```
