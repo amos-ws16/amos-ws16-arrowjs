@@ -1,3 +1,5 @@
+In this example the file was created in february and 2 tasks were created in february and in january, respectively. With the "similar-text-plugin" in combination with the "month-name-of-year"-pipe the tasks get a score with respect to the similarity of the names of the months.
+
 ### Request
 
   ```javascript

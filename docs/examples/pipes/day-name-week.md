@@ -1,3 +1,5 @@
+In this example the file was created on a monday and 2 tasks were created on a monday and on a wednesday, respectively. With the "similar-text-plugin" in combination with the "day-name-of-week"-pipe the tasks get a score with respect to the similarity of the names of the days.
+
 ### Request
 
   ```javascript
