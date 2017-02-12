@@ -7,10 +7,10 @@
     	"idPath": "tasks[].id",
 	   	"aggregator": {"mean": "*"},
 	   	"plugins": {
-		    "context-file-timestamp-tasks-timestamp-long": {
-		      "use": "close-time-plugin",
+		    "compare-month-numbers-equal": {
+		      "use": "compare-numbers-plugin",
 		      "inputs": ["file.created_at | month-number-of-year", "tasks[].created_at | month-number-of-year"],
-		      "params": { "time-limit": 1 }
+		      "params": { "operator": "=" }
 		    }
 		}
    },
@@ -42,16 +42,16 @@
   "success": true,
   "result": [
     {
-      "context-file-timestamp-tasks-timestamp-long": 1,
+      "compare-month-numbers-equal": 1,
       "id": 1,
       "total": 1
     },
     {
-      "context-file-timestamp-tasks-timestamp-long": 0,
+      "compare-month-numbers-equal": 0,
       "id": 2,
       "total": 0
     }
   ],
-  "uid": "58a0b4a4d192384b4dcb52b7"
+  "uid": "58a0b5f8d192384b4dcb52bb"
 }
   ```
