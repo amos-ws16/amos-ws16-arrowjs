@@ -1,6 +1,45 @@
 const utils = require('../lib/utils')
 const buster = require('buster')
 
+const inputChatUnfiltered = {
+  chat: [
+    {
+      'type': 'message',
+      'text': 'test test',
+      'channel': 'C2147483705',
+      'user': 'abc',
+      'ts': 200
+    },
+    {
+      'type': 'message',
+      'text': 'Hello world',
+      'channel': 'C2147483705',
+      'user': 'def',
+      'ts': 400
+    },
+    {
+      'type': 'message',
+      'text': 'Hello underworld',
+      'channel': 'C2147483705',
+      'user': 'abc',
+      'ts': 500
+    },
+    {
+      'type': 'message',
+      'text': 'Hello hello',
+      'channel': 'C2147483705',
+      'user': 'ghi',
+      'ts': 1200
+    },
+    {
+      'type': 'message',
+      'text': 'Hello amos',
+      'channel': 'C2147483705',
+      'user': 'jkl'
+    }
+  ]
+}
+
 buster.testCase('utils', {
   'toDebugString': {
     'should return a human readable string of a javascript object': function () {
@@ -52,6 +91,72 @@ buster.testCase('utils', {
       buster.refute.exception(() => utils.isNumber(-123))
       buster.refute.exception(() => utils.isNumber(1.0001))
       buster.refute.exception(() => utils.isNumber(-1.23))
+    }
+  },
+  filterChatByTimeTests: {
+    'should return an chat array with objects in time interval and without timestamps': function () {
+      const res = {
+        chat: [
+          {
+            'type': 'message',
+            'text': 'Hello world',
+            'channel': 'C2147483705',
+            'user': 'def',
+            'ts': 400
+          },
+          {
+            'type': 'message',
+            'text': 'Hello underworld',
+            'channel': 'C2147483705',
+            'user': 'abc',
+            'ts': 500
+          },
+          {
+            'type': 'message',
+            'text': 'Hello amos',
+            'channel': 'C2147483705',
+            'user': 'jkl'
+          }
+        ]
+      }
+      buster.assert.equals(utils.filterChatByTime(inputChatUnfiltered.chat, 300, 1000), res.chat)
+    }
+  },
+  getChatMessagesFromUsersTests: {
+    'should return an chat array only with objects from specific user': function () {
+      const res = {
+        chat: [
+          {
+            'type': 'message',
+            'text': 'Hello world',
+            'channel': 'C2147483705',
+            'user': 'def',
+            'ts': 400
+          }
+        ]
+      }
+      buster.assert.equals(utils.filterByUser(inputChatUnfiltered.chat, 'def'), res.chat)
+    },
+    'should return an chat array only with objects from multiple users using an array as input': function () {
+      const res = {
+        chat: [
+          {
+            'type': 'message',
+            'text': 'Hello world',
+            'channel': 'C2147483705',
+            'user': 'def',
+            'ts': 400
+          },
+          {
+            'type': 'message',
+            'text': 'Hello hello',
+            'channel': 'C2147483705',
+            'user': 'ghi',
+            'ts': 1200
+          }
+        ]
+      }
+      buster.assert.equals(utils.filterByUser(inputChatUnfiltered.chat, ['def', 'ghi']), res.chat)
     }
   }
 })

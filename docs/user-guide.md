@@ -151,11 +151,18 @@ A plugin is a function that takes two arguments - a file object that contains me
 
   5. __chat-text-plugin__:
 
-     This plugin scores the similarity of a given string (e.g title, name, or description of a file) and a set of texts (like a chat). It is necessary to have the chat as an array where each element is an objects with a key named 'text'. ([Click for more information](examples/plugins/chat-text.md))
+     This plugin scores the similarity of a given string (e.g title, name, or description of a file) and a set of texts (like a chat). It is necessary to have the chat as an array where each element is an objects with a key named 'text'. ([Click for more information](examples/plugins/plugin-chat-text.md))
      - Input: _chat_array_ (array of objects with key 'text'), _text_ (string)
-     - Parameters: none
+     - Parameters:
+       1. _startTime_: (timestamp, default: 1) from which start time should the chat content be considered for the scoring (Attention: If chat content don't have a 'ts' attribute the chat content is always part of the scoring content)
+       2. _endTime_: (timestamp, default: 9999999999) until when should the chat content be considered for the scoring (Attention: If chat content don't have a 'ts' attribute the chat content is always part of the scoring content)
+       3. _user_: (username or array of usernames, default: *) chat from specific user/users are considered for scoring
      - Returns: [0.0, 1.0]
-     - [Example](examples/plugins/chat-text.md), [Source](../lib/plugins/chat-text-plugin.js)
+     - [Example without filters](examples/plugins/chat-text/chat-text-nofilter.md)
+     - [Example with time intervall filter](examples/plugins//chat-text/chat-text-intervall.md)
+     - [Example with user filter](examples/plugins/chat-text/chat-text-user.md)
+     - [Example time intervall and user filters](examples/plugins/chat-text/chat-text-allfilter.md)
+     - [Source](../lib/plugins/chat-text-plugin.js)
 
   6. __compare-numbers-plugin__:
 
