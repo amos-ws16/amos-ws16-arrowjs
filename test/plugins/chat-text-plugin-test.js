@@ -5,11 +5,17 @@ const testChat = {
   chat: [
     {
       'type': 'message',
-      'text': 'Hello world'
+      'text': 'Hello world',
+      'channel': 'C2147483705',
+      'user': 'U2147483697',
+      'ts': 1355517523.000005
     },
     {
       'type': 'message',
-      'text': 'Hello underworld'
+      'text': 'Hello underworld',
+      'channel': 'C2147483705',
+      'user': 'U2147483697',
+      'ts': 1355517523.000005
     }
   ]
 }
@@ -18,7 +24,10 @@ const testChatSimple = {
   chat: [
     {
       'type': 'message',
-      'text': 'Hello world'
+      'text': 'Hello world',
+      'channel': 'C2147483705',
+      'user': 'U2147483697',
+      'ts': 1355517523.000005
     }
   ]
 }
@@ -27,11 +36,17 @@ const brokenChat = {
   chat: [
     {
       'type': 'message',
-      'notext': 1234
+      'notext': 1234,
+      'channel': 'C2147483705',
+      'user': 'U2147483697',
+      'ts': 1355517523.000005
     },
     {
       'type': 'message',
-      'notext': 'Hello underworld'
+      'notext': 'Hello underworld',
+      'channel': 'C2147483705',
+      'user': 'U2147483697',
+      'ts': 1355517523.000005
     }
   ]
 }
@@ -40,11 +55,17 @@ const halfChat = {
   chat: [
     {
       'type': 'message',
-      'notext': 1234
+      'notext': 1234,
+      'channel': 'C2147483705',
+      'user': 'U2147483697',
+      'ts': 1355517523.000005
     },
     {
       'type': 'message',
-      'text': 'Hello'
+      'text': 'Hello',
+      'channel': 'C2147483705',
+      'user': 'U2147483697',
+      'ts': 1355517523.000005
     }
   ]
 }
@@ -53,11 +74,17 @@ const wrongeTypeChat = {
   chat: [
     {
       'type': 'message',
-      'notext': 1234
+      'notext': 1234,
+      'channel': 'C2147483705',
+      'user': 'U2147483697',
+      'ts': 1355517523.000005
     },
     {
       'type': 'message',
-      'text': 'Hello'
+      'text': 'Hello',
+      'channel': 'C2147483705',
+      'user': 'U2147483697',
+      'ts': 1355517523.000005
     }
   ]
 }
@@ -110,4 +137,81 @@ buster.testCase('Chat Scorer', {
     let result = plugin(testChat.chat, compareText)
     buster.assert.near(result, 0.0, 0.2)
   }
+})
+
+const intervallChat = {
+  chat: [
+    {
+      'type': 'message',
+      'text': 'test test',
+      'channel': 'C2147483705',
+      'user': 'U2147483697',
+      'ts': 200
+    },
+    {
+      'type': 'message',
+      'text': 'Hello world',
+      'channel': 'C2147483705',
+      'user': 'U2147483697',
+      'ts': 300
+    },
+    {
+      'type': 'message',
+      'text': 'Hello underworld',
+      'channel': 'C2147483705',
+      'user': 'theOne',
+      'ts': 500
+    },
+    {
+      'type': 'message',
+      'text': 'Hello hello',
+      'channel': 'C2147483705',
+      'user': 'U2147483697',
+      'ts': 1200
+    }
+  ]
+}
+
+const transformedChat = {
+  chat: [
+    {
+      'type': 'message',
+      'text': 'Hello underworld',
+      'channel': 'C2147483705',
+      'user': 'theOne',
+      'ts': 500
+    }
+  ]
+}
+
+buster.testCase('Chat Scorer with params', {
+  'should throw error if startTimestamp is not a number': function () {
+    let params = {startTime: 'abc'}
+    let compareText = 'Hello world'
+    buster.assert.exception(() => plugin(intervallChat.chat, compareText, params))
+  },
+  'should throw error if endTimestamp is not a number': function () {
+    let params = {endTime: 'abc'}
+    let compareText = 'Hello world'
+    buster.assert.exception(() => plugin(intervallChat.chat, compareText, params))
+  },
+  'should return the transformedChat with the deleteChatMessagesNotInTimeIntervall-function': function () {
+    let compareText = 'Hello underworld'
+    let res1 = plugin(intervallChat.chat, compareText, { startTime: 400, endTime: 1000 })
+    let res2 = plugin(transformedChat.chat, compareText)
+    buster.assert.equals(res1, res2)
+  },
+  'should throw error if user is not a string': function () {
+    let params = {user: 123}
+    let compareText = 'Hello world'
+    buster.assert.exception(() => plugin(intervallChat.chat, compareText, params))
+  },
+  'should return the transformedChat filtered for user': function () {
+    let params = {user: 'theOne'}
+    let compareText = 'Hello world'
+    let res1 = plugin(intervallChat.chat, compareText, params)
+    let res2 = plugin(transformedChat.chat, compareText)
+    buster.assert.equals(res1, res2)
+  }
+
 })

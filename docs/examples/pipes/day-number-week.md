@@ -1,3 +1,5 @@
+In this example the file was created on a monday and 2 tasks were created on a monday and on a wednesday, respectively. With the "compare-numbers-plugin" in combination with the "day-number-of-week"-pipe the tasks get a score of 1 if they were created on the same day as the file, 0 otherwise.
+
 ### Request
 
   ```javascript
@@ -5,14 +7,14 @@
     "token": "YOUR_TOKEN_HERE",
     "config": {
     	"idPath": "tasks[].id",
-   	"aggregator": {"mean": "*"},
-   	"plugins": {
-    "context-file-timestamp-tasks-timestamp-long": {
-      "use": "close-time-plugin",
-      "inputs": ["file.created_at | day-number-of-week", "tasks[].created_at | day-number-of-week"],
-      "params": { "time-limit": 1 }
-    }
-}
+	   	"aggregator": {"mean": "*"},
+	   	"plugins": {
+		    "compare-day-numbers-equal": {
+		      "use": "compare-numbers-plugin",
+		      "inputs": ["file.created_at | day-number-of-week", "tasks[].created_at | day-number-of-week"],
+		      "params": { "operator": "=" }
+		    }
+		}
    },
    "file": {
      	"title": "monday report",
@@ -42,15 +44,16 @@
   "success": true,
   "result": [
     {
-      "context-file-timestamp-tasks-timestamp-long": 1,
+      "compare-day-numbers-equal": 1,
       "id": 1,
       "total": 1
     },
     {
-      "context-file-timestamp-tasks-timestamp-long": 0,
+      "compare-day-numbers-equal": 0,
       "id": 2,
       "total": 0
     }
-  ]
+  ],
+  "uid": "58a0b599d192384b4dcb52ba"
 }
   ```
