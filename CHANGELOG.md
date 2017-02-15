@@ -1,7 +1,7 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
-## [2.0.0](https://github.com/amos-ws16/amos-ws16-arrowjs/releases/final-release) - 15.02.2017
+## [2.0.0](https://github.com/amos-ws16/amos-ws16-arrowjs/releases/final-release) - 2017-02-15
 
 ## Changed
 - Several bug fixes and small improvements
